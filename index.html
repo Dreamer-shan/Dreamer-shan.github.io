@@ -147,6 +147,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/12/%E5%AE%89%E8%A3%85CentOS%E7%9A%84%E5%9D%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="shy">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/12/%E5%AE%89%E8%A3%85CentOS%E7%9A%84%E5%9D%91/" class="post-title-link" itemprop="url">安装CentOS的坑</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-12 15:48:12 / 修改时间：15:49:43" itemprop="dateCreated datePublished" datetime="2021-10-12T15:48:12+08:00">2021-10-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>1、使用刚刚制作的CentOS 7 安装U盘启动电脑，屏幕上会出现安装菜单：</p>
+<p>Install CentOS7<br>Test this media &amp; install CentOS7<br>Troubleshooting –&gt;</p>
+<p>Use the ▲ and ▼keys to change theselection.<br>Press ‘e’to edit the selected item,or ‘c’fora command prompt.</p>
+<p>4、选择第一项或第二项，等待一会儿之后安装界面会出现 dracut:# 命令行。</p>
+<p>此时，在dracut:#命令行后输入 cd dev 回车，进行dev目录下；然后用ls 命令查看dev目录下的磁盘分配列表信息（一般是sd打头）。</p>
+<p>(我的磁盘信息显示安装U盘的盘符是sdc4，情况不同，盘符可能会不同。)</p>
+<p>5、重启机器，在安装菜单界面按 e 键，屏幕会出现如下信息：</p>
+<p>Linuxefi /images/pxeboot/vmlinuzinst.stage22=hd:LABEL=CentOS\x207\x20x\86_64 quiet</p>
+<p>将此行信息更改为：</p>
+<p>Linuxefi /images/pxeboot/vmlinuzinst.stage22=hd:/dev/sdc4 quiet</p>
+<p>按Ctrl + X 执行，然后即可进入图形安装界面。</p>
+<p>6、在安装信息摘要界面在系统 –&gt; 安装位置中选择所要安装的磁盘，在软件–&gt; 软件选择中选择所要安装的选项（默认最小安装是不包含图形界面的，一般可以选择为GNOME桌面）</p>
+<p>7、在配置页面设置ROOT密码及创建用户。</p>
+<p>8、安装界面提示安装完成，重启后根据提示完成剩下的配置，安装结束。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/12/imagetest/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -491,7 +563,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
