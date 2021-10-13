@@ -65,5 +65,12 @@
     <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_files_list</span>(<span class="params"><span class="built_in">dir</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    实现遍历dir目录下,所有文件(包含子文件夹的文件)</span></span><br><span class="line"><span class="string">    :param dir:指定文件夹目录</span></span><br><span class="line"><span class="string">    :return:包含所有文件的列表-&gt;list</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># parent:父目录, filenames:该目录下所有文件夹,filenames:该目录下的文件名</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">r&quot;E:\test&quot;</span></span><br><span class="line">filelist = get_files_list(path)</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> filelist:</span><br><span class="line">    portion = os.path.splitext(filename)  <span class="comment"># portion为名称和后缀分离后的列表</span></span><br><span class="line">    <span class="keyword">if</span> portion[<span class="number">1</span>] ==<span class="string">&quot;.bmp&quot;</span>:</span><br><span class="line">        newname = portion[<span class="number">0</span>] + <span class="string">&quot;.jpg&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(filename)  <span class="comment"># 打印出要更改的文件名</span></span><br><span class="line">        os.chdir(path)</span><br><span class="line">        os.rename(filename, newname)</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>centOS</tag>
+        <tag>tomcat</tag>
+      </tags>
   </entry>
 </search>
