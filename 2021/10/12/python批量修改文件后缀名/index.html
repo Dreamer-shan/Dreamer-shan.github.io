@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="import osdef get_files_list(dir):    ‘’’    实现遍历dir目录下,所有文件(包含子文件夹的文件)    :param dir:指定文件夹目录    :return:包含所有文件的列表-&gt;list    ‘’’    # parent:父目录, filenames:该目录下所有文件夹,filenames:该目录下的文件名    files_list">
+  <meta name="description" content="1234567891011121314151617181920import osdef get_files_list(dir):    &amp;#x27;&amp;#x27;&amp;#x27;    实现遍历dir目录下,所有文件(包含子文件夹的文件)    :param dir:指定文件夹目录    :return:包含所有文件的列表-&gt;list    &amp;#x27;&amp;#x27;&amp;#x27;# parent:父">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python批量修改文件后缀名">
 <meta property="og:url" content="http://example.com/2021/10/12/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/index.html">
 <meta property="og:site_name" content="Dreamer-shan&#39;s Blog">
-<meta property="og:description" content="import osdef get_files_list(dir):    ‘’’    实现遍历dir目录下,所有文件(包含子文件夹的文件)    :param dir:指定文件夹目录    :return:包含所有文件的列表-&gt;list    ‘’’    # parent:父目录, filenames:该目录下所有文件夹,filenames:该目录下的文件名    files_list">
+<meta property="og:description" content="1234567891011121314151617181920import osdef get_files_list(dir):    &amp;#x27;&amp;#x27;&amp;#x27;    实现遍历dir目录下,所有文件(包含子文件夹的文件)    :param dir:指定文件夹目录    :return:包含所有文件的列表-&gt;list    &amp;#x27;&amp;#x27;&amp;#x27;# parent:父">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-12T07:54:23.000Z">
-<meta property="article:modified_time" content="2021-10-12T08:02:32.171Z">
+<meta property="article:modified_time" content="2021-10-13T01:32:27.712Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta name="twitter:card" content="summary">
 
@@ -172,10 +172,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-10-12 15:54:23 / 修改时间：16:02:32" itemprop="dateCreated datePublished" datetime="2021-10-12T15:54:23+08:00">2021-10-12</time>
+              <time title="创建时间：2021-10-12 15:54:23" itemprop="dateCreated datePublished" datetime="2021-10-12T15:54:23+08:00">2021-10-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-13 09:32:27" itemprop="dateModified" datetime="2021-10-13T09:32:27+08:00">2021-10-13</time>
+              </span>
 
           
 
@@ -188,8 +194,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>import os<br>def get_files_list(dir):<br>    ‘’’<br>    实现遍历dir目录下,所有文件(包含子文件夹的文件)<br>    :param dir:指定文件夹目录<br>    :return:包含所有文件的列表-&gt;list<br>    ‘’’<br>    # parent:父目录, filenames:该目录下所有文件夹,filenames:该目录下的文件名<br>    files_list = []<br>    for parent, dirnames, filenames in os.walk(dir):        # os.walk返回一个三元组（根 孩子文件夹 孩子文件）<br>        for filename in filenames:<br>            curr_file = parent.split(os.sep)[-1]    #当前文件名 os.sep表示以分隔符分开<br>            files_list.append(os.path.join(curr_file, filename))<br>    return files_list</p>
-<p>path = r”E:\test”<br>filelist = get_files_list(path)<br>for filename in filelist:<br>    portion = os.path.splitext(filename)  # portion为名称和后缀分离后的列表<br>    if portion[1] ==”.bmp”:<br>        newname = portion[0] + “.jpg”<br>        print(filename)  # 打印出要更改的文件名<br>        os.chdir(path)<br>        os.rename(filename, newname)</p>
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_files_list</span>(<span class="params"><span class="built_in">dir</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    实现遍历dir目录下,所有文件(包含子文件夹的文件)</span></span><br><span class="line"><span class="string">    :param dir:指定文件夹目录</span></span><br><span class="line"><span class="string">    :return:包含所有文件的列表-&gt;list</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># parent:父目录, filenames:该目录下所有文件夹,filenames:该目录下的文件名</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">r&quot;E:\test&quot;</span></span><br><span class="line">filelist = get_files_list(path)</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> filelist:</span><br><span class="line">    portion = os.path.splitext(filename)  <span class="comment"># portion为名称和后缀分离后的列表</span></span><br><span class="line">    <span class="keyword">if</span> portion[<span class="number">1</span>] ==<span class="string">&quot;.bmp&quot;</span>:</span><br><span class="line">        newname = portion[<span class="number">0</span>] + <span class="string">&quot;.jpg&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(filename)  <span class="comment"># 打印出要更改的文件名</span></span><br><span class="line">        os.chdir(path)</span><br><span class="line">        os.rename(filename, newname)</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
