@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JVM复习</title>
-    <url>/2021/10/11/ceshi/</url>
-    <content><![CDATA[<h3 id="Java和C-的一个重要区别"><a href="#Java和C-的一个重要区别" class="headerlink" title="Java和C++的一个重要区别"></a>Java和C++的一个重要区别</h3><p>&emsp;&emsp;Java和C++都是面向对象的，但是C++需要程序员手动开辟(malloc)和回收(free)内存，但是有了JVM内存管理的存在，所以Java不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
-<h3 id="为什么需要JVM？"><a href="#为什么需要JVM？" class="headerlink" title="为什么需要JVM？"></a>为什么需要JVM？</h3><p>&emsp;&emsp;Java语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过JVM执行。</p>
-<p>&emsp;&emsp;优点：减少了开发的难度，兼容不同操作系统。</p>
-<p>&emsp;&emsp;缺点：比直接在操作系统上执行的程序的运行速度要慢。在早期这确实是一个问题，但是由于硬件技术的发展，这些问题一直在优化。</p>
-<h3 id="JVM大体结构"><a href="#JVM大体结构" class="headerlink" title="JVM大体结构"></a>JVM大体结构</h3><p>&emsp;&emsp;JVM运行时数据区分为堆和方法区（<strong>线程共享</strong>）、虚拟机栈、本地方法栈、程序计数器（<strong>线程私有</strong>）。</p>
-<p><img src="E:\Blog\myblog\source_posts\imagetest\image-20211012141857897.png" alt="image-20211012141857897"></p>
-<p>&emsp;&emsp;堆：内存中最大的一块，<strong>几乎</strong>所有的对象实例和数组都分配在堆中。<strong>注意是几乎，而不是全部。</strong>由于编译技术的进步，逃逸分析技术的发展，现在也存在<strong>栈上分配</strong>的情况</p>
-<p>&emsp;&emsp;方法区：用于存储已被虚拟机加载 的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据</p>
-<p>&emsp;&emsp;虚拟机栈：虚拟机栈的生命周期与线程相同。每个方法被执行的时候，Java虚拟机都会同步创建一个栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。</p>
-<p>&emsp;&emsp;本地方法栈：与虚拟机栈的作用，虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈为虚拟机使用到的本地（Native）方法服务。</p>
-<p>&emsp;&emsp;程序计数器：可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时，代码的分支、循环、跳转、异常处理、线程恢复，都需要依赖这个计数器来完成</p>
-<h3 id="new一个对象的时候会发生什么？"><a href="#new一个对象的时候会发生什么？" class="headerlink" title="new一个对象的时候会发生什么？"></a>new一个对象的时候会发生什么？</h3><p>&emsp;&emsp;首先将去检查这个指令的参数是否能在常量池中定位到 一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。</p>
-]]></content>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2021/09/29/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -42,6 +25,26 @@
 ]]></content>
   </entry>
   <entry>
+    <title>python批量修改文件后缀名</title>
+    <url>/2021/10/12/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/</url>
+    <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_files_list</span>(<span class="params"><span class="built_in">dir</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    实现遍历dir目录下,所有文件(包含子文件夹的文件)</span></span><br><span class="line"><span class="string">    :param dir:指定文件夹目录</span></span><br><span class="line"><span class="string">    :return:包含所有文件的列表-&gt;list</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># parent:父目录, filenames:该目录下所有文件夹,filenames:该目录下的文件名</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">r&quot;E:\test&quot;</span></span><br><span class="line">filelist = get_files_list(path)</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> filelist:</span><br><span class="line">    portion = os.path.splitext(filename)  <span class="comment"># portion为名称和后缀分离后的列表</span></span><br><span class="line">    <span class="keyword">if</span> portion[<span class="number">1</span>] ==<span class="string">&quot;.bmp&quot;</span>:</span><br><span class="line">        newname = portion[<span class="number">0</span>] + <span class="string">&quot;.jpg&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(filename)  <span class="comment"># 打印出要更改的文件名</span></span><br><span class="line">        os.chdir(path)</span><br><span class="line">        os.rename(filename, newname)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>centOS</tag>
+        <tag>tomcat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>test</title>
+    <url>/2021/10/14/test/</url>
+    <content><![CDATA[<p>aaaaaaa</p>
+]]></content>
+  </entry>
+  <entry>
     <title>JVM复习</title>
     <url>/2021/10/09/newpapername/</url>
     <content><![CDATA[<p><img src="ceshi/a.png" alt="ss"><br><img src="E:\Blog\myblog\source_posts\b.jpg" alt="ss1"></p>
@@ -60,23 +63,20 @@
 ]]></content>
   </entry>
   <entry>
-    <title>python批量修改文件后缀名</title>
-    <url>/2021/10/12/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/</url>
-    <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_files_list</span>(<span class="params"><span class="built_in">dir</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    实现遍历dir目录下,所有文件(包含子文件夹的文件)</span></span><br><span class="line"><span class="string">    :param dir:指定文件夹目录</span></span><br><span class="line"><span class="string">    :return:包含所有文件的列表-&gt;list</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># parent:父目录, filenames:该目录下所有文件夹,filenames:该目录下的文件名</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">r&quot;E:\test&quot;</span></span><br><span class="line">filelist = get_files_list(path)</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> filelist:</span><br><span class="line">    portion = os.path.splitext(filename)  <span class="comment"># portion为名称和后缀分离后的列表</span></span><br><span class="line">    <span class="keyword">if</span> portion[<span class="number">1</span>] ==<span class="string">&quot;.bmp&quot;</span>:</span><br><span class="line">        newname = portion[<span class="number">0</span>] + <span class="string">&quot;.jpg&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(filename)  <span class="comment"># 打印出要更改的文件名</span></span><br><span class="line">        os.chdir(path)</span><br><span class="line">        os.rename(filename, newname)</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>centOS</tag>
-        <tag>tomcat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>test</title>
-    <url>/2021/10/14/test/</url>
-    <content><![CDATA[<p>aaaaaaa</p>
+    <title>JVM复习</title>
+    <url>/2021/10/11/ceshi/</url>
+    <content><![CDATA[<h3 id="Java和C-的一个重要区别"><a href="#Java和C-的一个重要区别" class="headerlink" title="Java和C++的一个重要区别"></a>Java和C++的一个重要区别</h3><p>&emsp;&emsp;Java和C++都是面向对象的，但是C++需要程序员手动开辟(malloc)和回收(free)内存，但是有了JVM内存管理的存在，所以Java不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
+<h3 id="为什么需要JVM？"><a href="#为什么需要JVM？" class="headerlink" title="为什么需要JVM？"></a>为什么需要JVM？</h3><p>&emsp;&emsp;Java语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过JVM执行。</p>
+<p>&emsp;&emsp;优点：减少了开发的难度，兼容不同操作系统。</p>
+<p>&emsp;&emsp;缺点：比直接在操作系统上执行的程序的运行速度要慢。在早期这确实是一个问题，但是由于硬件技术的发展，这些问题一直在优化。</p>
+<h3 id="JVM大体结构"><a href="#JVM大体结构" class="headerlink" title="JVM大体结构"></a>JVM大体结构</h3><p>&emsp;&emsp;JVM运行时数据区分为堆和方法区（<strong>线程共享</strong>）、虚拟机栈、本地方法栈、程序计数器（<strong>线程私有</strong>）。</p>
+<p><img src="E:\Blog\myblog\source_posts\imagetest\image-20211012141857897.png" alt="image-20211012141857897"></p>
+<p>&emsp;&emsp;堆：内存中最大的一块，<strong>几乎</strong>所有的对象实例和数组都分配在堆中。<strong>注意是几乎，而不是全部。</strong>由于编译技术的进步，逃逸分析技术的发展，现在也存在<strong>栈上分配</strong>的情况</p>
+<p>&emsp;&emsp;方法区：用于存储已被虚拟机加载 的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据</p>
+<p>&emsp;&emsp;虚拟机栈：虚拟机栈的生命周期与线程相同。每个方法被执行的时候，Java虚拟机都会同步创建一个栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。</p>
+<p>&emsp;&emsp;本地方法栈：与虚拟机栈的作用，虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈为虚拟机使用到的本地（Native）方法服务。</p>
+<p>&emsp;&emsp;程序计数器：可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时，代码的分支、循环、跳转、异常处理、线程恢复，都需要依赖这个计数器来完成</p>
+<h3 id="new一个对象的时候会发生什么？"><a href="#new一个对象的时候会发生什么？" class="headerlink" title="new一个对象的时候会发生什么？"></a>new一个对象的时候会发生什么？</h3><p>&emsp;&emsp;首先将去检查这个指令的参数是否能在常量池中定位到 一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。</p>
 ]]></content>
   </entry>
 </search>
