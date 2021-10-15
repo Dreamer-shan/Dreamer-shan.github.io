@@ -62,6 +62,7 @@
     <content><![CDATA[<p><img src="ceshi/a.png" alt="ss"><br><img src="E:\Blog\myblog\source_posts\b.jpg" alt="ss1"></p>
 <p><img src="https://img-blog.csdnimg.cn/c77480592dc041aaa423784a415e07f7.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5YKF6YeM5Y-25LiN5oOz5Y-Y5o2iXw==,size_17,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br><img src="ceshi/a.png" alt="aa"><br><img src="ceshi/b.jpg" alt="bb"></p>
 <h3 id="Java和C-的一个重要区别"><a href="#Java和C-的一个重要区别" class="headerlink" title="Java和C++的一个重要区别"></a>Java和C++的一个重要区别</h3><p>&emsp;&emsp;Java和C++都是面向对象的，但是C++需要程序员手动开辟(malloc)和回收(free)内存，但是有了JVM内存管理的存在，所以Java不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
+<span id="more"></span>
 <h3 id="为什么需要JVM？"><a href="#为什么需要JVM？" class="headerlink" title="为什么需要JVM？"></a>为什么需要JVM？</h3><p>&emsp;&emsp;Java语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过JVM执行。</p>
 <p>&emsp;&emsp;优点：减少了开发的难度，兼容不同操作系统。</p>
 <p>&emsp;&emsp;缺点：比直接在操作系统上执行的程序的运行速度要慢。在早期这确实是一个问题，但是由于硬件技术的发展，这些问题一直在优化。</p>
