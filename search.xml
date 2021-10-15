@@ -36,6 +36,12 @@
 ]]></content>
   </entry>
   <entry>
+    <title>test</title>
+    <url>/2021/10/14/test/</url>
+    <content><![CDATA[<p>aaaaaaa</p>
+]]></content>
+  </entry>
+  <entry>
     <title>imagetest</title>
     <url>/2021/10/12/imagetest/</url>
     <content><![CDATA[<p><img src="imagetest/a.png" alt="aa"><br><img src="imagetest/b.jpg" alt="bb"><br><img src="a.png" alt="aa1"><br><img src="b.jpg" alt="bb1"></p>
@@ -57,12 +63,6 @@
 <p>&emsp;&emsp;本地方法栈：与虚拟机栈的作用，虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈为虚拟机使用到的本地（Native）方法服务。</p>
 <p>&emsp;&emsp;程序计数器：可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时，代码的分支、循环、跳转、异常处理、线程恢复，都需要依赖这个计数器来完成</p>
 <h3 id="new一个对象的时候会发生什么？"><a href="#new一个对象的时候会发生什么？" class="headerlink" title="new一个对象的时候会发生什么？"></a>new一个对象的时候会发生什么？</h3><p>&emsp;&emsp;首先将去检查这个指令的参数是否能在常量池中定位到 一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>test</title>
-    <url>/2021/10/14/test/</url>
-    <content><![CDATA[<p>aaaaaaa</p>
 ]]></content>
   </entry>
   <entry>
