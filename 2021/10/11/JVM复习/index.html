@@ -33,8 +33,9 @@
 <meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/a.png">
 <meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/c.png">
 <meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/d.png">
+<meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/e.png">
 <meta property="article:published_time" content="2021-10-11T11:50:02.000Z">
-<meta property="article:modified_time" content="2021-10-17T08:31:30.095Z">
+<meta property="article:modified_time" content="2021-10-20T02:28:19.355Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
@@ -227,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-17 16:31:30" itemprop="dateModified" datetime="2021-10-17T16:31:30+08:00">2021-10-17</time>
+                <time title="修改时间：2021-10-20 10:28:19" itemprop="dateModified" datetime="2021-10-20T10:28:19+08:00">2021-10-20</time>
               </span>
 
           
@@ -243,14 +244,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -262,19 +263,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="Java和C-的一个重要区别"><a href="#Java和C-的一个重要区别" class="headerlink" title="Java和C++的一个重要区别"></a>Java和C++的一个重要区别</h5><p>&emsp;&emsp;Java和C++都是面向对象的，但是C++需要程序员手动开辟(malloc)和回收(free)内存，但是有了JVM内存管理的存在，所以Java不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
+        <h4 id="Java和C-的一个重要区别"><a href="#Java和C-的一个重要区别" class="headerlink" title="Java和C++的一个重要区别"></a>Java和C++的一个重要区别</h4><p>&emsp;&emsp;Java和C++都是面向对象的，但是C++需要程序员手动开辟(malloc)和回收(free)内存，但是有了JVM内存管理的存在，所以Java不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
 <span id="more"></span>
 
-<h5 id="为什么需要JVM？"><a href="#为什么需要JVM？" class="headerlink" title="为什么需要JVM？"></a>为什么需要JVM？</h5><p>&emsp;&emsp;Java语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过JVM执行。</p>
+<h4 id="为什么需要JVM？"><a href="#为什么需要JVM？" class="headerlink" title="为什么需要JVM？"></a>为什么需要JVM？</h4><p>&emsp;&emsp;Java语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过JVM执行。</p>
 <p>&emsp;&emsp;优点：减少了开发的难度，兼容不同操作系统。</p>
 <p>&emsp;&emsp;缺点：比直接在操作系统上执行的程序的运行速度要慢。在早期这确实是一个问题，但是由于硬件技术的发展，这些问题一直在优化。</p>
-<h5 id="JVM运行时数据区"><a href="#JVM运行时数据区" class="headerlink" title="JVM运行时数据区"></a>JVM运行时数据区</h5><p>&emsp;&emsp;JVM运行时数据区分为堆和方法区（<strong>线程共享</strong>）、虚拟机栈、本地方法栈、程序计数器（<strong>线程私有</strong>）。<img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/a.png" alt="JVM运行时数据区"></p>
+<h4 id="JVM运行时数据区"><a href="#JVM运行时数据区" class="headerlink" title="JVM运行时数据区"></a>JVM运行时数据区</h4><p>&emsp;&emsp;JVM运行时数据区分为堆和方法区（<strong>线程共享</strong>）、虚拟机栈、本地方法栈、程序计数器（<strong>线程私有</strong>）。<img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/a.png" alt="JVM运行时数据区"></p>
 <p>&emsp;&emsp;堆：内存中最大的一块，<strong>几乎</strong>所有的对象实例和数组都分配在堆中。<strong>注意是几乎，而不是全部。</strong>由于编译技术的进步，逃逸分析技术的发展，现在也存在<strong>栈上分配</strong>的情况。</p>
 <p>&emsp;&emsp;方法区：用于存储已被虚拟机加载的<strong>类型信息、常量、静态变量</strong>、即时编译器编译后的代码缓存等数据，<strong>运行时常量池也位于方法区中</strong>。</p>
 <p>&emsp;&emsp;虚拟机栈：虚拟机栈的生命周期与线程相同。每个方法被执行的时候，Java虚拟机都会同步创建一个栈帧用于存储<strong>局部变量表、操作数栈、动态连接、方法出口</strong>等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。当栈深度大于虚拟机栈所允许的深度，会抛出<strong>StackOverflowError</strong>异常。如果Java虚拟机栈容量可以动态扩展，当栈扩展时无法申请到足够的内存会抛出<strong>OutOfMemoryError</strong>异常。</p>
 <p>&emsp;&emsp;本地方法栈：与虚拟机栈的作用，虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈为虚拟机使用到的本地（Native）方法服务。</p>
 <p>&emsp;&emsp;程序计数器：可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时，代码的分支、循环、跳转、异常处理、线程恢复，都需要依赖这个计数器来完成。此内存区域是唯一一个在《Java虚拟机规范》中<strong>没有规定任何OutOfMemoryError</strong>情况的区域。</p>
-<h5 id="new一个对象的时候会发生什么？"><a href="#new一个对象的时候会发生什么？" class="headerlink" title="new一个对象的时候会发生什么？"></a>new一个对象的时候会发生什么？</h5><p>&emsp;&emsp;Java虚拟机遇到一条字节码new指令时，首先将去检查这个指令的参数是否能在常量池中定位到 一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，先要执行类加载过程。也就是加载-&gt;验证-&gt;准备-&gt;解析-&gt;初始化-&gt;使用-&gt;卸载。</p>
+<h4 id="new一个对象的时候会发生什么？"><a href="#new一个对象的时候会发生什么？" class="headerlink" title="new一个对象的时候会发生什么？"></a>new一个对象的时候会发生什么？</h4><p>&emsp;&emsp;Java虚拟机遇到一条字节码new指令时，首先将去检查这个指令的参数是否能在常量池中定位到 一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，先要执行类加载过程。也就是加载-&gt;验证-&gt;准备-&gt;解析-&gt;初始化-&gt;使用-&gt;卸载。</p>
 <p>&emsp;&emsp;类加载通过后，虚拟机需要为新对象<strong>分配内存</strong>。对象的内存大小在<strong>类加载完成后就可以确定</strong>。根据内存是否规整，分配内存有两种方式。内存规整时使用指针碰撞方式，不规整时使用空闲列表方式。</p>
 <p>​        &emsp;&emsp;指针碰撞：维护一个指针作为可用内存空间和不可用内存空间的分界点。内存分配就是将这个指针向着空闲内存的方向移动一段与对象内存大小相等的距离。Serial、ParNew收集器有空间压缩整理的能力（标记复制or整理算法），故这两款收集器使用指针碰撞方式来分配内存。</p>
 <p>&emsp;&emsp;&emsp;&emsp;空闲列表：维护一个列表来记录哪些内存块是可用的，在分配内存时，从列表中找到一块足够大的空间划分给对象实例。CMS收集器使用的是标记清除法，理论上内存是不规整的，所以使用空闲列表的方式来分配内存。</p>
@@ -284,7 +285,7 @@
 <li>内存分配的动作<strong>按照线程划分在不同的空间之中进行</strong>，即每个线程在Java堆中预先分配一小块内存，称为<strong>本地线程分配缓冲</strong>（Thread Local Allocation Buffer，TLAB），哪个线程要分配内存，就在哪个线程的本地缓冲区中分配，只有本地缓冲区用完了，分配新的缓存区时才需要同步锁定</li>
 </ul>
 <p>&emsp;&emsp;内存分配完了之后，虚拟机会为对象初始化零值。还要对对象进行必要的设置，例如类的元数据信息、对象的哈希码、对象的GC分代年龄等信息。</p>
-<h5 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h5><p>&emsp;&emsp;对象定位主要有两种方式：句柄访问和直接指针访问</p>
+<h4 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h4><p>&emsp;&emsp;对象定位主要有两种方式：句柄访问和直接指针访问</p>
 <ul>
 <li>句柄访问：从堆中划分一块内存作为句柄池，reference中存放着句柄地址，句柄中存放着对象实例数据与类型数据的具体地址信息。<ul>
 <li>特点：当对象被移动时，只会改变句柄池中的<strong>实例数据指针</strong>，<strong>reference本身并不需要被修改</strong>。<strong>多了一次间接访问的开销</strong><img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/c.png" alt="句柄访问对象"></li>
@@ -295,6 +296,70 @@
 </ul>
 </li>
 </ul>
+<hr>
+<h4 id="垃圾回收理论和垃圾回收器"><a href="#垃圾回收理论和垃圾回收器" class="headerlink" title="垃圾回收理论和垃圾回收器"></a>垃圾回收理论和垃圾回收器</h4><p>&emsp;&emsp;垃圾回收要考虑的三件事：哪些内存需要回收、何时回收、怎么回收</p>
+<ul>
+<li><strong>程序计数器、虚拟机栈、本地方法栈3个区域随线程而生，随线程而灭</strong>，栈中的栈帧随着方法的进入和退出而有条不紊地执行着出栈和入栈操作。每一个栈帧中分配多少内存基本上是在类结构确定下来时就已知的，因此<strong>这几个区域的内存分配和回收都具备确定性</strong>，在这几个区域内就不需要过多考虑如何回收的问题，<strong>当方法结束或者线程结束时，内存自然就跟随着回收了。</strong></li>
+<li>而<strong>Java堆和方法区</strong>这两个区域则有着很显著的不确定性：只有处于运行期间，我们才能知道程序究竟会创建哪些对象，创建多少个对象，<strong>这部分内存的分配和回收是动态的。</strong></li>
+</ul>
+<h5 id="对象已死？"><a href="#对象已死？" class="headerlink" title="对象已死？"></a>对象已死？</h5><p>&emsp;&emsp;在垃圾回收之前，最先要确定的就是哪些对象还存活，哪些对象已经死去（需要回收）。判断对象是否存活主要有两种算法：引用计数法和可达性分析。</p>
+<ul>
+<li>引用计数法：在对象中添加一个引用计数器，每当有一个地方引用它时，计数器值就加一。当引用失效时，计数器值就减一；<ul>
+<li>Python在对象回收时就使用了引用计数法。</li>
+<li>特点：原理简单，判定效率高。但是难以解决对象之间相互引用的问题（此时需要配合大量额外处理才能保证正确地工作）。</li>
+</ul>
+</li>
+<li>可达性分析：通过GC Roots根对象作为起始节点集，若GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的<img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/e.png" alt="可达性分析"></li>
+</ul>
+<h5 id="可作为GC-Roots的对象"><a href="#可作为GC-Roots的对象" class="headerlink" title="可作为GC Roots的对象"></a>可作为GC Roots的对象</h5><ul>
+<li>在<strong>虚拟机栈（栈帧中的本地变量表）中引用的对象</strong>，譬如各个线程被调用的方法堆栈中使用到的 参数、局部变量、临时变量等。 </li>
+<li>在方法区中<strong>类静态属性引用的对象</strong>，譬如Java类的引用类型静态变量。</li>
+<li>在方法区中<strong>常量引用的对象</strong>，譬如字符串常量池（String Table）里的引用。</li>
+</ul>
+<h5 id="再谈引用"><a href="#再谈引用" class="headerlink" title="再谈引用"></a>再谈引用</h5><p>&emsp;&emsp;在JDK1.2之前，Java引用就是传统定义，一个对象在这种定义下只有“被引用”或者“未被引用”两种状态未免有点过于狭隘。如果我们希望描述一类对象：当<strong>内存空间还足够时，能保留在内存之中</strong>，如果内存空间在进行垃圾收集后<strong>仍然非常紧张，那就可以抛弃这些对象</strong>。</p>
+<p>&emsp;&emsp;在JDK 1.2版之后，Java对引用的概念进行了扩充，将引用分为强引用、软引用、弱引用和虚引用</p>
+<ul>
+<li>强引用：类似 <code>Object obj=new Object()</code> 这种引用关系。无论任何情况下，只要强引用关系还存在，垃圾收集器就永远不会回 收掉被引用的对象</li>
+<li>软引用：<strong>还有用，但非必须的对象</strong>。只被软引用关联着的对象，在系统将要发生内存溢出异常前，会把这些对象列进回收范围之中进行第二次回收，<strong>如果这次回收还没有足够的内存， 才会抛出内存溢出异常</strong></li>
+<li>弱引用：非必须对象，但是它的强度比软引用更弱一些，<strong>无论当前内存是否足够，都会回收掉只被弱引用关联的对象</strong></li>
+<li>虚引用：为一个对象设置虚引用关联的<strong>唯一目的只是为了能在这个对象被收集器回收时收到一个系统通知</strong></li>
+</ul>
+<h5 id="finalize-方法？"><a href="#finalize-方法？" class="headerlink" title="finalize()方法？"></a>finalize()方法？</h5><p>&emsp;&emsp;要宣告一个对象的死亡至少要经历两次标记过程，如果对象在进行可达性分析后发现没有与GC Roots相连接的引用链，那它将会被第一次标记，随后进行一次筛选，筛选的条件是此对象是否有必要执行finalize()方法。如果有必要执行finalize()方法，那么该对象将会被放置在一个名为F-Queue的队列之中。稍后虚拟机会创建一个线程去筛选F-Queue中的对象。</p>
+<p>&emsp;&emsp;finalize()方法只会执行1次——只要重新与引用链上的任何一个对象建立关联即可，譬如把自己 （this关键字）赋值给某个类变量或者对象的成员变量。<strong>在第二次标记时它将被移出“即将回收”的集合；如果对象这时候还没有逃脱，那基本上它就真的要被回收了。</strong></p>
+<h5 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h5><p>&emsp;&emsp;<font color="#FF0000">  方法区实际上是有垃圾回收的。 </font>方法区的垃圾收集主要回收两部分内容：<strong>废弃的常量和不再使用的类型。</strong></p>
+<ul>
+<li>废弃常量：假如 “ABC” 在常量池中，但是现在没有任何字符串对象引用常量池中的 “ABC” 常量，如果在这时发生内存回收，这个 “ABC” 常量就将会被系统清理出常量池。<strong>常量池中其他类（接 口）、方法、字段的符号引用也与此类似。</strong></li>
+</ul>
+<h5 id="判定一个类型是否属于“不再被使用的类”的条件"><a href="#判定一个类型是否属于“不再被使用的类”的条件" class="headerlink" title="判定一个类型是否属于“不再被使用的类”的条件"></a>判定一个类型是否属于“不再被使用的类”的条件</h5><p>&emsp;&emsp;判定一个类是否属于==不再被使用的类==需要同时满足三个条件 <font color="red">asdsad</font></p>
+<ul>
+<li>该类所有的实例都已经被回收，也就是Java堆中不存在该类及其任何派生子类的实例。 </li>
+<li>加载该类的类加载器已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如 OSGi、JSP的重加载等，否则通常是很难达成的。 </li>
+<li>该类对应的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法</li>
+</ul>
+<h5 id="垃圾回收的几个假说-垃圾回收的前提-："><a href="#垃圾回收的几个假说-垃圾回收的前提-：" class="headerlink" title="垃圾回收的几个假说(垃圾回收的前提)："></a>垃圾回收的几个假说(垃圾回收的前提)：</h5><ul>
+<li><p>弱分代假说：绝大多数对象都是==朝生夕灭==的</p>
+</li>
+<li><p>强分代假说：熬过越多次垃圾收集过程的对象就==越难以消亡==</p>
+</li>
+<li><p>跨代引用假说：跨代引用相对于同代引用来说仅占极少数。</p>
+<p>基于前两个假说，垃圾收集器有了一下原则：</p>
+<ul>
+<li>收集器应该将Java堆划分出不同的区域，然后将回收对象依据其年龄（年龄即对象熬过垃圾收集过程的次数）分配到不同的区域之中存储，也就是<strong>新生代和老年代</strong></li>
+</ul>
+<p>基于第三个假说，我们就<strong>不应再为了少量的跨代引用去扫描整个老年代</strong>，也不必浪费空间专门记录每一个对象是否存在及存在哪些跨代引用，只需在新生代上建立一个全局的数据结构（该结构被称为<strong>“记忆集”</strong>），这个结构把老年代划分成若干小块，标识出老年代的哪一块内存会存在跨代引用。此后当发生Minor GC时，只有<strong>包含了跨代引用的小块内存里的对象才会被加入到GC Roots进行扫描</strong>。虽然这种方法需要在对象改变引用关系（如将自己或者某个属性赋值）时维护记录数据的正确性，会增加一些运行时的开销，但<strong>比起收集时扫描整个老年代来说仍然是划算的</strong>。</p>
+</li>
+</ul>
+<h5 id="标记-清除"><a href="#标记-清除" class="headerlink" title="标记-清除"></a>标记-清除</h5><p>&emsp;&emsp;首先标记出所有需要回收的对象，在标记完成后，统一回收掉所有被标记的对象。</p>
+<p>&emsp;&emsp;特点：</p>
+<ul>
+<li>执行效率不稳定（如果有大量对象需要回收的话，需要进行大量的标记和清除的动作）</li>
+<li>会导致内存空间的碎片化问题，导致分配大对象时由于<strong>无法找到足够大的连续内存空间而提前触发另一次垃圾回收</strong>。</li>
+</ul>
+<h5 id="标记-复制"><a href="#标记-复制" class="headerlink" title="标记-复制"></a>标记-复制</h5><p>&emsp;&emsp;半区复制：将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
+<p>&emsp;&emsp;特点：1.内存规整，不会产生空间碎片问题，但是如果多数对象存活，会产生大量的内存复制间的开销。2.内存利用率低，可用内存缩小为了原来的一半。</p>
+<p>&emsp;&emsp;==改进==：根据新生代对象朝生夕死的特点，把新生代分为Eden区和S1区、S2区。默认比例是8：1：1</p>
+<h5 id="标记-整理"><a href="#标记-整理" class="headerlink" title="标记-整理"></a>标记-整理</h5><p>&emsp;&emsp;标记过程与标记清除一样，然后让所有存活对象==都向内存空间一端移动==，再直接清理掉边界以外的内存。</p>
+<p>&emsp;&emsp;标记整理和标记清除的区别在于，标记整理是==移动式回收算法==，标记清理是非移动式算法。==对象移动操作必须全程暂停用户应用程序才能进行，也就是STW==</p>
 
     </div>
 
@@ -378,7 +443,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%E5%92%8CC-%E7%9A%84%E4%B8%80%E4%B8%AA%E9%87%8D%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">Java和C++的一个重要区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81JVM%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要JVM？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">JVM运行时数据区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#new%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">new一个对象的时候会发生什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%9A%E4%BD%8D"><span class="nav-number">5.</span> <span class="nav-text">对象的访问定位</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E5%92%8CC-%E7%9A%84%E4%B8%80%E4%B8%AA%E9%87%8D%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">Java和C++的一个重要区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81JVM%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要JVM？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">JVM运行时数据区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">new一个对象的时候会发生什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%9A%E4%BD%8D"><span class="nav-number">5.</span> <span class="nav-text">对象的访问定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%90%86%E8%AE%BA%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收理论和垃圾回收器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%B7%B2%E6%AD%BB%EF%BC%9F"><span class="nav-number">6.1.</span> <span class="nav-text">对象已死？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BD%9C%E4%B8%BAGC-Roots%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">6.2.</span> <span class="nav-text">可作为GC Roots的对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%8D%E8%B0%88%E5%BC%95%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">再谈引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#finalize-%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-number">6.4.</span> <span class="nav-text">finalize()方法？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9E%E6%94%B6%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-number">6.5.</span> <span class="nav-text">回收方法区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E5%AE%9A%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%9E%8B%E6%98%AF%E5%90%A6%E5%B1%9E%E4%BA%8E%E2%80%9C%E4%B8%8D%E5%86%8D%E8%A2%AB%E4%BD%BF%E7%94%A8%E7%9A%84%E7%B1%BB%E2%80%9D%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-number">6.6.</span> <span class="nav-text">判定一个类型是否属于“不再被使用的类”的条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%87%A0%E4%B8%AA%E5%81%87%E8%AF%B4-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%89%8D%E6%8F%90-%EF%BC%9A"><span class="nav-number">6.7.</span> <span class="nav-text">垃圾回收的几个假说(垃圾回收的前提)：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4"><span class="nav-number">6.8.</span> <span class="nav-text">标记-清除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E5%A4%8D%E5%88%B6"><span class="nav-number">6.9.</span> <span class="nav-text">标记-复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E6%95%B4%E7%90%86"><span class="nav-number">6.10.</span> <span class="nav-text">标记-整理</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -456,12 +521,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">5k</span>
+    <span title="站点总字数">8k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4 分钟</span>
+    <span title="站点阅读时长">7 分钟</span>
 </div>
 
 
