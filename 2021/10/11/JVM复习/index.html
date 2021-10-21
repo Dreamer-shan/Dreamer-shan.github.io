@@ -34,8 +34,12 @@
 <meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/c.png">
 <meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/d.png">
 <meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/e.png">
+<meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/f.jpg">
+<meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/g.png">
+<meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/h.png">
+<meta property="og:image" content="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/i.png">
 <meta property="article:published_time" content="2021-10-11T11:50:02.000Z">
-<meta property="article:modified_time" content="2021-10-20T02:28:19.355Z">
+<meta property="article:modified_time" content="2021-10-21T07:52:34.530Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
@@ -228,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-20 10:28:19" itemprop="dateModified" datetime="2021-10-20T10:28:19+08:00">2021-10-20</time>
+                <time title="修改时间：2021-10-21 15:52:34" itemprop="dateModified" datetime="2021-10-21T15:52:34+08:00">2021-10-21</time>
               </span>
 
           
@@ -244,14 +248,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5k</span>
+              <span>8.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -324,22 +328,22 @@
 <li>弱引用：非必须对象，但是它的强度比软引用更弱一些，<strong>无论当前内存是否足够，都会回收掉只被弱引用关联的对象</strong></li>
 <li>虚引用：为一个对象设置虚引用关联的<strong>唯一目的只是为了能在这个对象被收集器回收时收到一个系统通知</strong></li>
 </ul>
-<h5 id="finalize-方法？"><a href="#finalize-方法？" class="headerlink" title="finalize()方法？"></a>finalize()方法？</h5><p>&emsp;&emsp;要宣告一个对象的死亡至少要经历两次标记过程，如果对象在进行可达性分析后发现没有与GC Roots相连接的引用链，那它将会被第一次标记，随后进行一次筛选，筛选的条件是此对象是否有必要执行finalize()方法。如果有必要执行finalize()方法，那么该对象将会被放置在一个名为F-Queue的队列之中。稍后虚拟机会创建一个线程去筛选F-Queue中的对象。</p>
+<h5 id="finalize-方法"><a href="#finalize-方法" class="headerlink" title="finalize()方法"></a>finalize()方法</h5><p>&emsp;&emsp;要宣告一个对象的死亡至少要经历两次标记过程，如果对象在进行可达性分析后发现没有与GC Roots相连接的引用链，那它将会被第一次标记，随后进行一次筛选，筛选的条件是此对象是否有必要执行finalize()方法。如果有必要执行finalize()方法，那么该对象将会被放置在一个名为F-Queue的队列之中。稍后虚拟机会创建一个线程去筛选F-Queue中的对象。</p>
 <p>&emsp;&emsp;finalize()方法只会执行1次——只要重新与引用链上的任何一个对象建立关联即可，譬如把自己 （this关键字）赋值给某个类变量或者对象的成员变量。<strong>在第二次标记时它将被移出“即将回收”的集合；如果对象这时候还没有逃脱，那基本上它就真的要被回收了。</strong></p>
 <h5 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h5><p>&emsp;&emsp;<font color="#FF0000">  方法区实际上是有垃圾回收的。 </font>方法区的垃圾收集主要回收两部分内容：<strong>废弃的常量和不再使用的类型。</strong></p>
 <ul>
 <li>废弃常量：假如 “ABC” 在常量池中，但是现在没有任何字符串对象引用常量池中的 “ABC” 常量，如果在这时发生内存回收，这个 “ABC” 常量就将会被系统清理出常量池。<strong>常量池中其他类（接 口）、方法、字段的符号引用也与此类似。</strong></li>
 </ul>
-<h5 id="判定一个类型是否属于“不再被使用的类”的条件"><a href="#判定一个类型是否属于“不再被使用的类”的条件" class="headerlink" title="判定一个类型是否属于“不再被使用的类”的条件"></a>判定一个类型是否属于“不再被使用的类”的条件</h5><p>&emsp;&emsp;判定一个类是否属于==不再被使用的类==需要同时满足三个条件 <font color="red">asdsad</font></p>
+<h5 id="判定一个类型是否属于“不再被使用的类”的条件"><a href="#判定一个类型是否属于“不再被使用的类”的条件" class="headerlink" title="判定一个类型是否属于“不再被使用的类”的条件"></a>判定一个类型是否属于“不再被使用的类”的条件</h5><p>&emsp;&emsp;判定一个类是否属于 <font color="red">不再被使用的类</font>需要同时满足三个条件</p>
 <ul>
 <li>该类所有的实例都已经被回收，也就是Java堆中不存在该类及其任何派生子类的实例。 </li>
 <li>加载该类的类加载器已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如 OSGi、JSP的重加载等，否则通常是很难达成的。 </li>
 <li>该类对应的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法</li>
 </ul>
 <h5 id="垃圾回收的几个假说-垃圾回收的前提-："><a href="#垃圾回收的几个假说-垃圾回收的前提-：" class="headerlink" title="垃圾回收的几个假说(垃圾回收的前提)："></a>垃圾回收的几个假说(垃圾回收的前提)：</h5><ul>
-<li><p>弱分代假说：绝大多数对象都是==朝生夕灭==的</p>
+<li><p>弱分代假说：绝大多数对象都是<strong>朝生夕灭</strong>的</p>
 </li>
-<li><p>强分代假说：熬过越多次垃圾收集过程的对象就==越难以消亡==</p>
+<li><p>强分代假说：熬过越多次垃圾收集过程的对象就<strong>越难以消亡</strong></p>
 </li>
 <li><p>跨代引用假说：跨代引用相对于同代引用来说仅占极少数。</p>
 <p>基于前两个假说，垃圾收集器有了一下原则：</p>
@@ -357,9 +361,99 @@
 </ul>
 <h5 id="标记-复制"><a href="#标记-复制" class="headerlink" title="标记-复制"></a>标记-复制</h5><p>&emsp;&emsp;半区复制：将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
 <p>&emsp;&emsp;特点：1.内存规整，不会产生空间碎片问题，但是如果多数对象存活，会产生大量的内存复制间的开销。2.内存利用率低，可用内存缩小为了原来的一半。</p>
-<p>&emsp;&emsp;==改进==：根据新生代对象朝生夕死的特点，把新生代分为Eden区和S1区、S2区。默认比例是8：1：1</p>
-<h5 id="标记-整理"><a href="#标记-整理" class="headerlink" title="标记-整理"></a>标记-整理</h5><p>&emsp;&emsp;标记过程与标记清除一样，然后让所有存活对象==都向内存空间一端移动==，再直接清理掉边界以外的内存。</p>
-<p>&emsp;&emsp;标记整理和标记清除的区别在于，标记整理是==移动式回收算法==，标记清理是非移动式算法。==对象移动操作必须全程暂停用户应用程序才能进行，也就是STW==</p>
+<p>&emsp;&emsp;改进：根据新生代对象朝生夕死的特点，把新生代分为Eden区和S1区、S2区。默认比例是8：1：1</p>
+<h5 id="标记-整理"><a href="#标记-整理" class="headerlink" title="标记-整理"></a>标记-整理</h5><p>&emsp;&emsp;标记过程与标记清除一样，然后让所有存活对象<strong>都向内存空间一端移动</strong>，再直接清理掉边界以外的内存。</p>
+<p>&emsp;&emsp;标记整理和标记清除的区别在于，标记整理是<strong>移动式回收算法</strong>，标记清理是非移动式算法。对象移动操作必须<font color="red">全程暂停用户应用程序</font>才能进行，也就是STW</p>
+<h5 id="并发的可达性分析"><a href="#并发的可达性分析" class="headerlink" title="并发的可达性分析"></a>并发的可达性分析</h5><p>&emsp;&emsp;两种后果：收集器在对象图上标记颜色时，用户线程可能在修改引用关系，导致错误的GC。<strong>把原本消亡的对象标记为存活（问题不大，下次收集清理掉就好）或者把存活的对象标记为已消亡（非常致命）</strong></p>
+<p>&emsp;&emsp;解决方案：增量更新和内存快照</p>
+<ul>
+<li><p>增量更新：当黑色对象插入新的指向白色对象的引用关系时，就<strong>将这个新插入的引用记录下来</strong>，等并发扫描结束之后，再<strong>将这些记录过的引用关系中的黑色对象为根，重新扫描一次</strong>。</p>
+</li>
+<li><p>内存快照：无论引用关系删除与否，都会按照刚刚开始扫描那一刻的对象图快照来进行搜索。</p>
+<p>CMS是基于增量更新来做<strong>并发标记</strong>的，G1、Shenandoah则是用原始快照来实现。</p>
+</li>
+</ul>
+<h5 id="经典垃圾收集器"><a href="#经典垃圾收集器" class="headerlink" title="经典垃圾收集器"></a>经典垃圾收集器</h5><h6 id="emsp-CMS（标记-清除算法）"><a href="#emsp-CMS（标记-清除算法）" class="headerlink" title="&emsp;CMS（标记-清除算法）"></a>&emsp;CMS（标记-清除算法）</h6><p>&emsp;&emsp;老年代<strong>并行收集器</strong>，以获取最短回收停顿时间为目标的收集器，具有<strong>高并发、低停顿</strong>的特点，追求最短GC回收停顿时间<img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/f.jpg" alt="img"></p>
+<p>&emsp;&emsp;    回收步骤:</p>
+<ul>
+<li><p>初始标记: 只是标记一下GC Roots能直接关联到的对象，速度很快，<strong>需要STW</strong></p>
+</li>
+<li><p>并发标记：进行GC Roots Tracing的过程，<strong>在整个过程中耗时最长</strong>。</p>
+</li>
+<li><p>重新标记：为了修正并发标记期间因用户程序继续运作而导致标记<strong>产生变动的那一部分对象的标记记录</strong>，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。此阶段<strong>也需要STW</strong></p>
+</li>
+<li><p>并发清除（CMS concurrent sweep）</p>
+</li>
+<li><p>优点：并发收集、低停顿</p>
+</li>
+<li><p>缺点：<strong>无法处理浮动垃圾、标记清除算法带来的空间碎片</strong></p>
+<ul>
+<li><strong>标记-清除算法导致的空间碎片</strong>： CMS收集结束时会有大量空间碎片产生。空间碎片过多时，将会给大对象分配带来很大麻烦，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象。</li>
+<li><strong>浮动垃圾：</strong>由于CMS并发清理阶段用户线程还在运行着，伴随程序运行自然就还会有新的垃圾不断产生。这一部分垃圾出现在标记过程之后，CMS无法再当次收集中处理掉它们，只好留待下一次GC时再清理掉。</li>
+<li>解决方案：<strong>标记整理算法，也就是配合ParNew收集器</strong><ul>
+<li>为了解决空间碎片问题，CMS收集器提供了一个-XX：+UseCMS-CompactAtFullCollection开关参数（默认是开启的，此参数从JDK 9开始废弃），用于在CMS收集器不得不进行Full GC时开启内存碎片的合并整理过程，由于这个内存整理必须移动存活对象，（在Shenandoah和ZGC出现前）是无法并发的。这样空间碎片问题是解决了，但停顿时间又会变长，因此虚拟机设计者们还提供了另外一个参数-XX：CMSFullGCsBeforeCompaction（此参数从JDK 9开始废弃），<strong>这个参数的作用是要求CMS收集器在执行过若干次（数量由参数值决定）不整理空间的Full GC之后，下一次进入Full GC前会先进行碎片整理（默认值为0，表示每次进入Full GC时都进行碎片整理）。</strong></li>
+</ul>
+</li>
+</ul>
+<h6 id="G1收集器（标记-整理，不会产生内存空间碎片问题）"><a href="#G1收集器（标记-整理，不会产生内存空间碎片问题）" class="headerlink" title="G1收集器（标记-整理，不会产生内存空间碎片问题）"></a>G1收集器（标记-整理，不会产生内存空间碎片问题）</h6><p>&emsp;Java堆并行收集器，G1收集器不同于之前的收集器的一个重要特点是：G1<strong>回收的范围是整个Java堆</strong>(包括新生代，老年代)，而其他收集器仅限于新生代或老年代。</p>
+<p>&emsp;回收步骤跟CMS大概相似，注意，<strong>最终标记阶段处理的是原始快照记录。</strong></p>
+<ul>
+<li>特点：<ul>
+<li>优点：G1从<strong>整体来看是基于“标记-整理”算法</strong>实现的收集器，但从<strong>局部</strong>（两个Region之间）上看又是<strong>基于“标记-复制”算法</strong>实现，这两种算法都意味着G1运作期间<strong>不会产生内存空间碎片</strong></li>
+<li>缺点：巨型区域（Humongous Region）用来专门存放巨型对象。如果一个 H 区装不下一个巨型对象，那么 G1 会寻找连续的 H 分区来存储。<strong>为了能找到连续的 H 区，有时候不得不启动 Full GC</strong>。 虽然G1和CMS都使用卡表来处理跨代指针，<strong>但G1的卡表实现更为复杂</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/g.png" alt="image-20211021100940766"></p>
+</li>
+</ul>
+<h6 id="3-6-2-ZGC收集器"><a href="#3-6-2-ZGC收集器" class="headerlink" title="3.6.2 ZGC收集器"></a>3.6.2 ZGC收集器</h6><ul>
+<li><p>ZGC也采用基于Region的堆内存布局，但与它们不同的是，ZGC的Region可以具有大、中、小三类容量</p>
+</li>
+<li><p>核心：并发整理算法</p>
+<ul>
+<li><p>染色指针技术，一种直接将少量额外的信息存储在指针上的技术</p>
+</li>
+<li><p>从前，如果我们要在对象上存储一些额外的、只供收集器或者虚拟机本身使用的数据，通常会在对象头中增加额外的存储字段，如对象的哈希码、分代年龄、锁记录等就是这样存储的</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="内存分配策略"><a href="#内存分配策略" class="headerlink" title="内存分配策略"></a>内存分配策略</h5><ul>
+<li><p>虚拟机对于内存的分配还是会遵循以下几种「普世」规则：</p>
+<ul>
+<li><p>对象优先在 Eden 区分配，当Eden区没有足够空间进行分配时，虚拟机将发起 一次Minor GC</p>
+</li>
+<li><p>大对象直接进入老年代：复制对象时，大对象就意味着高额的内存复制开销。HotSpot虚拟机提供了-XX：PretenureSizeThreshold 参数，指定大于该设置值的对象直接在老年代分配，这样做的目的就是<strong>避免在Eden区及两个Survivor区之间来回复制，产生大量的内存复制操作。</strong></p>
+</li>
+<li><p>长期存活对象将进入老年代：CMS默认值位15，G1为6</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="动态对象年龄判定"><a href="#动态对象年龄判定" class="headerlink" title="动态对象年龄判定"></a>动态对象年龄判定</h5><p>&emsp;并不要求对象的年龄必须得到某个阈值才能晋升老年代，如果在Survivor空间中<strong>相同年龄所有对象大小的总和大于 Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代</strong>，无须等到-XX： MaxTenuringThreshold中要求的年龄。</p>
+<h5 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h5><ul>
+<li>如果另外一块Survivor空间<strong>没有足够空间存放上一次新生代收集下来的存活对象</strong>，这些对象便将通过分配担保机制直接进入老年代</li>
+<li>在发生Minor GC之前，虚拟机必须先<strong>检查老年代最大可用的连续空间是否大于新生代所有对象总空间</strong>，如果成立，那这一次Minor GC可以确保是安全的。如果不成立，虚拟机会先查看HandlePromotionFailure参数的设置值<strong>是否允许担保失败</strong>（Handle Promotion Failure）；如果允许，那会继续检查<strong>老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试进行一次Minor GC，尽管这次Minor GC是有风险的</strong>；如果小于，或者-XX：HandlePromotionFailure设置<strong>不允许冒险，那这时就要改为进行一次Full GC。</strong></li>
+<li>“冒险”是冒了什么风险：前面提到过，新生代使用复制收集算法，但为了内存利用率，只使用其中一个Survivor空间来作为轮换备份，因此当出现大量对象在Minor GC后仍然存活的情况——<strong>最极端的情况就是内存回收后新生代中所有对象都存活</strong>，需要老年代进行分配担保，把Survivor无法容纳的对象直接送入老年代，<strong>但一共有多少对象会在这次回收中活下来在实际完成内存回收之前是无法明确知道的，所以只能取之前每一次回收晋升到老年代对象容量的平均大小作为经验值。如果赌赢了，就只需要Minor GC，赌输了还是需要Full GC，这样停顿时间就很长了</strong>。</li>
+</ul>
+<h5 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h5><p>&emsp;类的生命周期：加载、验证、准备、解析、初始化、使用和卸载<img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/h.png" alt="image-20211021110722204"></p>
+<h6 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h6><ul>
+<li>加载：根据查找路径找到相应的 class 文件然后导入；</li>
+<li>验证：检查加载的 class 文件的正确性(文件格式验证、元数据验证、字节码验证)</li>
+<li>准备：正式为<strong>类中定义的变量（即静态变量）</strong>分配内存并<strong>设置类变量初始值</strong>。</li>
+<li>解析：虚拟机将常量池中的符号引用替换成直接引用的过程。符号引用就理解为一个标示，而在直接引用直接指向内存中的地址；</li>
+<li>初始化：对静态变量和静态代码块执行初始化工作</li>
+</ul>
+<h6 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h6><p>&emsp;如果一个类加载器收到了类加载的请求，它首先<strong>不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成</strong>，每一个层次的类加载器都是如此，因此所有的<strong>加载请求最终都应该传送到最顶层的启动类加载器中</strong>，只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需的类）时，子加载器才会尝试自己去完成加载。</p>
+<p>&emsp;好处：是Java中的类随着它的类加载器一起具备了一种带有优先级的层次关系。</p>
+<p><img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/i.png" alt="image-20211021111851986"></p>
+<h5 id="类加载的时机（什么时候会对类进行初始化）"><a href="#类加载的时机（什么时候会对类进行初始化）" class="headerlink" title="类加载的时机（什么时候会对类进行初始化）"></a>类加载的时机（什么时候会对类进行初始化）</h5><ul>
+<li>遇到new关键字</li>
+<li>读取类中的<strong>静态字段</strong>或者调用类中的<strong>静态方法</strong>的时候</li>
+<li>初始化类的时候如果发现其父类还没初始化，那么<strong>先触发其父类的初始化</strong></li>
+<li>虚拟机启动时，用户需要制定一个执行的主类 也就是包含main方法的类，虚拟机会先初始化这个类</li>
+</ul>
 
     </div>
 
@@ -443,7 +537,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E5%92%8CC-%E7%9A%84%E4%B8%80%E4%B8%AA%E9%87%8D%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">Java和C++的一个重要区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81JVM%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要JVM？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">JVM运行时数据区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">new一个对象的时候会发生什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%9A%E4%BD%8D"><span class="nav-number">5.</span> <span class="nav-text">对象的访问定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%90%86%E8%AE%BA%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收理论和垃圾回收器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%B7%B2%E6%AD%BB%EF%BC%9F"><span class="nav-number">6.1.</span> <span class="nav-text">对象已死？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BD%9C%E4%B8%BAGC-Roots%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">6.2.</span> <span class="nav-text">可作为GC Roots的对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%8D%E8%B0%88%E5%BC%95%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">再谈引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#finalize-%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-number">6.4.</span> <span class="nav-text">finalize()方法？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9E%E6%94%B6%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-number">6.5.</span> <span class="nav-text">回收方法区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E5%AE%9A%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%9E%8B%E6%98%AF%E5%90%A6%E5%B1%9E%E4%BA%8E%E2%80%9C%E4%B8%8D%E5%86%8D%E8%A2%AB%E4%BD%BF%E7%94%A8%E7%9A%84%E7%B1%BB%E2%80%9D%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-number">6.6.</span> <span class="nav-text">判定一个类型是否属于“不再被使用的类”的条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%87%A0%E4%B8%AA%E5%81%87%E8%AF%B4-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%89%8D%E6%8F%90-%EF%BC%9A"><span class="nav-number">6.7.</span> <span class="nav-text">垃圾回收的几个假说(垃圾回收的前提)：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4"><span class="nav-number">6.8.</span> <span class="nav-text">标记-清除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E5%A4%8D%E5%88%B6"><span class="nav-number">6.9.</span> <span class="nav-text">标记-复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E6%95%B4%E7%90%86"><span class="nav-number">6.10.</span> <span class="nav-text">标记-整理</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E5%92%8CC-%E7%9A%84%E4%B8%80%E4%B8%AA%E9%87%8D%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">Java和C++的一个重要区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81JVM%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要JVM？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">JVM运行时数据区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">new一个对象的时候会发生什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%9A%E4%BD%8D"><span class="nav-number">5.</span> <span class="nav-text">对象的访问定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%90%86%E8%AE%BA%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收理论和垃圾回收器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%B7%B2%E6%AD%BB%EF%BC%9F"><span class="nav-number">6.1.</span> <span class="nav-text">对象已死？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BD%9C%E4%B8%BAGC-Roots%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">6.2.</span> <span class="nav-text">可作为GC Roots的对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%8D%E8%B0%88%E5%BC%95%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">再谈引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#finalize-%E6%96%B9%E6%B3%95"><span class="nav-number">6.4.</span> <span class="nav-text">finalize()方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9E%E6%94%B6%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-number">6.5.</span> <span class="nav-text">回收方法区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E5%AE%9A%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%9E%8B%E6%98%AF%E5%90%A6%E5%B1%9E%E4%BA%8E%E2%80%9C%E4%B8%8D%E5%86%8D%E8%A2%AB%E4%BD%BF%E7%94%A8%E7%9A%84%E7%B1%BB%E2%80%9D%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-number">6.6.</span> <span class="nav-text">判定一个类型是否属于“不再被使用的类”的条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%87%A0%E4%B8%AA%E5%81%87%E8%AF%B4-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%89%8D%E6%8F%90-%EF%BC%9A"><span class="nav-number">6.7.</span> <span class="nav-text">垃圾回收的几个假说(垃圾回收的前提)：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4"><span class="nav-number">6.8.</span> <span class="nav-text">标记-清除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E5%A4%8D%E5%88%B6"><span class="nav-number">6.9.</span> <span class="nav-text">标记-复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0-%E6%95%B4%E7%90%86"><span class="nav-number">6.10.</span> <span class="nav-text">标记-整理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">6.11.</span> <span class="nav-text">并发的可达性分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">6.12.</span> <span class="nav-text">经典垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#emsp-CMS%EF%BC%88%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95%EF%BC%89"><span class="nav-number">6.12.1.</span> <span class="nav-text"> CMS（标记-清除算法）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#G1%E6%94%B6%E9%9B%86%E5%99%A8%EF%BC%88%E6%A0%87%E8%AE%B0-%E6%95%B4%E7%90%86%EF%BC%8C%E4%B8%8D%E4%BC%9A%E4%BA%A7%E7%94%9F%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E7%A2%8E%E7%89%87%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">6.12.2.</span> <span class="nav-text">G1收集器（标记-整理，不会产生内存空间碎片问题）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-6-2-ZGC%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">6.12.3.</span> <span class="nav-text">3.6.2 ZGC收集器</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="nav-number">6.13.</span> <span class="nav-text">内存分配策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%AF%B9%E8%B1%A1%E5%B9%B4%E9%BE%84%E5%88%A4%E5%AE%9A"><span class="nav-number">6.14.</span> <span class="nav-text">动态对象年龄判定</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E6%8B%85%E4%BF%9D"><span class="nav-number">6.15.</span> <span class="nav-text">空间分配担保</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="nav-number">6.16.</span> <span class="nav-text">类加载机制</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="nav-number">6.16.1.</span> <span class="nav-text">类加载过程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.16.2.</span> <span class="nav-text">双亲委派模型</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E7%9A%84%E6%97%B6%E6%9C%BA%EF%BC%88%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E5%AF%B9%E7%B1%BB%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%89"><span class="nav-number">6.17.</span> <span class="nav-text">类加载的时机（什么时候会对类进行初始化）</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -459,7 +553,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -521,12 +615,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">8k</span>
+    <span title="站点总字数">16k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7 分钟</span>
+    <span title="站点阅读时长">14 分钟</span>
 </div>
 
 

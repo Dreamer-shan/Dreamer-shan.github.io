@@ -141,22 +141,22 @@
 <li>弱引用：非必须对象，但是它的强度比软引用更弱一些，<strong>无论当前内存是否足够，都会回收掉只被弱引用关联的对象</strong></li>
 <li>虚引用：为一个对象设置虚引用关联的<strong>唯一目的只是为了能在这个对象被收集器回收时收到一个系统通知</strong></li>
 </ul>
-<h5 id="finalize-方法？"><a href="#finalize-方法？" class="headerlink" title="finalize()方法？"></a>finalize()方法？</h5><p>&emsp;&emsp;要宣告一个对象的死亡至少要经历两次标记过程，如果对象在进行可达性分析后发现没有与GC Roots相连接的引用链，那它将会被第一次标记，随后进行一次筛选，筛选的条件是此对象是否有必要执行finalize()方法。如果有必要执行finalize()方法，那么该对象将会被放置在一个名为F-Queue的队列之中。稍后虚拟机会创建一个线程去筛选F-Queue中的对象。</p>
+<h5 id="finalize-方法"><a href="#finalize-方法" class="headerlink" title="finalize()方法"></a>finalize()方法</h5><p>&emsp;&emsp;要宣告一个对象的死亡至少要经历两次标记过程，如果对象在进行可达性分析后发现没有与GC Roots相连接的引用链，那它将会被第一次标记，随后进行一次筛选，筛选的条件是此对象是否有必要执行finalize()方法。如果有必要执行finalize()方法，那么该对象将会被放置在一个名为F-Queue的队列之中。稍后虚拟机会创建一个线程去筛选F-Queue中的对象。</p>
 <p>&emsp;&emsp;finalize()方法只会执行1次——只要重新与引用链上的任何一个对象建立关联即可，譬如把自己 （this关键字）赋值给某个类变量或者对象的成员变量。<strong>在第二次标记时它将被移出“即将回收”的集合；如果对象这时候还没有逃脱，那基本上它就真的要被回收了。</strong></p>
 <h5 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h5><p>&emsp;&emsp;<font color="#FF0000">  方法区实际上是有垃圾回收的。 </font>方法区的垃圾收集主要回收两部分内容：<strong>废弃的常量和不再使用的类型。</strong></p>
 <ul>
 <li>废弃常量：假如 “ABC” 在常量池中，但是现在没有任何字符串对象引用常量池中的 “ABC” 常量，如果在这时发生内存回收，这个 “ABC” 常量就将会被系统清理出常量池。<strong>常量池中其他类（接 口）、方法、字段的符号引用也与此类似。</strong></li>
 </ul>
-<h5 id="判定一个类型是否属于“不再被使用的类”的条件"><a href="#判定一个类型是否属于“不再被使用的类”的条件" class="headerlink" title="判定一个类型是否属于“不再被使用的类”的条件"></a>判定一个类型是否属于“不再被使用的类”的条件</h5><p>&emsp;&emsp;判定一个类是否属于==不再被使用的类==需要同时满足三个条件 <font color="red">asdsad</font></p>
+<h5 id="判定一个类型是否属于“不再被使用的类”的条件"><a href="#判定一个类型是否属于“不再被使用的类”的条件" class="headerlink" title="判定一个类型是否属于“不再被使用的类”的条件"></a>判定一个类型是否属于“不再被使用的类”的条件</h5><p>&emsp;&emsp;判定一个类是否属于 <font color="red">不再被使用的类</font>需要同时满足三个条件</p>
 <ul>
 <li>该类所有的实例都已经被回收，也就是Java堆中不存在该类及其任何派生子类的实例。 </li>
 <li>加载该类的类加载器已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如 OSGi、JSP的重加载等，否则通常是很难达成的。 </li>
 <li>该类对应的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法</li>
 </ul>
 <h5 id="垃圾回收的几个假说-垃圾回收的前提-："><a href="#垃圾回收的几个假说-垃圾回收的前提-：" class="headerlink" title="垃圾回收的几个假说(垃圾回收的前提)："></a>垃圾回收的几个假说(垃圾回收的前提)：</h5><ul>
-<li><p>弱分代假说：绝大多数对象都是==朝生夕灭==的</p>
+<li><p>弱分代假说：绝大多数对象都是<strong>朝生夕灭</strong>的</p>
 </li>
-<li><p>强分代假说：熬过越多次垃圾收集过程的对象就==越难以消亡==</p>
+<li><p>强分代假说：熬过越多次垃圾收集过程的对象就<strong>越难以消亡</strong></p>
 </li>
 <li><p>跨代引用假说：跨代引用相对于同代引用来说仅占极少数。</p>
 <p>基于前两个假说，垃圾收集器有了一下原则：</p>
@@ -174,12 +174,529 @@
 </ul>
 <h5 id="标记-复制"><a href="#标记-复制" class="headerlink" title="标记-复制"></a>标记-复制</h5><p>&emsp;&emsp;半区复制：将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
 <p>&emsp;&emsp;特点：1.内存规整，不会产生空间碎片问题，但是如果多数对象存活，会产生大量的内存复制间的开销。2.内存利用率低，可用内存缩小为了原来的一半。</p>
-<p>&emsp;&emsp;==改进==：根据新生代对象朝生夕死的特点，把新生代分为Eden区和S1区、S2区。默认比例是8：1：1</p>
-<h5 id="标记-整理"><a href="#标记-整理" class="headerlink" title="标记-整理"></a>标记-整理</h5><p>&emsp;&emsp;标记过程与标记清除一样，然后让所有存活对象==都向内存空间一端移动==，再直接清理掉边界以外的内存。</p>
-<p>&emsp;&emsp;标记整理和标记清除的区别在于，标记整理是==移动式回收算法==，标记清理是非移动式算法。==对象移动操作必须全程暂停用户应用程序才能进行，也就是STW==</p>
+<p>&emsp;&emsp;改进：根据新生代对象朝生夕死的特点，把新生代分为Eden区和S1区、S2区。默认比例是8：1：1</p>
+<h5 id="标记-整理"><a href="#标记-整理" class="headerlink" title="标记-整理"></a>标记-整理</h5><p>&emsp;&emsp;标记过程与标记清除一样，然后让所有存活对象<strong>都向内存空间一端移动</strong>，再直接清理掉边界以外的内存。</p>
+<p>&emsp;&emsp;标记整理和标记清除的区别在于，标记整理是<strong>移动式回收算法</strong>，标记清理是非移动式算法。对象移动操作必须<font color="red">全程暂停用户应用程序</font>才能进行，也就是STW</p>
+<h5 id="并发的可达性分析"><a href="#并发的可达性分析" class="headerlink" title="并发的可达性分析"></a>并发的可达性分析</h5><p>&emsp;&emsp;两种后果：收集器在对象图上标记颜色时，用户线程可能在修改引用关系，导致错误的GC。<strong>把原本消亡的对象标记为存活（问题不大，下次收集清理掉就好）或者把存活的对象标记为已消亡（非常致命）</strong></p>
+<p>&emsp;&emsp;解决方案：增量更新和内存快照</p>
+<ul>
+<li><p>增量更新：当黑色对象插入新的指向白色对象的引用关系时，就<strong>将这个新插入的引用记录下来</strong>，等并发扫描结束之后，再<strong>将这些记录过的引用关系中的黑色对象为根，重新扫描一次</strong>。</p>
+</li>
+<li><p>内存快照：无论引用关系删除与否，都会按照刚刚开始扫描那一刻的对象图快照来进行搜索。</p>
+<p>CMS是基于增量更新来做<strong>并发标记</strong>的，G1、Shenandoah则是用原始快照来实现。</p>
+</li>
+</ul>
+<h5 id="经典垃圾收集器"><a href="#经典垃圾收集器" class="headerlink" title="经典垃圾收集器"></a>经典垃圾收集器</h5><h6 id="emsp-CMS（标记-清除算法）"><a href="#emsp-CMS（标记-清除算法）" class="headerlink" title="&emsp;CMS（标记-清除算法）"></a>&emsp;CMS（标记-清除算法）</h6><p>&emsp;&emsp;老年代<strong>并行收集器</strong>，以获取最短回收停顿时间为目标的收集器，具有<strong>高并发、低停顿</strong>的特点，追求最短GC回收停顿时间<img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/f.jpg" alt="img"></p>
+<p>&emsp;&emsp;    回收步骤:</p>
+<ul>
+<li><p>初始标记: 只是标记一下GC Roots能直接关联到的对象，速度很快，<strong>需要STW</strong></p>
+</li>
+<li><p>并发标记：进行GC Roots Tracing的过程，<strong>在整个过程中耗时最长</strong>。</p>
+</li>
+<li><p>重新标记：为了修正并发标记期间因用户程序继续运作而导致标记<strong>产生变动的那一部分对象的标记记录</strong>，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。此阶段<strong>也需要STW</strong></p>
+</li>
+<li><p>并发清除（CMS concurrent sweep）</p>
+</li>
+<li><p>优点：并发收集、低停顿</p>
+</li>
+<li><p>缺点：<strong>无法处理浮动垃圾、标记清除算法带来的空间碎片</strong></p>
+<ul>
+<li><strong>标记-清除算法导致的空间碎片</strong>： CMS收集结束时会有大量空间碎片产生。空间碎片过多时，将会给大对象分配带来很大麻烦，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象。</li>
+<li><strong>浮动垃圾：</strong>由于CMS并发清理阶段用户线程还在运行着，伴随程序运行自然就还会有新的垃圾不断产生。这一部分垃圾出现在标记过程之后，CMS无法再当次收集中处理掉它们，只好留待下一次GC时再清理掉。</li>
+<li>解决方案：<strong>标记整理算法，也就是配合ParNew收集器</strong><ul>
+<li>为了解决空间碎片问题，CMS收集器提供了一个-XX：+UseCMS-CompactAtFullCollection开关参数（默认是开启的，此参数从JDK 9开始废弃），用于在CMS收集器不得不进行Full GC时开启内存碎片的合并整理过程，由于这个内存整理必须移动存活对象，（在Shenandoah和ZGC出现前）是无法并发的。这样空间碎片问题是解决了，但停顿时间又会变长，因此虚拟机设计者们还提供了另外一个参数-XX：CMSFullGCsBeforeCompaction（此参数从JDK 9开始废弃），<strong>这个参数的作用是要求CMS收集器在执行过若干次（数量由参数值决定）不整理空间的Full GC之后，下一次进入Full GC前会先进行碎片整理（默认值为0，表示每次进入Full GC时都进行碎片整理）。</strong></li>
+</ul>
+</li>
+</ul>
+<h6 id="G1收集器（标记-整理，不会产生内存空间碎片问题）"><a href="#G1收集器（标记-整理，不会产生内存空间碎片问题）" class="headerlink" title="G1收集器（标记-整理，不会产生内存空间碎片问题）"></a>G1收集器（标记-整理，不会产生内存空间碎片问题）</h6><p>&emsp;Java堆并行收集器，G1收集器不同于之前的收集器的一个重要特点是：G1<strong>回收的范围是整个Java堆</strong>(包括新生代，老年代)，而其他收集器仅限于新生代或老年代。</p>
+<p>&emsp;回收步骤跟CMS大概相似，注意，<strong>最终标记阶段处理的是原始快照记录。</strong></p>
+<ul>
+<li>特点：<ul>
+<li>优点：G1从<strong>整体来看是基于“标记-整理”算法</strong>实现的收集器，但从<strong>局部</strong>（两个Region之间）上看又是<strong>基于“标记-复制”算法</strong>实现，这两种算法都意味着G1运作期间<strong>不会产生内存空间碎片</strong></li>
+<li>缺点：巨型区域（Humongous Region）用来专门存放巨型对象。如果一个 H 区装不下一个巨型对象，那么 G1 会寻找连续的 H 分区来存储。<strong>为了能找到连续的 H 区，有时候不得不启动 Full GC</strong>。 虽然G1和CMS都使用卡表来处理跨代指针，<strong>但G1的卡表实现更为复杂</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/g.png" alt="image-20211021100940766"></p>
+</li>
+</ul>
+<h6 id="3-6-2-ZGC收集器"><a href="#3-6-2-ZGC收集器" class="headerlink" title="3.6.2 ZGC收集器"></a>3.6.2 ZGC收集器</h6><ul>
+<li><p>ZGC也采用基于Region的堆内存布局，但与它们不同的是，ZGC的Region可以具有大、中、小三类容量</p>
+</li>
+<li><p>核心：并发整理算法</p>
+<ul>
+<li><p>染色指针技术，一种直接将少量额外的信息存储在指针上的技术</p>
+</li>
+<li><p>从前，如果我们要在对象上存储一些额外的、只供收集器或者虚拟机本身使用的数据，通常会在对象头中增加额外的存储字段，如对象的哈希码、分代年龄、锁记录等就是这样存储的</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="内存分配策略"><a href="#内存分配策略" class="headerlink" title="内存分配策略"></a>内存分配策略</h5><ul>
+<li><p>虚拟机对于内存的分配还是会遵循以下几种「普世」规则：</p>
+<ul>
+<li><p>对象优先在 Eden 区分配，当Eden区没有足够空间进行分配时，虚拟机将发起 一次Minor GC</p>
+</li>
+<li><p>大对象直接进入老年代：复制对象时，大对象就意味着高额的内存复制开销。HotSpot虚拟机提供了-XX：PretenureSizeThreshold 参数，指定大于该设置值的对象直接在老年代分配，这样做的目的就是<strong>避免在Eden区及两个Survivor区之间来回复制，产生大量的内存复制操作。</strong></p>
+</li>
+<li><p>长期存活对象将进入老年代：CMS默认值位15，G1为6</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="动态对象年龄判定"><a href="#动态对象年龄判定" class="headerlink" title="动态对象年龄判定"></a>动态对象年龄判定</h5><p>&emsp;并不要求对象的年龄必须得到某个阈值才能晋升老年代，如果在Survivor空间中<strong>相同年龄所有对象大小的总和大于 Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代</strong>，无须等到-XX： MaxTenuringThreshold中要求的年龄。</p>
+<h5 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h5><ul>
+<li>如果另外一块Survivor空间<strong>没有足够空间存放上一次新生代收集下来的存活对象</strong>，这些对象便将通过分配担保机制直接进入老年代</li>
+<li>在发生Minor GC之前，虚拟机必须先<strong>检查老年代最大可用的连续空间是否大于新生代所有对象总空间</strong>，如果成立，那这一次Minor GC可以确保是安全的。如果不成立，虚拟机会先查看HandlePromotionFailure参数的设置值<strong>是否允许担保失败</strong>（Handle Promotion Failure）；如果允许，那会继续检查<strong>老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试进行一次Minor GC，尽管这次Minor GC是有风险的</strong>；如果小于，或者-XX：HandlePromotionFailure设置<strong>不允许冒险，那这时就要改为进行一次Full GC。</strong></li>
+<li>“冒险”是冒了什么风险：前面提到过，新生代使用复制收集算法，但为了内存利用率，只使用其中一个Survivor空间来作为轮换备份，因此当出现大量对象在Minor GC后仍然存活的情况——<strong>最极端的情况就是内存回收后新生代中所有对象都存活</strong>，需要老年代进行分配担保，把Survivor无法容纳的对象直接送入老年代，<strong>但一共有多少对象会在这次回收中活下来在实际完成内存回收之前是无法明确知道的，所以只能取之前每一次回收晋升到老年代对象容量的平均大小作为经验值。如果赌赢了，就只需要Minor GC，赌输了还是需要Full GC，这样停顿时间就很长了</strong>。</li>
+</ul>
+<h5 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h5><p>&emsp;类的生命周期：加载、验证、准备、解析、初始化、使用和卸载<img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/h.png" alt="image-20211021110722204"></p>
+<h6 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h6><ul>
+<li>加载：根据查找路径找到相应的 class 文件然后导入；</li>
+<li>验证：检查加载的 class 文件的正确性(文件格式验证、元数据验证、字节码验证)</li>
+<li>准备：正式为<strong>类中定义的变量（即静态变量）</strong>分配内存并<strong>设置类变量初始值</strong>。</li>
+<li>解析：虚拟机将常量池中的符号引用替换成直接引用的过程。符号引用就理解为一个标示，而在直接引用直接指向内存中的地址；</li>
+<li>初始化：对静态变量和静态代码块执行初始化工作</li>
+</ul>
+<h6 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h6><p>&emsp;如果一个类加载器收到了类加载的请求，它首先<strong>不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成</strong>，每一个层次的类加载器都是如此，因此所有的<strong>加载请求最终都应该传送到最顶层的启动类加载器中</strong>，只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需的类）时，子加载器才会尝试自己去完成加载。</p>
+<p>&emsp;好处：是Java中的类随着它的类加载器一起具备了一种带有优先级的层次关系。</p>
+<p><img src="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/i.png" alt="image-20211021111851986"></p>
+<h5 id="类加载的时机（什么时候会对类进行初始化）"><a href="#类加载的时机（什么时候会对类进行初始化）" class="headerlink" title="类加载的时机（什么时候会对类进行初始化）"></a>类加载的时机（什么时候会对类进行初始化）</h5><ul>
+<li>遇到new关键字</li>
+<li>读取类中的<strong>静态字段</strong>或者调用类中的<strong>静态方法</strong>的时候</li>
+<li>初始化类的时候如果发现其父类还没初始化，那么<strong>先触发其父类的初始化</strong></li>
+<li>虚拟机启动时，用户需要制定一个执行的主类 也就是包含main方法的类，虚拟机会先初始化这个类</li>
+</ul>
 ]]></content>
       <tags>
         <tag>JVM</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>JVM实战</title>
+    <url>/2021/10/20/JVM%E5%AE%9E%E6%88%98/</url>
+    <content><![CDATA[<p>JVM实战</p>
+<ul>
+<li><p>jps命令   jps是jdk提供的一个查看当前java进程的小工具，列出了现在运行的线程情况</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a4232929-3de1-4da8-a98d-8aece0f929e9-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>查看VM参数  jinfo 命令可以用来查看 Java 进程运行的 JVM 参数</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/c37307cd-e977-4803-880c-1ce4ad63e4d6-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>具体查看某个参数  </p>
+<ul>
+<li>jinfo -flag MetaspaceSize(参数名) 55504(  pid号)<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/5e2afc97-0a8a-4c34-a052-53e88318f3f5-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常用参数</p>
+<ul>
+<li>-Xms600m 堆空间（年轻代+老年代）的<strong>初始内存</strong>大小</li>
+<li>-Xmx600m 堆空间（年轻代+老年代）的<strong>最大内存</strong>大小</li>
+<li>开发中建议将初始堆内存和最大的堆内存设置成相同的值。</li>
+<li>-XX:NewRatio ： 设置新生代与老年代的比例。默认值是2.(一般不会调)  除非我们知道<strong>很多类对象生命周期非常长，在某些情况下还能与JVM的生命周期保持一致</strong></li>
+<li>*-*XX:SurvivorRatio ：设置新生代中Eden区与Survivor区的比例。默认值是8</li>
+</ul>
+</li>
+<li><p>为什么需要分代？不分代就不能正常工作了吗？</p>
+<ul>
+<li>经研究，不同对象的生命周期不同。70%-99%的对象都是临时对象。<ul>
+<li>新生代：有Eden、Survivor构成（s0,s1 又称为from to），to总为空</li>
+<li>老年代：存放新生代中经历多次依然存活的对象</li>
+</ul>
+</li>
+<li><strong>其实不分代完全可以，分代的唯一理由就是优化GC性能</strong>。如果没有分代，<strong>那所有的对象都在一块</strong>，就如同把一个学校的人都关在一个教室。<strong>GC的时候要找到哪些对象没用，这样就会对堆的所有区域进行扫描</strong>，而很多对象都是朝生夕死的，<strong>如果分代的话，把新创建的对象放到某一地方，当GC的时候先把这块存储“朝生夕死”对象的区域进行回收，这样就会腾出很大的空间出来。</strong></li>
+</ul>
+</li>
+<li><p>大对象直接进入老年代：分配60m堆空间，新生代 20m ，Eden 16m， s0 2m， s1 2m，buffer对象20m，Eden 区无法存放buffer， 直接晋升老年代</p>
+<ul>
+<li><em>-Xms60m -Xmx60m -XX:NewRatio=2 -XX:SurvivorRatio=8 -XX:+PrintGCDetails</em><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/955732eb-5ae9-43b5-8a40-5e84472cc8d5-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/bd05e07c-8d9a-40c9-8d6f-0bc64d9b0408-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>什么是TLAB</p>
+<ul>
+<li>从内存模型而不是垃圾收集的角度，对Eden区域继续进行划分，JVM为每个线程分配了一个私有缓存区域，它包含在Eden空间内<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/f5ff4ad1-cd53-4197-bc3d-5baf37b2c2d6-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>多线程同时分配内存时，使用TLAB可以避免一系列的非线程安全问题，同时还能够提升内存分配的吞吐量，因此我们可以将这种内存分配方式称之为<strong>快速分配策略</strong></li>
+</ul>
+</li>
+<li><p>说明</p>
+<ul>
+<li>尽管不是所有的对象实例都能够在TLAB中成功分配内存，但JVM明确是是将TLAB作为内存分配的首选</li>
+<li>jinfo -flag UseTLAB 42668<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/af22140d-65df-4c86-89c9-2f3cc9bb0f4e-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>在程序中，开发人员可以通过选项“-XX:UseTLAB“ 设置是够开启TLAB空间</li>
+<li>默认情况下，TLAB空间的内存非常小，**仅占有整个EDen空间的1%**，当然我们可以通过选项 ”-XX:TLABWasteTargetPercent“ 设置TLAB空间所占用Eden空间的百分比大小</li>
+<li><strong>一旦对象在TLAB空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在Eden空间中分配了内存</strong><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/35f2d985-eba5-4841-a508-f4bb9764f6e4-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>为什么有TLAB（Thread Local Allocation Buffer）</strong></p>
+<ul>
+<li>堆区是线程共享的，任何线程都可以访问到堆区中的共享数据。由于对象实例的创建在JVM中非常频繁，<strong>因此在并发环境下从堆区中划分内存空间是线程不安全的</strong></li>
+<li><strong>为避免多个线程操作同一地址，需要使用加锁等机制，进而影响分配速度</strong></li>
+<li><strong>所以有了TLAB</strong></li>
+</ul>
+</li>
+<li><p>逃逸分析   -XX:DoEscapeAnalysis 显式开启逃逸分析</p>
+<ul>
+<li>在Java虚拟机中，对象是在Java堆中分配内存的，这是一个普遍的常识。但是，有一种特殊情况，<strong>那就是如果经过逃逸分析（Escape Analysis)后发现，一个对象并没有逃逸出方法的话，那么就可能被优化成栈上分配</strong>。<strong>这样就无需在堆上分配内存，也无须进行垃圾回收了。</strong>这也是最常见的堆外存储技术。</li>
+<li>逃逸分析的基本行为就是分析对象动态作用域：<ul>
+<li>当一个对象在方法中被定义后，<strong>对象只在方法内部使用</strong>，则认为<strong>没有发生逃逸</strong>。</li>
+<li>当一个对象在方法中被定义后，<strong>它被外部方法所引用，则认为发生逃逸。</strong>例如作为调用参数传递到其他地方中。</li>
+</ul>
+</li>
+<li>如何快速的判断是否发生了逃逸分析，就<strong>看new的对象实体是否有可能在方法外被调用</strong></li>
+<li><strong>结论</strong><ul>
+<li>开发中能使用局部变量的，就不要使用在方法外定义</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>代码优化</p>
+<ul>
+<li>使用逃逸分析，编译器可以对代码做如下优化：</li>
+<li>栈上分配：将堆分配转化为栈分配。如果一个对象在子线程中被分配，要使指向该对象的指针永远不会逃逸，对象可能是栈分配的候选，而不是堆分配<ul>
+<li>JIT编译器在编译期间根据逃逸分析的结果，发现如果一个对象并没有逃逸出方法的话，就可能被优化成栈上分配。分配完成之后，继续在调用栈内执行，最后线程结束，栈空间被回收，局部变量对象也被回收。这样就无须机型垃圾回收了</li>
+<li>常见的栈上分配场景：给成员变量赋值、方法返回值、实例引用传递</li>
+</ul>
+</li>
+<li>同步省略：如果一个对象被发现只能从一个线程被访问到，那么对于这个对象的操作可以不考虑同步<ul>
+<li>在动态编译同步块的时候，JIT编译器可以借助逃逸分析来判断同步块所使用的锁对象是否只能够被一个线程访问而没有被发布到其他线程。如果没有，那么JIT编译器在编译这个同步块的时候就会取消对这部分代码的同步。这样就能大大提高并发性和性能。这个取消同步的过程就叫同步省略，也叫==锁消除==</li>
+</ul>
+</li>
+<li>分离对象或标量替换：有的对象可能不需要作为一个连续的内存结构存在也可以被访问到，那么对象的部分（或全部）可以不存储在内存，而是存储在CPU寄存器中。<ul>
+<li>如果经过逃逸分析，发现一个对象不会被外界访问的话，那么经过JIT优化，就会把这个对象拆解成若干个其中包含的若干个成员变量来替代。这个过程就是标量替换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>逃逸分析小结</p>
+<ul>
+<li>无法保证逃逸分析的性能消耗一定能高于他的消耗。虽然经过逃逸分析可以做<strong>标量替换、栈上分配、和锁消除</strong>。但是逃逸分析自身也是需要进行一系列复杂的分析的，这其实也是一个相对耗时的过程。</li>
+<li>通过逃逸分析，JVM会在栈上分配那些不会逃逸的对象，这在理论上是可行的，但是取决于JVM设计者的选择</li>
+</ul>
+</li>
+<li><p>栈、堆和方法区的交互</p>
+<ul>
+<li>reference指向对象的实例数据，实例数据中有到对象类型数据的指针，这个指针指向方法区中的对象类型数据。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/7a448b77-9369-48e8-b83a-ae42c10dae10-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>JVM没有使用句柄池的方式（增加了一次指针的开销）<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/2e95c125-00b0-4b68-8a4d-deab4e882a8e-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>方法区   <strong>在jdk7及以前，习惯上把方法区称为永久代。jdk8开始，使用元空间取代了永久代</strong></p>
+</li>
+<li><p>方法区的演变</p>
+<ul>
+<li>jdk1.6及之前：有永久代（permanent generation） ，静态变量存放在永久代上</li>
+<li>jdk1.7：有永久代，但已经逐步“去永久代”，<strong>字符串常量池、静态变量移除，保存在堆中</strong></li>
+<li>jdk1.8及之后： 无永久代，<strong>类型信息、字段、方法、常量保存在本地内存的元空间，但字符串常量池、静态变量仍在堆</strong></li>
+</ul>
+</li>
+<li><p>永久代为什么要被元空间替换</p>
+</li>
+<li><p>方法区的垃圾回收</p>
+</li>
+<li><p>StringTable （字符串常量池）为什么要调整到堆中</p>
+<ul>
+<li>jdk7中将StringTable放到了堆空间中。因为永久代的回收效率很低，在fullgc的时候才会触发。而full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了StringTable回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存.</li>
+</ul>
+</li>
+<li><p>内存布局</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/3d17013b-524f-4c60-83f5-1988c9617bb0-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>对象在JVM是怎么存储的？对象头中有哪些东西？</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/04430d3c-ccab-4884-9a17-252635ebeded-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>对象头（Header）</p>
+<ul>
+<li>运行时元数据</li>
+<li>类型指针：指向类元数据的InstanceKlass，确定该对象所属的类型</li>
+<li>说明：如果是数组，还需记录数组的长度</li>
+</ul>
+</li>
+<li><p>编译型语言和解释型语言</p>
+<ul>
+<li><strong>编译型语言</strong>的执行方式是：先把这10行代码通过<a href="https://baike.baidu.com/item/%E7%BC%96%E8%AF%91%E5%99%A8/8853067?fr=aladdin">编译器</a>全部编<strong>译成机器指令码的文件</strong>，然后再让计算机运行<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a0b6d04d-ad8c-48ea-8f7e-3bf00e651de5-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><strong>解释型语言</strong>的执行方式就是：通过<a href="https://baike.baidu.com/item/%E8%A7%A3%E9%87%8A%E5%99%A8/10418965?fr=aladdin">解释器</a>一行一行的将代码翻译成机器指令码执行。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/541878de-4caf-4609-aea1-96c6996b5096-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>Java代码来说，是将源文件（.java文件）先<strong>编译</strong>成字节码文件（.class文件），然后再在<a href="https://baike.baidu.com/item/JVM/2902369?fr=aladdin">Java虚拟机</a>（JVM）中<strong>解释</strong>执行。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/51ede055-f9f8-4ab4-be18-cd70a2bb207c-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JAVA是半编译半解释的语言</p>
+<ul>
+<li><strong>Java首先将源代码编译成字节码， 然后依赖各种不同平台上的虚拟机来解释执行字节码</strong>，<strong>从而实现了“一次编写，到处运行”的跨平台特性</strong>， 所以说java是半编译半解释型的语言。</li>
+<li>编译器：将源代码编译成class字节码文件</li>
+<li>解释器：将字节码文件中的内中翻译为**对应平台(windows 、linux)**的本地机器指令</li>
+</ul>
+</li>
+<li><p>四种引用：软弱虚引用在一定条件下都是可以被回收的。<strong>相对而言，强引用是造成内存泄漏的主要原因之一。</strong></p>
+<ul>
+<li>强引用：只要强引用的对象是可触及的，被强引用的对象就不会被回收。比如这个”hello 双硅谷”<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/517f7338-19b9-404d-a4b9-890040b4829a-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/f222f539-c3d1-490d-8e79-27eb5819e443-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>如果str置为null   这个时候就会被回收</li>
+<li>软引用<ul>
+<li><em>内存不足即回收   -Xms10m -Xmx10m  //在报OOM之前，垃圾回收器会回收软引用的可达对象。</em><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/4049e061-4129-4167-b40e-cfdd9cfc32bf-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>弱引用<ul>
+<li>// 不管当前内存空间足够与否，都会回收它的内存</li>
+</ul>
+</li>
+<li><h2 id="虚引用"><a href="#虚引用" class="headerlink" title="虚引用"></a>虚引用</h2></li>
+</ul>
+</li>
+<li><p>GC性能的几大指标</p>
+</li>
+<li><p>JVM调优篇</p>
+<ul>
+<li>生产环境中的问题<ul>
+<li>发生了内存移除怎么处理</li>
+<li>给服务器分配多少内存合适</li>
+<li>怎么对垃圾回收器调优</li>
+<li>CPU负载高怎么处理</li>
+<li>分配多少线程比较合适</li>
+<li>不加log  怎么确定请求是否实行了某一行代码</li>
+<li>不加log  怎么实时查看某个方法的入参和返回值</li>
+</ul>
+</li>
+<li>为什么要调优  防止OOM  解决OOM  减少Full GC出现的频率</li>
+</ul>
+</li>
+<li><p>调优步骤</p>
+<ul>
+<li>性能监控、性能分析、性能调优<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/ce90f4e4-9aa1-4b6a-b962-030198e0d9cf-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JVM命令</p>
+<ul>
+<li>查看运行的Java进程<ul>
+<li>jps Java Virtual Machine Process Status Tool</li>
+<li>jps  显示pid和类名</li>
+<li>jps -q  显示pid</li>
+<li>jps -l  显示pid和全限定名</li>
+<li>jps -v  显示JVM参数</li>
+</ul>
+</li>
+<li>查看JVM统计信息<ul>
+<li>jstat Java Virtual Machine statistics monitoring tool<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/b3a763dd-aae4-4e7f-b10c-10d33645edea-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>jstat -class pid<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/3899f590-e60a-4340-96ce-6f33017e02a3-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>每秒打印1次<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/915abbf5-56c2-4219-87fb-a0de77955ed1-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>类加载统计<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/2a642908-d15b-4927-873a-9206edbf7b51-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>垃圾回收统计   jstat -gc 2060<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/6f571dc1-8ef0-4e1e-85bc-9eddf338907f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>堆内存统计  jstat -gccapacity 2060<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/fe0fd382-d937-4c95-be10-c1838c1a03fe-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>新生代垃圾回收统计<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/400b51e0-c385-4b21-9011-e4781f2d155f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>总结垃圾回收统计<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/8efc6046-dd8d-4141-bc94-441e3d8c7879-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>查看JVM参数   jinfo<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/bc7e9da1-3957-4ff8-9563-d28761ee7666-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>导出内存映像文件   获取dump文件 作用  出现了堆溢出时可以用dump文件分析<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/1f928e57-bb28-4b3f-bcc0-b96295137a84-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/1912078b-7ce1-4c95-9861-ba7f9d208833-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>打印线程快照  jstack pid</p>
+</li>
+<li><p>排查</p>
+</li>
+<li><p>jstack实战之高cpu占用率排查</p>
+<ul>
+<li><strong>1、</strong>使用top指令，定位CPU占用较高的进程。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/0251434d-d9dd-4bd5-bafe-4266e9506909-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>2.使用top -H -p ${进程id}指令，查看指定进程下各个线程的cpu使用情况<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/e739a85b-0208-41a3-bedc-35bc736402b3-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>注意：PID虽然名为进程控制符，<strong>但其用途不限于特指进程id</strong>。如上图中PID列指的就是线程的id</li>
+<li>3.使用printf “%x” xxx指令，将1977转换为16进制<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/4609dd90-6770-4fa7-bcd0-b93de9159260-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><strong>4</strong>使用jstack pid指令，查看当前的堆栈信息；并<strong>根据上一步得到的16进制的线程id，找到肇事线程</strong>。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/b705c322-4bcb-4d2f-a20c-679e9bb3d3b4-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>如果线程较多的话，我们可以使用grep指定来根据关键字定位行，jstack 1956 | grep -10 7b9 显示10行</li>
+<li><strong>5：</strong>分析肇事线程堆栈信息。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/d510fb6a-e43b-490d-a9cc-22228356acbf-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>我们已经定位到位置6，然后去找代码即可<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/2827bed2-0a3d-466e-908b-c2aa6ecef481-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>jstack之死锁排查</p>
+<ul>
+<li><strong>1、</strong>使用jps指令，查看所有java进程。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/0659ef78-4f38-493f-8da8-604708b74515-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><strong>2、</strong>使用jstack pid指令，查看指定进程的堆栈信息,观察并定位到死锁线程。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/bb313bdc-ae62-47f5-b37b-02259adfb9ee-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>jcmd  包括了之前 的所有  jcmd -l 列出所有进程pid号</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/5be5237a-7cd7-4a39-abb4-96b01ade100b-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/cbc0cd05-760c-4128-886c-093b94fec7f8-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>内存泄漏和内存溢出</p>
+<ul>
+<li>内存泄露：对象不会再被程序引用了，但是GC又不会回收他们</li>
+<li>内存溢出：内存不够分配新对象了</li>
+<li>两者关系：内存泄漏的增多最终会导致内存溢出。</li>
+</ul>
+</li>
+<li><p>JAVA中内存泄漏的情况</p>
+<ul>
+<li><p><img src="https://api2.mubu.com/v3/document_image/89af9633-3827-4eb5-b611-2a4675fe023b-12259280.jpg" alt="img"></p>
+</li>
+<li><p>静态集合类</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/0fdd6986-18a2-46bd-8a72-ddd1320c82e6-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>单例模式</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/4f05caf6-0f14-40ab-9107-20bcd27e1dc3-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>内部类持有外部类</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a2e9b2b7-8c36-466f-8c3b-267e3a89b70f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>不释放连接</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a52b8862-bac3-4812-b850-79608684003b-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>改变哈希值  当我们想把自定义对象存入map时就要保证对象的hashcode不变</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/f1c15ebe-5199-4313-a900-4bd84caa2524-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>缓存问题</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/5e4b4094-7e36-432e-b3c3-944a76e0ee37-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>内存泄漏案例</p>
+<ul>
+<li>第一个只是移动了指针，实际上栈顶的数据还在，没有被回收<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/8ae1dd10-9486-4e31-a4a6-492cf016fef2-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>解决   将栈顶元素置空</li>
+</ul>
+</li>
+<li><p>Eden区和两个S区理论上是8:1:1，但实际上是150:25:25，也就是6:1:1，原因是有一个参数UseAdaptiveSizePolicy，默认开启，它会自动选择各区大小的比例。虽然查出来SurvivoRatio=8,但没有启用，当UseAdaptiveSizePolicy禁用时 且显式地写出SurvivoRatio=8才会出现8:1:1的比例</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/33ae6bd9-0aa6-4530-a9d1-4bf42dd7b74f-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/cdc67e2a-9551-47ea-b304-d38657a79644-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/3c415e11-318c-4806-b4a6-cbfed2572dd0-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/ca3725c0-fb71-4d52-bbf1-c54a5cfe2e82-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/7df214b3-2fea-4370-837b-33beb3d76b87-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>1.4 动态对象年龄判定</p>
+</li>
+<li><p>“Hotspot遍历所有对象时，按照年龄从小到大对其所占用的大小进行累积，当<strong>累积的某个年龄大小超过了survivor区的一半时</strong>，<strong>取这个年龄和MaxTenuringThreshold中更小的一个值，作为新的晋升年龄阈值”。</strong></p>
+</li>
+<li><p>需要注意的是：<strong>对象默认晋升年龄并不都是15，这个是要区分垃圾收集器的，CMS就是6.</strong></p>
+</li>
+<li><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/dd8f0efc-a6ba-457d-b84f-c47b389e673f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/ca4e0e3b-6e72-4cd6-8a1b-cfa2ceb7e4ca-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+]]></content>
   </entry>
 </search>
