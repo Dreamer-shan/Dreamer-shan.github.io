@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!--pjax：防止跳转页面音乐暂停-->
+ <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
+
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dreamer-shan&#39;s Blog">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Dreamer-shan&#39;s Blog">
+<meta property="og:description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Dreamer-shan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Dreamer-shan's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Dreamer-shan's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="history fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">JVM复习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-11 19:50:02" itemprop="dateCreated datePublished" datetime="2021-10-11T19:50:02+08:00">2021-10-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-21 15:52:34" itemprop="dateModified" datetime="2021-10-21T15:52:34+08:00">2021-10-21</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="Java和C-的一个重要区别"><a href="#Java和C-的一个重要区别" class="headerlink" title="Java和C++的一个重要区别"></a>Java和C++的一个重要区别</h4><p>&emsp;&emsp;Java和C++都是面向对象的，但是C++需要程序员手动开辟(malloc)和回收(free)内存，但是有了JVM内存管理的存在，所以Java不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/20/JVM%E5%AE%9E%E6%88%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/20/JVM%E5%AE%9E%E6%88%98/" class="post-title-link" itemprop="url">JVM实战</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-20 11:15:17 / 修改时间：11:16:35" itemprop="dateCreated datePublished" datetime="2021-10-20T11:15:17+08:00">2021-10-20</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>JVM实战</p>
+<ul>
+<li><p>jps命令   jps是jdk提供的一个查看当前java进程的小工具，列出了现在运行的线程情况</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a4232929-3de1-4da8-a98d-8aece0f929e9-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>查看VM参数  jinfo 命令可以用来查看 Java 进程运行的 JVM 参数</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/c37307cd-e977-4803-880c-1ce4ad63e4d6-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>具体查看某个参数  </p>
+<ul>
+<li>jinfo -flag MetaspaceSize(参数名) 55504(  pid号)<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/5e2afc97-0a8a-4c34-a052-53e88318f3f5-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常用参数</p>
+<ul>
+<li>-Xms600m 堆空间（年轻代+老年代）的<strong>初始内存</strong>大小</li>
+<li>-Xmx600m 堆空间（年轻代+老年代）的<strong>最大内存</strong>大小</li>
+<li>开发中建议将初始堆内存和最大的堆内存设置成相同的值。</li>
+<li>-XX:NewRatio ： 设置新生代与老年代的比例。默认值是2.(一般不会调)  除非我们知道<strong>很多类对象生命周期非常长，在某些情况下还能与JVM的生命周期保持一致</strong></li>
+<li>*-*XX:SurvivorRatio ：设置新生代中Eden区与Survivor区的比例。默认值是8</li>
+</ul>
+</li>
+<li><p>为什么需要分代？不分代就不能正常工作了吗？</p>
+<ul>
+<li>经研究，不同对象的生命周期不同。70%-99%的对象都是临时对象。<ul>
+<li>新生代：有Eden、Survivor构成（s0,s1 又称为from to），to总为空</li>
+<li>老年代：存放新生代中经历多次依然存活的对象</li>
+</ul>
+</li>
+<li><strong>其实不分代完全可以，分代的唯一理由就是优化GC性能</strong>。如果没有分代，<strong>那所有的对象都在一块</strong>，就如同把一个学校的人都关在一个教室。<strong>GC的时候要找到哪些对象没用，这样就会对堆的所有区域进行扫描</strong>，而很多对象都是朝生夕死的，<strong>如果分代的话，把新创建的对象放到某一地方，当GC的时候先把这块存储“朝生夕死”对象的区域进行回收，这样就会腾出很大的空间出来。</strong></li>
+</ul>
+</li>
+<li><p>大对象直接进入老年代：分配60m堆空间，新生代 20m ，Eden 16m， s0 2m， s1 2m，buffer对象20m，Eden 区无法存放buffer， 直接晋升老年代</p>
+<ul>
+<li><em>-Xms60m -Xmx60m -XX:NewRatio=2 -XX:SurvivorRatio=8 -XX:+PrintGCDetails</em><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/955732eb-5ae9-43b5-8a40-5e84472cc8d5-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/bd05e07c-8d9a-40c9-8d6f-0bc64d9b0408-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>什么是TLAB</p>
+<ul>
+<li>从内存模型而不是垃圾收集的角度，对Eden区域继续进行划分，JVM为每个线程分配了一个私有缓存区域，它包含在Eden空间内<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/f5ff4ad1-cd53-4197-bc3d-5baf37b2c2d6-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>多线程同时分配内存时，使用TLAB可以避免一系列的非线程安全问题，同时还能够提升内存分配的吞吐量，因此我们可以将这种内存分配方式称之为<strong>快速分配策略</strong></li>
+</ul>
+</li>
+<li><p>说明</p>
+<ul>
+<li>尽管不是所有的对象实例都能够在TLAB中成功分配内存，但JVM明确是是将TLAB作为内存分配的首选</li>
+<li>jinfo -flag UseTLAB 42668<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/af22140d-65df-4c86-89c9-2f3cc9bb0f4e-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>在程序中，开发人员可以通过选项“-XX:UseTLAB“ 设置是够开启TLAB空间</li>
+<li>默认情况下，TLAB空间的内存非常小，**仅占有整个EDen空间的1%**，当然我们可以通过选项 ”-XX:TLABWasteTargetPercent“ 设置TLAB空间所占用Eden空间的百分比大小</li>
+<li><strong>一旦对象在TLAB空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在Eden空间中分配了内存</strong><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/35f2d985-eba5-4841-a508-f4bb9764f6e4-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>为什么有TLAB（Thread Local Allocation Buffer）</strong></p>
+<ul>
+<li>堆区是线程共享的，任何线程都可以访问到堆区中的共享数据。由于对象实例的创建在JVM中非常频繁，<strong>因此在并发环境下从堆区中划分内存空间是线程不安全的</strong></li>
+<li><strong>为避免多个线程操作同一地址，需要使用加锁等机制，进而影响分配速度</strong></li>
+<li><strong>所以有了TLAB</strong></li>
+</ul>
+</li>
+<li><p>逃逸分析   -XX:DoEscapeAnalysis 显式开启逃逸分析</p>
+<ul>
+<li>在Java虚拟机中，对象是在Java堆中分配内存的，这是一个普遍的常识。但是，有一种特殊情况，<strong>那就是如果经过逃逸分析（Escape Analysis)后发现，一个对象并没有逃逸出方法的话，那么就可能被优化成栈上分配</strong>。<strong>这样就无需在堆上分配内存，也无须进行垃圾回收了。</strong>这也是最常见的堆外存储技术。</li>
+<li>逃逸分析的基本行为就是分析对象动态作用域：<ul>
+<li>当一个对象在方法中被定义后，<strong>对象只在方法内部使用</strong>，则认为<strong>没有发生逃逸</strong>。</li>
+<li>当一个对象在方法中被定义后，<strong>它被外部方法所引用，则认为发生逃逸。</strong>例如作为调用参数传递到其他地方中。</li>
+</ul>
+</li>
+<li>如何快速的判断是否发生了逃逸分析，就<strong>看new的对象实体是否有可能在方法外被调用</strong></li>
+<li><strong>结论</strong><ul>
+<li>开发中能使用局部变量的，就不要使用在方法外定义</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>代码优化</p>
+<ul>
+<li>使用逃逸分析，编译器可以对代码做如下优化：</li>
+<li>栈上分配：将堆分配转化为栈分配。如果一个对象在子线程中被分配，要使指向该对象的指针永远不会逃逸，对象可能是栈分配的候选，而不是堆分配<ul>
+<li>JIT编译器在编译期间根据逃逸分析的结果，发现如果一个对象并没有逃逸出方法的话，就可能被优化成栈上分配。分配完成之后，继续在调用栈内执行，最后线程结束，栈空间被回收，局部变量对象也被回收。这样就无须机型垃圾回收了</li>
+<li>常见的栈上分配场景：给成员变量赋值、方法返回值、实例引用传递</li>
+</ul>
+</li>
+<li>同步省略：如果一个对象被发现只能从一个线程被访问到，那么对于这个对象的操作可以不考虑同步<ul>
+<li>在动态编译同步块的时候，JIT编译器可以借助逃逸分析来判断同步块所使用的锁对象是否只能够被一个线程访问而没有被发布到其他线程。如果没有，那么JIT编译器在编译这个同步块的时候就会取消对这部分代码的同步。这样就能大大提高并发性和性能。这个取消同步的过程就叫同步省略，也叫==锁消除==</li>
+</ul>
+</li>
+<li>分离对象或标量替换：有的对象可能不需要作为一个连续的内存结构存在也可以被访问到，那么对象的部分（或全部）可以不存储在内存，而是存储在CPU寄存器中。<ul>
+<li>如果经过逃逸分析，发现一个对象不会被外界访问的话，那么经过JIT优化，就会把这个对象拆解成若干个其中包含的若干个成员变量来替代。这个过程就是标量替换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>逃逸分析小结</p>
+<ul>
+<li>无法保证逃逸分析的性能消耗一定能高于他的消耗。虽然经过逃逸分析可以做<strong>标量替换、栈上分配、和锁消除</strong>。但是逃逸分析自身也是需要进行一系列复杂的分析的，这其实也是一个相对耗时的过程。</li>
+<li>通过逃逸分析，JVM会在栈上分配那些不会逃逸的对象，这在理论上是可行的，但是取决于JVM设计者的选择</li>
+</ul>
+</li>
+<li><p>栈、堆和方法区的交互</p>
+<ul>
+<li>reference指向对象的实例数据，实例数据中有到对象类型数据的指针，这个指针指向方法区中的对象类型数据。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/7a448b77-9369-48e8-b83a-ae42c10dae10-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>JVM没有使用句柄池的方式（增加了一次指针的开销）<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/2e95c125-00b0-4b68-8a4d-deab4e882a8e-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>方法区   <strong>在jdk7及以前，习惯上把方法区称为永久代。jdk8开始，使用元空间取代了永久代</strong></p>
+</li>
+<li><p>方法区的演变</p>
+<ul>
+<li>jdk1.6及之前：有永久代（permanent generation） ，静态变量存放在永久代上</li>
+<li>jdk1.7：有永久代，但已经逐步“去永久代”，<strong>字符串常量池、静态变量移除，保存在堆中</strong></li>
+<li>jdk1.8及之后： 无永久代，<strong>类型信息、字段、方法、常量保存在本地内存的元空间，但字符串常量池、静态变量仍在堆</strong></li>
+</ul>
+</li>
+<li><p>永久代为什么要被元空间替换</p>
+</li>
+<li><p>方法区的垃圾回收</p>
+</li>
+<li><p>StringTable （字符串常量池）为什么要调整到堆中</p>
+<ul>
+<li>jdk7中将StringTable放到了堆空间中。因为永久代的回收效率很低，在fullgc的时候才会触发。而full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了StringTable回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存.</li>
+</ul>
+</li>
+<li><p>内存布局</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/3d17013b-524f-4c60-83f5-1988c9617bb0-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>对象在JVM是怎么存储的？对象头中有哪些东西？</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/04430d3c-ccab-4884-9a17-252635ebeded-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>对象头（Header）</p>
+<ul>
+<li>运行时元数据</li>
+<li>类型指针：指向类元数据的InstanceKlass，确定该对象所属的类型</li>
+<li>说明：如果是数组，还需记录数组的长度</li>
+</ul>
+</li>
+<li><p>编译型语言和解释型语言</p>
+<ul>
+<li><strong>编译型语言</strong>的执行方式是：先把这10行代码通过<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BC%96%E8%AF%91%E5%99%A8/8853067?fr=aladdin">编译器</a>全部编<strong>译成机器指令码的文件</strong>，然后再让计算机运行<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a0b6d04d-ad8c-48ea-8f7e-3bf00e651de5-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><strong>解释型语言</strong>的执行方式就是：通过<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%A7%A3%E9%87%8A%E5%99%A8/10418965?fr=aladdin">解释器</a>一行一行的将代码翻译成机器指令码执行。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/541878de-4caf-4609-aea1-96c6996b5096-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>Java代码来说，是将源文件（.java文件）先<strong>编译</strong>成字节码文件（.class文件），然后再在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/JVM/2902369?fr=aladdin">Java虚拟机</a>（JVM）中<strong>解释</strong>执行。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/51ede055-f9f8-4ab4-be18-cd70a2bb207c-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JAVA是半编译半解释的语言</p>
+<ul>
+<li><strong>Java首先将源代码编译成字节码， 然后依赖各种不同平台上的虚拟机来解释执行字节码</strong>，<strong>从而实现了“一次编写，到处运行”的跨平台特性</strong>， 所以说java是半编译半解释型的语言。</li>
+<li>编译器：将源代码编译成class字节码文件</li>
+<li>解释器：将字节码文件中的内中翻译为**对应平台(windows 、linux)**的本地机器指令</li>
+</ul>
+</li>
+<li><p>四种引用：软弱虚引用在一定条件下都是可以被回收的。<strong>相对而言，强引用是造成内存泄漏的主要原因之一。</strong></p>
+<ul>
+<li>强引用：只要强引用的对象是可触及的，被强引用的对象就不会被回收。比如这个”hello 双硅谷”<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/517f7338-19b9-404d-a4b9-890040b4829a-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/f222f539-c3d1-490d-8e79-27eb5819e443-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>如果str置为null   这个时候就会被回收</li>
+<li>软引用<ul>
+<li><em>内存不足即回收   -Xms10m -Xmx10m  //在报OOM之前，垃圾回收器会回收软引用的可达对象。</em><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/4049e061-4129-4167-b40e-cfdd9cfc32bf-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>弱引用<ul>
+<li>// 不管当前内存空间足够与否，都会回收它的内存</li>
+</ul>
+</li>
+<li><h2 id="虚引用"><a href="#虚引用" class="headerlink" title="虚引用"></a>虚引用</h2></li>
+</ul>
+</li>
+<li><p>GC性能的几大指标</p>
+</li>
+<li><p>JVM调优篇</p>
+<ul>
+<li>生产环境中的问题<ul>
+<li>发生了内存移除怎么处理</li>
+<li>给服务器分配多少内存合适</li>
+<li>怎么对垃圾回收器调优</li>
+<li>CPU负载高怎么处理</li>
+<li>分配多少线程比较合适</li>
+<li>不加log  怎么确定请求是否实行了某一行代码</li>
+<li>不加log  怎么实时查看某个方法的入参和返回值</li>
+</ul>
+</li>
+<li>为什么要调优  防止OOM  解决OOM  减少Full GC出现的频率</li>
+</ul>
+</li>
+<li><p>调优步骤</p>
+<ul>
+<li>性能监控、性能分析、性能调优<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/ce90f4e4-9aa1-4b6a-b962-030198e0d9cf-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JVM命令</p>
+<ul>
+<li>查看运行的Java进程<ul>
+<li>jps Java Virtual Machine Process Status Tool</li>
+<li>jps  显示pid和类名</li>
+<li>jps -q  显示pid</li>
+<li>jps -l  显示pid和全限定名</li>
+<li>jps -v  显示JVM参数</li>
+</ul>
+</li>
+<li>查看JVM统计信息<ul>
+<li>jstat Java Virtual Machine statistics monitoring tool<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/b3a763dd-aae4-4e7f-b10c-10d33645edea-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>jstat -class pid<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/3899f590-e60a-4340-96ce-6f33017e02a3-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>每秒打印1次<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/915abbf5-56c2-4219-87fb-a0de77955ed1-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>类加载统计<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/2a642908-d15b-4927-873a-9206edbf7b51-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>垃圾回收统计   jstat -gc 2060<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/6f571dc1-8ef0-4e1e-85bc-9eddf338907f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>堆内存统计  jstat -gccapacity 2060<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/fe0fd382-d937-4c95-be10-c1838c1a03fe-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>新生代垃圾回收统计<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/400b51e0-c385-4b21-9011-e4781f2d155f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>总结垃圾回收统计<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/8efc6046-dd8d-4141-bc94-441e3d8c7879-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>查看JVM参数   jinfo<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/bc7e9da1-3957-4ff8-9563-d28761ee7666-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>导出内存映像文件   获取dump文件 作用  出现了堆溢出时可以用dump文件分析<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/1f928e57-bb28-4b3f-bcc0-b96295137a84-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/1912078b-7ce1-4c95-9861-ba7f9d208833-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>打印线程快照  jstack pid</p>
+</li>
+<li><p>排查</p>
+</li>
+<li><p>jstack实战之高cpu占用率排查</p>
+<ul>
+<li><strong>1、</strong>使用top指令，定位CPU占用较高的进程。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/0251434d-d9dd-4bd5-bafe-4266e9506909-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>2.使用top -H -p ${进程id}指令，查看指定进程下各个线程的cpu使用情况<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/e739a85b-0208-41a3-bedc-35bc736402b3-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>注意：PID虽然名为进程控制符，<strong>但其用途不限于特指进程id</strong>。如上图中PID列指的就是线程的id</li>
+<li>3.使用printf “%x” xxx指令，将1977转换为16进制<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/4609dd90-6770-4fa7-bcd0-b93de9159260-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><strong>4</strong>使用jstack pid指令，查看当前的堆栈信息；并<strong>根据上一步得到的16进制的线程id，找到肇事线程</strong>。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/b705c322-4bcb-4d2f-a20c-679e9bb3d3b4-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>如果线程较多的话，我们可以使用grep指定来根据关键字定位行，jstack 1956 | grep -10 7b9 显示10行</li>
+<li><strong>5：</strong>分析肇事线程堆栈信息。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/d510fb6a-e43b-490d-a9cc-22228356acbf-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>我们已经定位到位置6，然后去找代码即可<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/2827bed2-0a3d-466e-908b-c2aa6ecef481-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>jstack之死锁排查</p>
+<ul>
+<li><strong>1、</strong>使用jps指令，查看所有java进程。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/0659ef78-4f38-493f-8da8-604708b74515-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><strong>2、</strong>使用jstack pid指令，查看指定进程的堆栈信息,观察并定位到死锁线程。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/bb313bdc-ae62-47f5-b37b-02259adfb9ee-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>jcmd  包括了之前 的所有  jcmd -l 列出所有进程pid号</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/5be5237a-7cd7-4a39-abb4-96b01ade100b-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/cbc0cd05-760c-4128-886c-093b94fec7f8-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>内存泄漏和内存溢出</p>
+<ul>
+<li>内存泄露：对象不会再被程序引用了，但是GC又不会回收他们</li>
+<li>内存溢出：内存不够分配新对象了</li>
+<li>两者关系：内存泄漏的增多最终会导致内存溢出。</li>
+</ul>
+</li>
+<li><p>JAVA中内存泄漏的情况</p>
+<ul>
+<li><p><img src="https://api2.mubu.com/v3/document_image/89af9633-3827-4eb5-b611-2a4675fe023b-12259280.jpg" alt="img"></p>
+</li>
+<li><p>静态集合类</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/0fdd6986-18a2-46bd-8a72-ddd1320c82e6-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>单例模式</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/4f05caf6-0f14-40ab-9107-20bcd27e1dc3-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>内部类持有外部类</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a2e9b2b7-8c36-466f-8c3b-267e3a89b70f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>不释放连接</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a52b8862-bac3-4812-b850-79608684003b-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>改变哈希值  当我们想把自定义对象存入map时就要保证对象的hashcode不变</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/f1c15ebe-5199-4313-a900-4bd84caa2524-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>缓存问题</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/5e4b4094-7e36-432e-b3c3-944a76e0ee37-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>内存泄漏案例</p>
+<ul>
+<li>第一个只是移动了指针，实际上栈顶的数据还在，没有被回收<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/8ae1dd10-9486-4e31-a4a6-492cf016fef2-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>解决   将栈顶元素置空</li>
+</ul>
+</li>
+<li><p>Eden区和两个S区理论上是8:1:1，但实际上是150:25:25，也就是6:1:1，原因是有一个参数UseAdaptiveSizePolicy，默认开启，它会自动选择各区大小的比例。虽然查出来SurvivoRatio=8,但没有启用，当UseAdaptiveSizePolicy禁用时 且显式地写出SurvivoRatio=8才会出现8:1:1的比例</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/33ae6bd9-0aa6-4530-a9d1-4bf42dd7b74f-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/cdc67e2a-9551-47ea-b304-d38657a79644-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/3c415e11-318c-4806-b4a6-cbfed2572dd0-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/ca3725c0-fb71-4d52-bbf1-c54a5cfe2e82-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/7df214b3-2fea-4370-837b-33beb3d76b87-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>1.4 动态对象年龄判定</p>
+</li>
+<li><p>“Hotspot遍历所有对象时，按照年龄从小到大对其所占用的大小进行累积，当<strong>累积的某个年龄大小超过了survivor区的一半时</strong>，<strong>取这个年龄和MaxTenuringThreshold中更小的一个值，作为新的晋升年龄阈值”。</strong></p>
+</li>
+<li><p>需要注意的是：<strong>对象默认晋升年龄并不都是15，这个是要区分垃圾收集器的，CMS就是6.</strong></p>
+</li>
+<li><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/dd8f0efc-a6ba-457d-b84f-c47b389e673f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/ca4e0e3b-6e72-4cd6-8a1b-cfa2ceb7e4ca-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/17/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%80%A7%E3%80%81%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80%E3%80%81%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/17/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%80%A7%E3%80%81%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80%E3%80%81%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/" class="post-title-link" itemprop="url">跨平台性、编译型语言、解释型语言</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-17 13:50:17 / 修改时间：14:35:24" itemprop="dateCreated datePublished" datetime="2021-10-17T13:50:17+08:00">2021-10-17</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="跨平台性是什么意思？"><a href="#跨平台性是什么意思？" class="headerlink" title="跨平台性是什么意思？"></a>跨平台性是什么意思？</h5><p>&emsp;&emsp;要知道，不同操作系统支持的函数、数据类型都可能不同，所以基于某个操作系统下编写的源代码一般是不能直接拿到另一个操作系统下编译的。注意<strong>我们所说的跨平台指的是源代码跨平台，而不是解释器跨平台</strong>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/17/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%80%A7%E3%80%81%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80%E3%80%81%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/16/JAVA%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/16/JAVA%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">JAVA基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-16 14:44:21" itemprop="dateCreated datePublished" datetime="2021-10-16T14:44:21+08:00">2021-10-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-17 14:41:44" itemprop="dateModified" datetime="2021-10-17T14:41:44+08:00">2021-10-17</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>360</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h5 id="为什么说Java是跨平台性的语言？"><a href="#为什么说Java是跨平台性的语言？" class="headerlink" title="为什么说Java是跨平台性的语言？"></a>为什么说Java是跨平台性的语言？</h5><p>&emsp;&emsp;跨平台性是指使用Java语言编写的程序，经过一次编译后，可以在不同操作系统上运行。其原理就是Java程序是通过Java虚拟机在操作系统上运行的，只要该操作系统安装了对应的Java虚拟机，这个系统就可以运行Java程序。<br>&emsp;&emsp;也就是说，Java程序只需要跟虚拟机打交道，与操作系统的交互都由虚拟机来负责。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/16/JAVA%E5%9F%BA%E7%A1%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/12/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/12/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/" class="post-title-link" itemprop="url">python批量修改文件后缀名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-12 15:54:23" itemprop="dateCreated datePublished" datetime="2021-10-12T15:54:23+08:00">2021-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-13 15:01:03" itemprop="dateModified" datetime="2021-10-13T15:01:03+08:00">2021-10-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>480</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_files_list</span>(<span class="params"><span class="built_in">dir</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    实现遍历dir目录下,所有文件(包含子文件夹的文件)</span></span><br><span class="line"><span class="string">    :param dir:指定文件夹目录</span></span><br><span class="line"><span class="string">    :return:包含所有文件的列表-&gt;list</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># parent:父目录, filenames:该目录下所有文件夹,filenames:该目录下的文件名</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">r&quot;E:\test&quot;</span></span><br><span class="line">filelist = get_files_list(path)</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> filelist:</span><br><span class="line">    portion = os.path.splitext(filename)  <span class="comment"># portion为名称和后缀分离后的列表</span></span><br><span class="line">    <span class="keyword">if</span> portion[<span class="number">1</span>] ==<span class="string">&quot;.bmp&quot;</span>:</span><br><span class="line">        newname = portion[<span class="number">0</span>] + <span class="string">&quot;.jpg&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(filename)  <span class="comment"># 打印出要更改的文件名</span></span><br><span class="line">        os.chdir(path)</span><br><span class="line">        os.rename(filename, newname)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/29/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/29/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-29 16:52:04" itemprop="dateCreated datePublished" datetime="2021-09-29T16:52:04+08:00">2021-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-15 22:30:38" itemprop="dateModified" datetime="2021-10-15T22:30:38+08:00">2021-10-15</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>367</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/29/hello-world/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Dreamer-shan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Dreamer-shan</p>
+  <div class="site-description" itemprop="description">吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Dreamer-shan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Dreamer-shan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/1713944558@qq.com" title="E-Mail → 1713944558@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+              <div id="music163player">
+                  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1827559941&auto=1&height=66"></iframe>
+              </div>
+  </aside>
+
+  <div id="sidebar-dimmer"></div>
+
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dreamer-shan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">16k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">14 分钟</span>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
