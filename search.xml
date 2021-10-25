@@ -9,7 +9,8 @@
 <h5 id="为什么需要JVM？"><a href="#为什么需要JVM？" class="headerlink" title="为什么需要JVM？"></a>为什么需要JVM？</h5><p>&emsp;&emsp;Java语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过JVM执行。</p>
 <p>&emsp;&emsp;优点：减少了开发的难度，兼容不同操作系统。</p>
 <p>&emsp;&emsp;缺点：比直接在操作系统上执行的程序的运行速度要慢。在早期这确实是一个问题，但是由于硬件技术的发展，这些问题一直在优化。</p>
-<h5 id="JVM运行时数据区"><a href="#JVM运行时数据区" class="headerlink" title="JVM运行时数据区"></a>JVM运行时数据区</h5><p>&emsp;&emsp;JVM运行时数据区分为堆和方法区（<strong>线程共享</strong>）、虚拟机栈、本地方法栈、程序计数器（<strong>线程私有</strong>）。<img src="/.com//a.png" alt="JVM运行时数据区"></p>
+<h5 id="JVM运行时数据区"><a href="#JVM运行时数据区" class="headerlink" title="JVM运行时数据区"></a>JVM运行时数据区</h5><p>&emsp;&emsp;JVM运行时数据区分为堆和方法区（<strong>线程共享</strong>）、虚拟机栈、本地方法栈、程序计数器（<strong>线程私有</strong>）。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/ed3e919c-acab-4314-9425-e357ac95a610-12259280.jpg" alt="img"></p>
 <p>&emsp;&emsp;堆：内存中最大的一块，<strong>几乎</strong>所有的对象实例和数组都分配在堆中。<strong>注意是几乎，而不是全部。</strong>由于编译技术的进步，逃逸分析技术的发展，现在也存在<strong>栈上分配</strong>的情况。</p>
 <p>&emsp;&emsp;方法区：用于存储已被虚拟机加载的<strong>类型信息、常量、静态变量</strong>、即时编译器编译后的代码缓存等数据，<strong>运行时常量池也位于方法区中</strong>。</p>
 <p>&emsp;&emsp;虚拟机栈：虚拟机栈的生命周期与线程相同。每个方法被执行的时候，Java虚拟机都会同步创建一个栈帧用于存储<strong>局部变量表、操作数栈、动态连接、方法出口</strong>等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。当栈深度大于虚拟机栈所允许的深度，会抛出<strong>StackOverflowError</strong>异常。如果Java虚拟机栈容量可以动态扩展，当栈扩展时无法申请到足够的内存会抛出<strong>OutOfMemoryError</strong>异常。</p>
@@ -28,11 +29,11 @@
 <h5 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h5><p>&emsp;&emsp;对象定位主要有两种方式：句柄访问和直接指针访问</p>
 <ul>
 <li>句柄访问：从堆中划分一块内存作为句柄池，reference中存放着句柄地址，句柄中存放着对象实例数据与类型数据的具体地址信息。<ul>
-<li>特点：当对象被移动时，只会改变句柄池中的<strong>实例数据指针</strong>，<strong>reference本身并不需要被修改</strong>。<strong>多了一次间接访问的开销</strong><img src="/.com//c.png" alt="句柄访问对象"></li>
+<li>特点：当对象被移动时，只会改变句柄池中的<strong>实例数据指针</strong>，<strong>reference本身并不需要被修改</strong>。<strong>多了一次间接访问的开销</strong><img src="https://api2.mubu.com/v3/document_image/c52d6c3e-b864-4b84-a834-e2e67c529c8d-12259280.jpg" alt="img"></li>
 </ul>
 </li>
 <li>直接指针：<ul>
-<li>速度更快，节省了一次指针定位的开销。<img src="/.com//d.png" alt="直接指针访问对象"></li>
+<li>速度更快，节省了一次指针定位的开销。<img src="https://api2.mubu.com/v3/document_image/ce87bd80-6e3b-4ebf-95ed-11153650160d-12259280.jpg" alt="img"></li>
 </ul>
 </li>
 </ul>
@@ -49,7 +50,7 @@
 <li>特点：原理简单，判定效率高。但是难以解决对象之间相互引用的问题（此时需要配合大量额外处理才能保证正确地工作）。</li>
 </ul>
 </li>
-<li>可达性分析：通过GC Roots根对象作为起始节点集，若GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的<img src="/.com//e.png" alt="可达性分析"></li>
+<li>可达性分析：通过GC Roots根对象作为起始节点集，若GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的<img src="https://api2.mubu.com/v3/document_image/917fc3c1-7a71-4570-8ecb-d6d6a0443c96-12259280.jpg" alt="img"></li>
 </ul>
 <h5 id="可作为GC-Roots的对象"><a href="#可作为GC-Roots的对象" class="headerlink" title="可作为GC Roots的对象"></a>可作为GC Roots的对象</h5><ul>
 <li>在<strong>虚拟机栈（栈帧中的本地变量表）中引用的对象</strong>，譬如各个线程被调用的方法堆栈中使用到的 参数、局部变量、临时变量等。 </li>
@@ -109,7 +110,7 @@
 <p>CMS是基于增量更新来做<strong>并发标记</strong>的，G1、Shenandoah则是用原始快照来实现。</p>
 </li>
 </ul>
-<h5 id="经典垃圾收集器"><a href="#经典垃圾收集器" class="headerlink" title="经典垃圾收集器"></a>经典垃圾收集器</h5><h6 id="emsp-CMS（标记-清除算法）"><a href="#emsp-CMS（标记-清除算法）" class="headerlink" title="&emsp;CMS（标记-清除算法）"></a>&emsp;CMS（标记-清除算法）</h6><p>&emsp;&emsp;老年代<strong>并行收集器</strong>，以获取最短回收停顿时间为目标的收集器，具有<strong>高并发、低停顿</strong>的特点，追求最短GC回收停顿时间<img src="/.com//f.jpg" alt="img"></p>
+<h5 id="经典垃圾收集器"><a href="#经典垃圾收集器" class="headerlink" title="经典垃圾收集器"></a>经典垃圾收集器</h5><h6 id="emsp-CMS（标记-清除算法）"><a href="#emsp-CMS（标记-清除算法）" class="headerlink" title="&emsp;CMS（标记-清除算法）"></a>&emsp;CMS（标记-清除算法）</h6><p>&emsp;&emsp;老年代<strong>并行收集器</strong>，以获取最短回收停顿时间为目标的收集器，具有<strong>高并发、低停顿</strong>的特点，追求最短GC回收停顿时间<img src="https://api2.mubu.com/v3/document_image/27cc5986-593c-4797-bca5-8eb0d89b53f5-12259280.jpg" alt="img"></p>
 <p>&emsp;&emsp;    回收步骤:</p>
 <ul>
 <li><p>初始标记: 只是标记一下GC Roots能直接关联到的对象，速度很快，<strong>需要STW</strong></p>
@@ -140,7 +141,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/.com//g.png" alt="image-20211021100940766"></p>
+<p><img src="https://api2.mubu.com/v3/document_image/ff1e23ec-c0da-42ae-aee9-861e9bef469f-12259280.jpg" alt="img"></p>
 </li>
 </ul>
 <h6 id="3-6-2-ZGC收集器"><a href="#3-6-2-ZGC收集器" class="headerlink" title="3.6.2 ZGC收集器"></a>3.6.2 ZGC收集器</h6><ul>
@@ -173,7 +174,7 @@
 <li>在发生Minor GC之前，虚拟机必须先<strong>检查老年代最大可用的连续空间是否大于新生代所有对象总空间</strong>，如果成立，那这一次Minor GC可以确保是安全的。如果不成立，虚拟机会先查看HandlePromotionFailure参数的设置值<strong>是否允许担保失败</strong>（Handle Promotion Failure）；如果允许，那会继续检查<strong>老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试进行一次Minor GC，尽管这次Minor GC是有风险的</strong>；如果小于，或者-XX：HandlePromotionFailure设置<strong>不允许冒险，那这时就要改为进行一次Full GC。</strong></li>
 <li>“冒险”是冒了什么风险：前面提到过，新生代使用复制收集算法，但为了内存利用率，只使用其中一个Survivor空间来作为轮换备份，因此当出现大量对象在Minor GC后仍然存活的情况——<strong>最极端的情况就是内存回收后新生代中所有对象都存活</strong>，需要老年代进行分配担保，把Survivor无法容纳的对象直接送入老年代，<strong>但一共有多少对象会在这次回收中活下来在实际完成内存回收之前是无法明确知道的，所以只能取之前每一次回收晋升到老年代对象容量的平均大小作为经验值。如果赌赢了，就只需要Minor GC，赌输了还是需要Full GC，这样停顿时间就很长了</strong>。</li>
 </ul>
-<h5 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h5><p>&emsp;类的生命周期：加载、验证、准备、解析、初始化、使用和卸载<img src="/.com//h.png" alt="image-20211021110722204"></p>
+<h5 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h5><p>&emsp;类的生命周期：加载、验证、准备、解析、初始化、使用和卸载<img src="https://api2.mubu.com/v3/document_image/7b7fd4c0-2228-481a-b2db-7c796db28dad-12259280.jpg" alt="img"></p>
 <h6 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h6><ul>
 <li>加载：根据查找路径找到相应的 class 文件然后导入；</li>
 <li>验证：检查加载的 class 文件的正确性(文件格式验证、元数据验证、字节码验证)</li>
@@ -183,7 +184,7 @@
 </ul>
 <h6 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h6><p>&emsp;如果一个类加载器收到了类加载的请求，它首先<strong>不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成</strong>，每一个层次的类加载器都是如此，因此所有的<strong>加载请求最终都应该传送到最顶层的启动类加载器中</strong>，只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需的类）时，子加载器才会尝试自己去完成加载。</p>
 <p>&emsp;好处：是Java中的类随着它的类加载器一起具备了一种带有优先级的层次关系。</p>
-<p><img src="/.com//i.png" alt="image-20211021111851986"></p>
+<p><img src="https://api2.mubu.com/v3/document_image/36cb3d78-4a3d-4f20-8623-4428282459e5-12259280.jpg" alt="img"></p>
 <h5 id="类加载的时机（什么时候会对类进行初始化）"><a href="#类加载的时机（什么时候会对类进行初始化）" class="headerlink" title="类加载的时机（什么时候会对类进行初始化）"></a>类加载的时机（什么时候会对类进行初始化）</h5><ul>
 <li>遇到new关键字</li>
 <li>读取类中的<strong>静态字段</strong>或者调用类中的<strong>静态方法</strong>的时候</li>
@@ -661,9 +662,8 @@
 <p>&emsp;&emsp;&emsp;&emsp;对于编译型语言，我们下载到的是可执行文件，源代码被作者保留，所以编译型语言的程序一般是<strong>闭源</strong>的。</p>
 <p>&emsp;&emsp;&emsp;&emsp;对于解释型语言，我们下载到的是所有的源代码，因为作者不给源代码就没法运行，所以解释型语言的程序一般是<strong>开源</strong>的</p>
 <p>&emsp;&emsp;编译型语言和解释型语言的执行流程如下图所示：</p>
-<p><img src="/.com//1.jpg" alt="编译型语言和解释型语言的执行流程"></p>
+<p><img src="https://api2.mubu.com/v3/document_image/74a0fec7-97de-41a0-82e6-b8eda78fb014-12259280.jpg" alt="编译型语言和解释型语言的执行流程"></p>
 <p>&emsp;&emsp;有次面试被问到过<strong>Java和Python的区别</strong>，当时只答了一些语法层面，还有强类型语言弱类型语言的东西，包括垃圾回收机制（Python也是有自动垃圾回收的，而且用的是引用计数法）。面试官说我理解得不够深刻，我想他应该是想让我从这个层面来说吧。</p>
-<p><img src="/.com//1.jpg" alt="a"></p>
 ]]></content>
       <tags>
         <tag>语言类型的差异</tag>
