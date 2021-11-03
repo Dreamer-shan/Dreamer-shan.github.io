@@ -1,35 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JVM复习</title>
-    <url>/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/JVM%E5%A4%8D%E4%B9%A0/</url>
-    <content><![CDATA[<h5 id="Java和C-的一个重要区别"><a href="#Java和C-的一个重要区别" class="headerlink" title="Java和C++的一个重要区别"></a>Java和C++的一个重要区别</h5><p>&emsp;&emsp;Java和C++都是面向对象的，但是C++需要程序员手动开辟(malloc)和回收(free)内存，但是有了JVM内存管理的存在，所以Java不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
+    <title>《Redis 设计与实现》读书笔记</title>
+    <url>/2021/10/26/%E3%80%8ARedis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8ARedis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h5 id="Redis 中的数据结构"><a href="#Redis 中的数据结构" class="headerlink" title="Redis 中的数据结构"></a>Redis 中的数据结构 </h5><h6 id="字符串"><a href="# 字符串" class="headerlink" title="字符串"></a> 字符串</h6><p>&emsp;&emsp; 简单动态字符串的结构：使用一个结构体来表示，其内部有一个<strong>buf 数组(保存字符串)，以及字符串长度 len，剩余长度 free 等字段</strong>，优点是通过长度限制写入，避免缓冲区溢出，另外剩余长度不足时会自动扩容，扩展性较好，不需要频繁分配内存。</p>
 <span id="more"></span>
 
-<h5 id="为什么需要JVM？"><a href="#为什么需要JVM？" class="headerlink" title="为什么需要JVM？"></a>为什么需要JVM？</h5><p>&emsp;&emsp;Java语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过JVM执行。</p>
-<p>&emsp;&emsp;优点：减少了开发的难度，兼容不同操作系统。</p>
-<p>&emsp;&emsp;缺点：比直接在操作系统上执行的程序的运行速度要慢。在早期这确实是一个问题，但是由于硬件技术的发展，这些问题一直在优化。</p>
-<h5 id="JVM运行时数据区"><a href="#JVM运行时数据区" class="headerlink" title="JVM运行时数据区"></a>JVM运行时数据区</h5><p>&emsp;&emsp;JVM运行时数据区分为堆和方法区（<strong>线程共享</strong>）、虚拟机栈、本地方法栈、程序计数器（<strong>线程私有</strong>）。</p>
-<p><img src="https://api2.mubu.com/v3/document_image/ed3e919c-acab-4314-9425-e357ac95a610-12259280.jpg" alt="img"></p>
-<p>&emsp;&emsp;堆：内存中最大的一块，<strong>几乎</strong>所有的对象实例和数组都分配在堆中。<strong>注意是几乎，而不是全部。</strong>由于编译技术的进步，逃逸分析技术的发展，现在也存在<strong>栈上分配</strong>的情况。</p>
-<p>&emsp;&emsp;方法区：用于存储已被虚拟机加载的<strong>类型信息、常量、静态变量</strong>、即时编译器编译后的代码缓存等数据，<strong>运行时常量池也位于方法区中</strong>。</p>
-<p>&emsp;&emsp;虚拟机栈：虚拟机栈的生命周期与线程相同。每个方法被执行的时候，Java虚拟机都会同步创建一个栈帧用于存储<strong>局部变量表、操作数栈、动态连接、方法出口</strong>等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。当栈深度大于虚拟机栈所允许的深度，会抛出<strong>StackOverflowError</strong>异常。如果Java虚拟机栈容量可以动态扩展，当栈扩展时无法申请到足够的内存会抛出<strong>OutOfMemoryError</strong>异常。</p>
-<p>&emsp;&emsp;本地方法栈：与虚拟机栈的作用，虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈为虚拟机使用到的本地（Native）方法服务。</p>
-<p>&emsp;&emsp;程序计数器：可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时，代码的分支、循环、跳转、异常处理、线程恢复，都需要依赖这个计数器来完成。此内存区域是唯一一个在《Java虚拟机规范》中<strong>没有规定任何OutOfMemoryError</strong>情况的区域。</p>
-<h5 id="new一个对象的时候会发生什么？"><a href="#new一个对象的时候会发生什么？" class="headerlink" title="new一个对象的时候会发生什么？"></a>new一个对象的时候会发生什么？</h5><p>&emsp;&emsp;Java虚拟机遇到一条字节码new指令时，首先将去检查这个指令的参数是否能在常量池中定位到 一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，先要执行类加载过程。也就是加载-&gt;验证-&gt;准备-&gt;解析-&gt;初始化-&gt;使用-&gt;卸载。</p>
-<p>&emsp;&emsp;类加载通过后，虚拟机需要为新对象<strong>分配内存</strong>。对象的内存大小在<strong>类加载完成后就可以确定</strong>。根据内存是否规整，分配内存有两种方式。内存规整时使用指针碰撞方式，不规整时使用空闲列表方式。</p>
-<p>​        &emsp;&emsp;指针碰撞：维护一个指针作为可用内存空间和不可用内存空间的分界点。内存分配就是将这个指针向着空闲内存的方向移动一段与对象内存大小相等的距离。Serial、ParNew收集器有空间压缩整理的能力（标记复制or整理算法），故这两款收集器使用指针碰撞方式来分配内存。</p>
-<p>&emsp;&emsp;&emsp;&emsp;空闲列表：维护一个列表来记录哪些内存块是可用的，在分配内存时，从列表中找到一块足够大的空间划分给对象实例。CMS收集器使用的是标记清除法，理论上内存是不规整的，所以使用空闲列表的方式来分配内存。</p>
-<p>&emsp;&emsp;在并发情况下，即使只是修改一个指针所指向的位置，也不一定是线程安全的。可能会出现这种情况：给对象A分配内存时，指针还没来得及修改，对象B使用了原来的指针分配内存。解决这个问题 有两种可选方案：</p>
+<p><img src="https://api2.mubu.com/v3/document_image/aef323e1-d81e-45b5-bc34-78f82fca759f-12259280.jpg" alt="img"></p>
+<p>&emsp; 简单动态字符串 (SDS) 与 C 语言字符串的区别</p>
 <ul>
-<li><strong>对分配内存空间的动作进行同步处理</strong>——实际上虚拟机是采用<strong>CAS+失败重试</strong>的方式保证更新操作的原子性；</li>
-<li>内存分配的动作<strong>按照线程划分在不同的空间之中进行</strong>，即每个线程在Java堆中预先分配一小块内存，称为<strong>本地线程分配缓冲</strong>（Thread Local Allocation Buffer，TLAB），哪个线程要分配内存，就在哪个线程的本地缓冲区中分配，只有本地缓冲区用完了，分配新的缓存区时才需要同步锁定</li>
+<li><p>1. 常数复杂度获取字符串长度</p>
+<ul>
+<li>len 表示已经使用字节的数量 (也就是字符串的长度，这样就可以 O(1) 复杂度获取字符串的长度)</li>
+<li>即使对一个非常长的字符串键执行 strlen 命令，也不会对系统性能造成影响，因为 strlen 复杂度仅为 O(1)</li>
 </ul>
-<p>&emsp;&emsp;内存分配完了之后，虚拟机会为对象初始化零值。还要对对象进行必要的设置，例如类的元数据信息、对象的哈希码、对象的GC分代年龄等信息。</p>
-<h5 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h5><p>&emsp;&emsp;对象定位主要有两种方式：句柄访问和直接指针访问</p>
+</li>
+<li><p>2. 杜绝缓冲区溢出</p>
+<p><img src="https://api2.mubu.com/v3/document_image/d531493d-261f-42e3-a5d0-a1249a3655d9-12259280.jpg" alt="img"></p>
 <ul>
-<li>句柄访问：从堆中划分一块内存作为句柄池，reference中存放着句柄地址，句柄中存放着对象实例数据与类型数据的具体地址信息。<ul>
-<li>特点：当对象被移动时，只会改变句柄池中的<strong>实例数据指针</strong>，<strong>reference本身并不需要被修改</strong>。<strong>多了一次间接访问的开销</strong><img src="https://api2.mubu.com/v3/document_image/c52d6c3e-b864-4b84-a834-e2e67c529c8d-12259280.jpg" alt="img"></li>
+<li>C 字符串不记录自身长度带来的一个问题是容易造成缓冲区溢出：执行 strcat 时如果忘记分配足够空间，s1 的数据就会溢出到 s2 所在的空间中  如图，执行 strcat 之前没有分配足够空间，s1 就变成了 rediscluster，也就是 s1 的内容溢出到了 s2 所在位置<img src="https://api2.mubu.com/v3/document_image/81fcb70e-7b3e-4d79-b919-4262e4695044-12259280.jpg" alt="img"></li>
+<li>SDS 空间分配策略：需要对 SDS 进行修改时，<strong>先会检查 SDS 的空间是否满足修改所需的要求，不满足要求的话就先拓展 SDS 的空间</strong>，再执行 sdscat 拼接操作</li>
+</ul>
+</li>
+<li><p>3. 减少修改字符串时带来的内存重分配次数</p>
+<ul>
+<li><p>对于一个包含了 N 个字符的 C 字符串来说，底层实现总是一个 N+1 个字符长的数组(‘\0’作为结束标志)，所以每次增长或者缩短 C 字符串，都要对保存这个 C 字符串的数组进行内存重分配操作。</p>
+<ul>
+<li><p>如果是拼接操作 append，执行这个操作之前，程序先要内存重分配来扩展底层数组的大小——如果忘了这一步就会产生 <strong> 缓冲区溢出</strong></p>
+</li>
+<li><p>如果是裁剪操作 trim，执行这个操作之后，程序需要内存重分配来释放字符串不再使用的那部分空间——如果忘了这一步就会产生 <strong> 内存泄露</strong></p>
+</li>
+</ul>
+</li>
+<li><p>在一般程序中，如果修改字符串长度的情况不经常出现，那么每次修改都执行一次内存重分配是可以接受的，但是<strong>redis 作为数据库，经常被用于速度要求严苛、数据被频繁修改的场合，如果每次修改字符串的长度都需要执行一次内存重分配的话</strong>，内存重分配的时间就会占据修改字符串所用时间段一大部分，如果频繁修改还可能对性能造成影响。</p>
+</li>
+</ul>
+</li>
+<li><p>4. 减少内存分配次数采取的策略：<strong>空间预分配 </strong> 以及 <strong> 惰性空间释放</strong></p>
+<ul>
+<li>空间预分配：<ul>
+<li>修改后的 SDS&lt;1MB，程序分配和 len 属性同样大小的未使用空间，此时 SDS 的 len 与 free 大小相等。比如修改后实际存储字符串的空间变为 13 字节，那么 len=13，free=13，buf 数组整体的长度 =13+13+1=27（额外 1 字节保存结束符）</li>
+<li>修改后 SDS&gt;=1MB。程序会分配 1MB 的未使用空间。比如修改后实际存储字符串的空间变为 2MB，那么 len=2M，free=1MB，buf 数组整体的长度 =2MB+1MB+1byte</li>
+</ul>
+</li>
+<li>惰性空间释放：用于优化 SDS 字符串 <strong> 缩短操作 </strong>。当 SDS API 需要缩短保存的字符串时，程序并<strong> 不立即回收这部分内存，而是使用 free 属性将字节的数量记录，等待使用。</strong>与此同时，SDS 提供了相关 API，<strong>在有需要时，真正释放未使用空间</strong></li>
+</ul>
+</li>
+</ul>
+<h6 id="字符串总结"><a href="# 字符串总结" class="headerlink" title="字符串总结"></a>字符串总结 <img src="https://api2.mubu.com/v3/document_image/a41abab9-9440-4535-b78d-7475be0c171b-12259280.jpg" alt="img"></h6><h6 id="链表"><a href="# 链表" class="headerlink" title="链表"></a> 链表 </h6><p> 双向链表结构，使用 adlist.h/list 来持有，操作链表<img src="https://api2.mubu.com/v3/document_image/f104c56b-d380-44cd-a64a-28fb51eeba76-12259280.jpg" alt="img"><img src="https://api2.mubu.com/v3/document_image/81d2b496-b86c-4d50-8900-c95034f36dc1-12259280.jpg" alt="img"></p>
+<p>链表总结</p>
+<ul>
+<li>双端：链表节点带有 prev 和 next 指针，获取前置和后置节点的复杂度都是 O(1)</li>
+<li>无环：表头节点的 prev 指针和表尾节点的 next 指针都指向 NULL，对链表的访问以 NULL 为终点。 带表头指针和表尾指针，带链表长度计数器 </li>
+<li>头尾指针：将程序获取头尾节点的复杂度降为 O(1)</li>
+<li>长度计数器：将程序获取表长的复杂度降为 O(1)</li>
+<li>多态：链表节点使用 void* 指针来保存节点值，并且可以通过 list 结构的 dup、free、match 为节点值设置类型特定函数，所以链表可以用于保存各种不同类型的值</li>
+</ul>
+<h6 id="字典"><a href="# 字典" class="headerlink" title="字典"></a>字典</h6><p>&emsp; 数组中的每个元素都是指向 dict.h/dictht 的结构，dictEntry 就是一个键值对<img src="https://api2.mubu.com/v3/document_image/2ce1d861-37a6-4e50-bd6a-f31a52b72403-12259280.jpg" alt="img"></p>
+<p>Redis 中的字典由 dict.h/dict 实现，由这个数据结构将字典组织在一起</p>
+<p><img src="https://api2.mubu.com/v3/document_image/d5280468-3589-4c38-8a7a-c457c4c0c608-12259280.jpg" alt="img"></p>
+<ul>
+<li>ht 属性是包含两个项的数组，<strong>每项都是一个哈希表 </strong>，<strong>ht[0] 平时使用，而 ht[1]仅在 rehash 时使用</strong>。</li>
+<li>rehashidx 记录了 rehash 的进度，初始为 -1</li>
+<li>解决键冲突：链地址法，为了提高速度，每次都是 <strong> 将新节点添加到链表的表头位置</strong>，复杂度为 O(1)（这点跟 hashmap 不一样）</li>
+</ul>
+<p>rehash 的过程</p>
+<ul>
+<li>1. 为字典 ht[1]哈希表分配空间，大小取决于要执行的操作与 ht[0]当前键值对的数量，将保存在 ht[0]中的所有键值对存放到 ht[1]指定的位置</li>
+<li>2. 当 ht[0]的所有键值对都迁移完毕后，释放 ht[0]，并指向 ht[1]，并在 ht[1]上创建一个空的哈希表，为下次 rehash 准备。</li>
+</ul>
+<p>扩容的条件</p>
+<ul>
+<li>服务器目前 <strong> 没有在执行 </strong>BGSAVE 命令或 BGREWRITEAOF 命令，并且哈希表的<strong> 负载因子 &gt;=1</strong></li>
+<li>服务器 <strong> 正在执行 </strong>BGSAVE 命令或 BGREWRITEAOF 命令，并且哈希表的<strong> 负载因子 &gt;=5</strong></li>
+</ul>
+<p>为什么根据 BGSAVE 命令或 BGREWRITEAOF 命令来判断是否扩展？</p>
+<ul>
+<li>执行这些命令时，Redis 需要创建当前服务器进程的子进程，大多数操作系统采用 <strong> 写时复制技术 </strong> 来优化子进程使用效率，此时提高负载因子，可以尽量避免子进程对哈希表扩展，避免不必要的内存写入操作，节约内存。</li>
+<li>Redis 在持久化时，如果是采用 BGSAVE 命令或者 BGREWRITEAOF 的方式，那 Redis 会 <strong>fork 出一个子进程来读取数据，从而写到磁盘中</strong>。如果子进程存在期间，发生了大量的写操作，那可能就会出现很多的分页错误(页异常中断 page-fault)，这样就得耗费不少性能在复制上。<strong> 而在 rehash 阶段上，写操作是无法避免的。</strong>所以 Redis 在 fork 出子进程之后，将负载因子阈值提高，尽量减少写操作，避免不必要的内存写入操作，最大限度地节约内存。</li>
+</ul>
+<p>渐进式 hash</p>
+<ul>
+<li>rehash 时会将 ht[0]中所有的键值对 rehash 到 ht[1]，如果 <strong> 键值对很多并且一次性操作的话，容易导致服务器在一段时间内停止服务 </strong>。为避免这种情况，Redis 采用渐进式 rehash，将 ht[0] 中的键值对 <strong> 分多次，慢慢的 rehash 到 ht[1]之中</strong>。</li>
+</ul>
+<p>渐进式 hash 的步骤</p>
+<ul>
+<li>1. 为 ht[1]分配空间，让字典同时持有两个哈希表。</li>
+<li>2. 在字典中维持一个索引计数器变量 rehashidx，将其设置为 0，表示 rehash 正式开始。</li>
+<li>3. 在 rehash 进行期间，每次对字典进行添加，删除，查找或更新操作时，程序除了执行指定的操作外，还会将 ht[0]哈希表在 rehashidx 索引上的所有键值对 rehash 到 ht[1]，当 rehash 工作完成后，将 rehashidx++。</li>
+<li>4. 某个时刻，ht[0]中的所有键值对都被 rehash 至 ht[1]，此时设置 rehashidx= -1 时，表示 rehash 操作已经完成。</li>
+</ul>
+<p>渐进式 hash 的好处</p>
+<p>&emsp; 采用了分而治之的方式，将 rehash 键值对所需的计算工作均摊到对字典的每个操作中，从而避免集中式 rehash 带来庞大计算量</p>
+<p>&emsp; 在 rehash 的期间，字典同时使用 ht[0]，ht[1]两个哈希表。对哈希表的操作会在两个表上进行，比如查找键时，<strong>先在 ht[0]里面查找，如果为空，就继续到 ht[1]里查找 </strong>。在此期间，<strong> 新增的键值对都会被添加到 ht[1]中 </strong>，ht[0] 不承担任何添加操作，<strong>保证 ht[0]中的键值对只能是越来越少</strong>。</p>
+<h6 id="跳表"><a href="# 跳表" class="headerlink" title="跳表"></a>跳表 </h6><p>　跳跃表是一种<strong> 有序的 </strong> 数据结构，通过在每个节点 <strong> 维持多个指向其他节点的指针</strong>，达到快速访问节点的目的。Redis 只有在两个地方用到了跳跃表，一个是实现有序集合键，另一个是在集群节点中作为内部数据结构。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/cf9cb1d2-8ec5-4026-b32c-e8c7f22db422-12259280.jpg" alt="img"></p>
+<p><img src="https://api2.mubu.com/v3/document_image/ea8f1d97-b799-4ee3-ace2-d64bc5598109-12259280.jpg" alt="img"></p>
+<p>　1. 层–level</p>
+<p>　　跳跃表的每个节点都会包含多个层，每次创建一个新跳跃表时，都会根据 <strong> 幂次定律</strong>，随机生成一个<strong>1~32 之间的数作为层的大小</strong>。每个层都会包含前进指针和跨度</p>
+<p>　2. 前进指针（forword）</p>
+<p>　　用于访问下一个节点。跨度表示两个节点之间的距离，指向 NULL 的所有前进指针的跨度为 0。跨度用于计算排位，访问某一结点的 <strong> 经过的跨度之和就是当前节点的排位</strong></p>
+<p>　3. 后退指针–backward</p>
+<p>　　用于从表尾向表头方向访问节点，<strong>前进指针可以一次跳过多个节点 </strong>，<strong> 后退指针只能后退至前一个节点</strong>，因为每个节点只有一个后退指针。</p>
+<p>　4. 分值–score</p>
+<p>　　分值是一个 double 类型的浮点数，跳跃表中节点都按照分值排序。</p>
+<p>　5. 成员对象–obj</p>
+<p>　　是一个指针，指向字符串 SDS 对象。一个跳跃表中，对象必须是唯一的，但分值可以相同。相同时按对象字典序来排序。</p>
+<p>　Redis 的 level 个数 <strong> 为什么要用幂次定律生成</strong>（随机生成节点的层数）？</p>
+<p>　　通过幂次定律能保证 <strong> 越高 level 的结点数量越少 。保证索引等级越高，参与索引建立的元素越少，如果每层都有很多 level，那么这个索引建立的就没有意义了。</strong></p>
+<p>　为什么不用最均衡的方式，按照节点分数的排序情况均匀建立索引？</p>
+<p>　　考虑到下一个插入的元素具有随机性，这样设计不容易出现最坏的情况。如果每次都以均匀固定的方式建索引，维护的成本很高，跳跃表的优点就是维持结构平衡的成本低，完全依靠随机。跳跃表相比二叉树有一个优势就在于不需要主动 rebalance 去维护平衡。</p>
+<p>　跳表的查找过程</p>
+<p>　　此时跳跃表查找 10，会先从 header 节点（O1）的最高层（L3）寻找，发现要查找的数小于 23.２则返回，继续从下一个有后继的层开始寻找，当发现要查找的数小于 11.0 时，则从 O1 的下一层找，此时到 O2 的 L1，发现要查找的数大于 7.0，则从 L1 找，直到查找到相邻节点为止。<img src="https://api2.mubu.com/v3/document_image/4dbbfdf9-4dfe-41f1-a0b2-f3fc8c0a1ddd-12259280.jpg" alt="img"></p>
+<p>　为什么有序集合需要同时使用跳跃表和字典来实现？</p>
+<p>　　如果 <strong> 只使用字典存储，由于是无序的，所以每次在范围查询时，需要排序 </strong>，时间复杂度 O(nlogn) 为和额外 O(n)  的内存空间，因为要创建一个数组存储排序后的元素。 如果 <strong> 只用跳跃表实现，根据成员查找分值时，复杂度将为 O(logn)</strong> 。综上，为了让有序集合的分值查找和范围查找都尽可能快地执行，Redis 选择字典和跳跃表两种数据结构结合的方式</p>
+<p>　跳表时间复杂度<img src="https://api2.mubu.com/v3/document_image/5b934ef8-c434-473d-88d0-faa17f1821e1-12259280.jpg" alt="img"></p>
+<h5 id="数据库"><a href="# 数据库" class="headerlink" title="数据库"></a>数据库</h5><p>　Redis 把所有库信息都保存在 redis.h/redisServer 结构的 db 数组中，数组类型是 redis.h/redisDB，dbnum 决定着应该创建多少数据库中的 db，默认为 16，clients 维护着所有连接 Redis 的客户端<img src="https://api2.mubu.com/v3/document_image/79cb9883-2f79-4a5b-8a0f-60e0eebc74ab-12259280.jpg" alt="img"></p>
+<p>切换库时，其实就是 redisClient.db 对 redisServer.db 数组的目标数据库指针的移动　<img src="https://api2.mubu.com/v3/document_image/81d85ea8-e660-4a79-b3fa-b4ffb356ee94-12259280.jpg" alt="img"></p>
+<h6 id="存储过期时间"><a href="# 存储过期时间" class="headerlink" title="存储过期时间"></a>存储过期时间</h6><p>　redisDb 中有一个 expires 的字典数据结构保存所有键的过期时间，也称为过期字典。过期字典的值是一个 long long 类型的整数，保存了键所指向的数据库键的过期时间（毫秒精度的 Unix 时间戳）</p>
+<p><img src="https://api2.mubu.com/v3/document_image/0089123b-1ace-428f-8d52-dd5d37c830be-12259280.jpg" alt="img"></p>
+<h6 id="过期键删除策略"><a href="# 过期键删除策略" class="headerlink" title="过期键删除策略"></a>过期键删除策略</h6><p>　定时删除：设置键的过期时间时，创建定时器，过期时，定时器立刻执行键的删除。</p>
+<p>　惰性删除：不着急删除过期键，每次获取时都会进行过期校验</p>
+<p>　定期删除：隔一段时间，程序就对数据库检查，删除过期键</p>
+<h6 id="删除策略的特点"><a href="# 删除策略的特点" class="headerlink" title="删除策略的特点"></a>删除策略的特点 </h6><p>　定时删除：<strong> 对内存友好，但对 CPU 不友好。</strong>过期键比较多时，删除会占用资源，特别是和删除当前任务无关的过期键，影响性能。<strong>Redis 定时器需要创建时间事件</strong>，时间事件底层由无序链表实现，查找复杂度为 O(N)，如果需要高效处理必然要创建大量的定时器，并不现实。</p>
+<p>　惰性删除：<strong>对 CPU 友好，但对内存不友好 </strong>。不需要把时间浪费在非相关键的删除上。如果有非常多的过期键，这些键又恰好没有被访问到的话，那么它们永远不会被删除，除非用户手动执行 flushdb，我们甚至可以把<strong> 这种情况下看作是一种内存泄露 </strong>。当键非常多时，会导致内存泄漏，因为<strong> 只有用到时才会判断，删除</strong>。</p>
+<p>　定期删除：<strong>定时删除占用太多 CPU 时间，影响响应时间，惰性删除浪费太多内存，有内存泄露的风险 </strong>。<font color="red"> 定期删除是一种折衷的方式</font>，隔一段时间执行一次，并限制删除操作执行的时长和频率减少对 CPU 的占用；定期删除还能减少庞大的过期键对内存的占用。</p>
+<p>　<strong>难点是如何确定时长和频率，执行得太频繁或者执行时间太长，会退化为定时删除，执行得太少或者执行时间太短，会退化为惰性删除</strong>，因此，服务器必须根据情况，合理设置删除的执行时长和执行频率。</p>
+<h5 id="redis 持久化"><a href="#redis 持久化" class="headerlink" title="redis 持久化"></a>redis 持久化</h5><p>　RDB 持久化：RDB 文件是经过压缩的二进制文件，可通过该文件还原成数据库状态</p>
+<p>　AOF 持久化：采用日志的形式来记录每个写操作，并追加到文件中</p>
+<h6 id="RDB 与 AOF 共存的载入情况"><a href="#RDB 与 AOF 共存的载入情况" class="headerlink" title="RDB 与 AOF 共存的载入情况"></a><strong>RDB 与 AOF 共存的载入情况 </strong></h6><p>　由于 AOF 文件的更新频率更高，因此开启 AOF 持久化功能后，启动时<strong> 优先加载 AOF 还原数据</strong>，只有在 AOF 处于关闭状态，才使用 RDB 文件恢复数据</p>
+<h6 id="SAVE 和 BGSAVE 的区别"><a href="#SAVE 和 BGSAVE 的区别" class="headerlink" title="SAVE 和 BGSAVE 的区别"></a>SAVE 和 BGSAVE 的区别 </h6><p>　SAVE 会<strong> 阻塞 Redis 服务器进程 </strong>，直到 RDB 文件创建完毕为止，<strong> 阻塞期间，服务器不能处理任何命令请求。</strong></p>
+<p>　<strong>BGSAVE 会 fork 出一个子进程 </strong>，由<strong> 子进程负责创建 RDB 文件，父进程继续处理命令请求</strong>。当子进程完成之后，向父进程发送信号</p>
+<h6 id="服务器是如何根据 save 选项来自动执行 BGSAVE 的？"><a href="# 服务器是如何根据 save 选项来自动执行 BGSAVE 的？" class="headerlink" title="服务器是如何根据 save 选项来自动执行 BGSAVE 的？"></a>服务器是如何根据 save 选项来自动执行 BGSAVE 的？</h6><p>　主要是根据<strong>dirty 计数器和 lastsave 属性，</strong>dirty 计数器记录距离上次成功执行 SAVE 或 BGSAVE 后数据库被修改了几次，lastsave 是一个 UNIX 时间戳，记录上次成功执行 SAVE 或 BGSAVE 的时间</p>
+<h6 id="AOF 文件的载入与数据还原"><a href="#AOF 文件的载入与数据还原" class="headerlink" title="AOF 文件的载入与数据还原"></a>AOF 文件的载入与数据还原</h6><ul>
+<li>1. 创建一个没有网络连接的伪客户端。因为 Redis 命令只能在客户端上下文中执行，并且 AOF 文件在本地而不是网络</li>
+<li>2. 解析 AOF 文件并取出一条写命令</li>
+<li>3. 使用 <strong> 伪客户端 </strong> 执行被读出的写命令</li>
+<li>4. 持续执行 2 和 3，直到所有写命令都已经执行完毕<img src="https://api2.mubu.com/v3/document_image/135f9792-2877-463e-9054-7cb6d49022f1-12259280.jpg" alt="img"></li>
+</ul>
+<h6 id="AOF 重写"><a href="#AOF 重写" class="headerlink" title="AOF 重写"></a>AOF 重写 </h6><p>　<strong> 因为 AOF 持久化会将所有的写命令都记录，所以会有冗余情况 </strong>，比如频繁地创建删除键值对，或者对同一个键的值频繁更新，都会导致文件的内容越来越多。所以需要一种<strong> 瘦身机制确保 AOF 里存的都是必不可少的精华</strong></p>
+<p>　Redis 提供 AOF 文件重写功能，让服务器创建一个新的 AOF 文件，替代现有的 AOF 文件，减少冗余命令。<strong>虽然名字叫 AOF 重写，但是在新的 AOF 文件的重写过程中，不会读取旧 AOF 文件，而是通过读取数据库状态来实现的 </strong>。首先<strong> 从数据库中读取键现在的值，然后用一条命令记录键值对</strong>，代替之前记录的多条命令。</p>
+<p>　比如 RPUSH  list “A”  RPUSH list  “B” RPUSH  list “C” RPUSH  list “D” RPUSH list  “E” ，如果没有 AOF 重写，AOF 文件要保存 5 条命令，<strong>如果服务器想要用尽量少的命令来记录 list 的状态，最简单高效的办法不是去读取和分析 AOF 文件的内容，而是直接从数据库中读取 list 键的值</strong>，然后用一条 RPUSH list “A” “B” “C” “D” “E”代替 5 条命令</p>
+<h6 id="AOF 重写过程"><a href="#AOF 重写过程" class="headerlink" title="AOF 重写过程"></a>AOF 重写过程 </h6><p>　AOF 重写的过程中会有<strong> 大量的写入操作 </strong>，为了<strong> 避免 Redis 服务器长时间的阻塞 </strong>，重写工作将被<strong> 放到子进程中进行 </strong>。这样<strong> 父进程仍然可继续处理请求</strong></p>
+<p>　子进程在执行 AOF 重写期间，服务器进程还需要继续处理命令请求，而新的命令可能会对现有的数据库状态进行修改，导致当前数据库状态与重写后的 AOF 文件保存状态不一致。为解决这个问题，<strong>设置了 AOF 重写缓冲区</strong></p>
+<p>　当重写子进程创建后，Redis 服务器执行完写命令就会将其写入 AOF 缓冲区和 AOF 重写缓冲区，子进程执行重写期间，服务器进程要执行 3 个工作：</p>
+<ul>
+<li><p>执行客户端发来的命令。</p>
+</li>
+<li><p>将执行后的写命令追加到 AOF 缓冲区</p>
+</li>
+<li><p>将执行后的写命令追加到 AOF 重写缓冲区<img src="https://api2.mubu.com/v3/document_image/f7d5cbc6-ea87-4ae1-8a78-f74561e57503-12259280.jpg" alt="img"></p>
+</li>
+</ul>
+<p>　当子进程完成重写后，<strong>会向父进程发送一个信号 </strong>，父进程接收并调用信号处理函数，将<strong> 重写缓冲区的所有内容写到新 AOF 文件中，原地覆盖现有的 AOF 文件 </strong>。因此整个 AOF 文件重写的过程中，<strong> 只有信号处理函数执行时，才会阻塞</strong>，将性能损耗降到最低。</p>
+<h5 id="主从复制"><a href="# 主从复制" class="headerlink" title="主从复制"></a>主从复制 </h5><p>　通过 SLAVEOF 命令或配置文件中设置 slaveof 选项设置主从，Redis 的复制功能分为<strong> 同步 </strong> 和<strong>命令传播 </strong> 俩操作：</p>
+<ul>
+<li>同步用于把 slave 的数据库状态更新至 master 的数据库状态</li>
+<li>命令传播是在 master 的数据库状态被修改时，导致主从数据库状态不一致，让主从回到一致的过程</li>
+</ul>
+<h6 id="同步和命令传播过程"><a href="# 同步和命令传播过程" class="headerlink" title="同步和命令传播过程"></a>同步和命令传播过程 </h6><h6 id="同步"><a href="# 同步" class="headerlink" title="同步"></a> 同步</h6><ul>
+<li>slave 向主发送 SYNC 命令。</li>
+<li>master 接收并执行 BGSAVE，后台生成 RDB 文件，并用 <strong> 一个缓冲区记录现在开始执行的所有写命令</strong>。</li>
+<li>BGSAVE 执行完毕时，master 将 RDB 文件发给 slave，slave 接收并载入，更新数据库状态。</li>
+<li>master<strong>将其记录在缓冲区的所有写命令发给 slave</strong>，slave 执行写命令<img src="https://api2.mubu.com/v3/document_image/0502a38d-b4a5-42a7-bde5-666c372ded94-12259280.jpg" alt="img"></li>
+</ul>
+<h6 id="命令传播"><a href="# 命令传播" class="headerlink" title="命令传播"></a>命令传播</h6><p>　　当 master 发生写操作时，主从同步需要通过命令传播，master 将写命令发送给 slave，slave 接收并执行相同的写命令</p>
+<h5 id="一次完整的主从复制过程"><a href="# 一次完整的主从复制过程" class="headerlink" title="一次完整的主从复制过程"></a>一次完整的主从复制过程 </h5><p>　一次完整的复制过程可以分为<strong> 设置主服务器的地址和端口、建立套接字连接、发送 PING 命令、身份验证、发送端口信息、同步、命令传播</strong></p>
+<ul>
+<li>1. 设置主服务器的地址和端口：当客户端向 slave 发送 slaveof 127.0.0.1:6379 时，slave 要将客户端给定的 ip 和端口号都保存后发送 OK。这是一个异步命令，所以复制工作在回复 OK 后再执行。</li>
+<li>2. 创建连向 master 的套接字连接，如果成功，slave 会给它关联一个处理复制工作的文件事件处理器（负责接收 RDB，传播的命令等）。主从成功连接后，master 会创建从服务器的客户端状态，<strong>将 slave 看做是一个客户端来看待</strong><img src="https://api2.mubu.com/v3/document_image/00a7b512-8ce2-4aab-a504-12e4d5887aa6-12259280.jpg" alt="img"></li>
+<li>发送 PING 命令：slave 在套接字连接后做的第一个工作就是发送 PING 命令，<strong>检查套接字读写状态是否正常</strong>；主服务器能否正常处理命令请求。而主服务器会根据网络状态、能够处理给出对应回复。一旦回复超时或返回错误，从服务器就会断开并重连主服务器。</li>
+<li>身份验证：收到 <strong>master 的 pong 回复</strong> 之后，检查从服务器是否设置<strong>masterauth，如果设置则进行身份验证</strong></li>
+<li>发送端口信息：slave<strong>向 master 发送自己监听的端口号</strong>，master 保存这个端口号，也就是 12345</li>
+<li>同步：从服务器发送 PSYNC 命令，主从互相成为对方的客户端，都能够执行命令并回复，执行同步操作，看是完整重同步还是部分重同步。</li>
+<li>命令传播：完成同步后，进入该阶段，主服务器将写命令发送给从服务器，从服务器接收并执行</li>
+</ul>
+<h6 id="心跳机制"><a href="# 心跳机制" class="headerlink" title="心跳机制"></a>心跳机制 </h6><p>　在命令传播阶段，从服务器默认 1 秒一次发送 REPLCONF ACK <replication_offset> 命令给主服务器，<strong>replication_offset 是复制偏移量</strong>。这么做有 3 个作用：</replication_offset></p>
+<ul>
+<li>检测主从网络状态：若主服务器超过一秒没收到从服务器的 REPLCONF ACK 则表示连接有问题。</li>
+<li>辅助实现 min-slave 选项：min-slaves-to-write 3 min-slaves-max-lag 10 表示从服务器数量少于 3 或 3 个从服务器延迟大于等于 10s 时，主服务器拒绝写命令。</li>
+<li>检测命令丢失：如果 master 传播给 slave 的写命令在半路丢失，那么 slave 向 master 发送 REPLCONF ACK 时，master 发现 slave 当前的复制偏移量少于自己的复制偏移量，就从积压缓冲区里找到并补发。<img src="https://api2.mubu.com/v3/document_image/799f8eb4-35cb-453c-b135-d8cb51f5a0a3-12259280.jpg" alt="img"></li>
+</ul>
+<p>如图所示，这时会将复制缓冲区里面复制偏移量为 201-233 的命令重发</p>
+<h5 id="Sentinel 机制"><a href="#Sentinel 机制" class="headerlink" title="Sentinel 机制"></a><strong>Sentinel 机制 </strong></h5><p>　Sentinel（哨兵）是 Redis 的<strong> 高可用性 </strong> 的解决方案，由一个或多个 Sentinel 实例组成的 Sentinel 系统可以监视任意多个主服务器以及属下的所有从服务器。当主服务器下线时，自动将下线的某个主服务器属下的某个从服务器升级为新的主服务器。从而实现故障转移，<strong>当原来的主服务器重新上线时，会被降级为从服务器。</strong></p>
+<h6 id="Sentinel 系统对主服务器执行故障转移的过程"><a href="#Sentinel 系统对主服务器执行故障转移的过程" class="headerlink" title="Sentinel 系统对主服务器执行故障转移的过程"></a>Sentinel 系统对主服务器执行故障转移的过程</h6><ul>
+<li>检测 <strong> 主观下线 </strong> 状态：Sentinel 默认每秒与创建命令连接的实例 <strong> 发送 PING 命令 </strong>，通过回复判断是否在线。由于每个 Sentinel 中的<strong> 主观下线时间配置都可以不同，所有有可能某个 Sentinel 判断主观下线时，另一个 Sentinel 认为在线状态</strong></li>
+<li>检查 <strong> 客观下线 </strong> 状态：当 Sentinel 判断主服务器为主观下线时，还会向其他 Sentinel 询问，得到足量数据已下线判断后，就会判定服务器为客观下线，并执行故障转移。</li>
+<li><strong>选举领头 Sentinel</strong><ul>
+<li>当主服务器被判断为客观下线时，sentinel 会协商选举领头 sentinel，并由领头 sentinel 对下线主服务器执行故障转移操作</li>
+<li>当 SENTINEL is-master-down-by-addr 命令 <strong> 已经确认主服务器客观下线时 </strong>，Sentinel 还会再发送带有选举性质的命令，<strong> 并且带上自己的运行 ID</strong>。如果接收命令的 Sentinel 还没设置局部领头时，就会将这个运行 ID 作为自己的 Multi Bulk 回复参数。根据回复参数来判断多少 sentinel 将自己设置为局部领头。可能根据网络延迟，有的 Sentinel 命令比其他 Sentinel 都先到达，并且胜出（必须有半数以上的票），那么就由它负责故障转移。一次选举没有产生，一段时间后再次选举，直到选出</li>
+</ul>
+</li>
+</ul>
+<h5 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h5><p>　出现的原因：主从复制不能实现高可用、业务需要更高的 QPS，而主从复制中单机的 QPS 可能无法满足业务需求</p>
+<p>​    节点取余方式：对每个数据进行 hash 运算之后，与节点数进行取余运算，根据余数不同保存在不同的节点上，<strong>优点是配置简单，缺点是数据节点伸缩时，导致数据迁移</strong></p>
+<p>　一致性哈希方式：将所有的数据当做一个哈希环，哈希环中的数据范围是 0-2＾32。然后为每一个数据节点分配一个哈希值，<strong>这个节点就负责保存这个范围内的数据 </strong>。对<strong> 每一个 key 进行 hash 运算，被哈希后的结果在哪个 node 的范围内，则 <font color="red"> 按顺时针去找最近的节点 </font>&gt;，这个 key 将会被保存在这个节点上。</strong> 优点是 **<font color="red">节点伸缩时，只影响邻近节点</font>&gt;<img src="https://api2.mubu.com/v3/document_image/42cee358-df0c-4e1d-b0f1-655e92f976d1-12259280.jpg" alt="img">**</p>
+<h6 id="分配槽"><a href="# 分配槽" class="headerlink" title="分配槽"></a>分配槽 </h6><p>　1. 每个节点通过通信都会共享 Redis Cluster 中<strong> 槽和集群中对应节点的关系</strong></p>
+<p>　2. 客户端向 Redis Cluster 的任意节点发送命令，接收命令的节点会根据 CRC16 规则进行<strong>hash 运算与 16383 取余</strong>，计算自己的槽和对应节点 </p>
+<p>　3. 如果保存数据的槽被分配给当前节点，则去槽中执行命令，并把命令执行结果返回给客户端 </p>
+<p>　4. 如果保存数据的槽不在当前节点的管理范围内，则 <strong> 向客户端返回 moved 重定向异常</strong> </p>
+<p>　5. 客户端接收到节点返回的结果，如果是 moved 异常，则 <strong> 从 moved 异常中获取目标节点的信息</strong> </p>
+<p>　6. 客户端向目标节点发送命令，获取命令执行结果<img src="https://api2.mubu.com/v3/document_image/ea429ae5-bc25-492b-b584-303d4c5c7e76-12259280.jpg" alt="img"></p>
+]]></content>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JVM 复习</title>
+    <url>/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/JVM%E5%A4%8D%E4%B9%A0/</url>
+    <content><![CDATA[<h5 id="Java 和 C- 的一个重要区别"><a href="#Java 和 C- 的一个重要区别" class="headerlink" title="Java 和 C++ 的一个重要区别"></a>Java 和 C++ 的一个重要区别 </h5><p>&emsp;&emsp;Java 和 C++ 都是面向对象的，但是 C++ 需要程序员手动开辟(malloc) 和回收 (free) 内存，但是有了 JVM 内存管理的存在，所以 Java 不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
+<span id="more"></span>
+
+<h5 id="为什么需要 JVM？"><a href="# 为什么需要 JVM？" class="headerlink" title="为什么需要 JVM？"></a>为什么需要 JVM？</h5><p>&emsp;&emsp;Java 语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过 JVM 执行。</p>
+<p>&emsp;&emsp; 优点：减少了开发的难度，兼容不同操作系统。</p>
+<p>&emsp;&emsp; 缺点：比直接在操作系统上执行的程序的运行速度要慢。在早期这确实是一个问题，但是由于硬件技术的发展，这些问题一直在优化。</p>
+<h5 id="JVM 运行时数据区"><a href="#JVM 运行时数据区" class="headerlink" title="JVM 运行时数据区"></a>JVM 运行时数据区 </h5><p>&emsp;&emsp;JVM 运行时数据区分为堆和方法区（<strong> 线程共享 </strong>）、虚拟机栈、本地方法栈、程序计数器（<strong> 线程私有</strong>）。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/ed3e919c-acab-4314-9425-e357ac95a610-12259280.jpg" alt="img"></p>
+<p>&emsp;&emsp; 堆：内存中最大的一块，<strong>几乎 </strong> 所有的对象实例和数组都分配在堆中。<strong>注意是几乎，而不是全部。</strong>由于编译技术的进步，逃逸分析技术的发展，现在也存在 <strong> 栈上分配 </strong> 的情况。</p>
+<p>&emsp;&emsp; 方法区：用于存储已被虚拟机加载的 <strong> 类型信息、常量、静态变量 </strong>、即时编译器编译后的代码缓存等数据，<strong> 运行时常量池也位于方法区中</strong>。</p>
+<p>&emsp;&emsp; 虚拟机栈：虚拟机栈的生命周期与线程相同。每个方法被执行的时候，Java 虚拟机都会同步创建一个栈帧用于存储 <strong> 局部变量表、操作数栈、动态连接、方法出口 </strong> 等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。当栈深度大于虚拟机栈所允许的深度，会抛出 <strong>StackOverflowError</strong> 异常。如果 Java 虚拟机栈容量可以动态扩展，当栈扩展时无法申请到足够的内存会抛出 <strong>OutOfMemoryError</strong> 异常。</p>
+<p>&emsp;&emsp; 本地方法栈：与虚拟机栈的作用，虚拟机栈为虚拟机执行 Java 方法（也就是字节码）服务，而本地方法栈为虚拟机使用到的本地（Native）方法服务。</p>
+<p>&emsp;&emsp; 程序计数器：可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时，代码的分支、循环、跳转、异常处理、线程恢复，都需要依赖这个计数器来完成。此内存区域是唯一一个在《Java 虚拟机规范》中 <strong> 没有规定任何 OutOfMemoryError</strong>情况的区域。</p>
+<h5 id="new 一个对象的时候会发生什么？"><a href="#new 一个对象的时候会发生什么？" class="headerlink" title="new 一个对象的时候会发生什么？"></a>new 一个对象的时候会发生什么？</h5><p>&emsp;&emsp;Java 虚拟机遇到一条字节码 new 指令时，首先将去检查这个指令的参数是否能在常量池中定位到 一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，先要执行类加载过程。也就是加载 -&gt; 验证 -&gt; 准备 -&gt; 解析 -&gt; 初始化 -&gt; 使用 -&gt; 卸载。</p>
+<p>&emsp;&emsp; 类加载通过后，虚拟机需要为新对象 <strong> 分配内存 </strong>。对象的内存大小在<strong> 类加载完成后就可以确定</strong>。根据内存是否规整，分配内存有两种方式。内存规整时使用指针碰撞方式，不规整时使用空闲列表方式。</p>
+<p>​        &emsp;&emsp; 指针碰撞：维护一个指针作为可用内存空间和不可用内存空间的分界点。内存分配就是将这个指针向着空闲内存的方向移动一段与对象内存大小相等的距离。Serial、ParNew 收集器有空间压缩整理的能力（标记复制 or 整理算法），故这两款收集器使用指针碰撞方式来分配内存。</p>
+<p>&emsp;&emsp;&emsp;&emsp; 空闲列表：维护一个列表来记录哪些内存块是可用的，在分配内存时，从列表中找到一块足够大的空间划分给对象实例。CMS 收集器使用的是标记清除法，理论上内存是不规整的，所以使用空闲列表的方式来分配内存。</p>
+<p>&emsp;&emsp; 在并发情况下，即使只是修改一个指针所指向的位置，也不一定是线程安全的。可能会出现这种情况：给对象 A 分配内存时，指针还没来得及修改，对象 B 使用了原来的指针分配内存。解决这个问题 有两种可选方案：</p>
+<ul>
+<li><strong>对分配内存空间的动作进行同步处理 </strong>——实际上虚拟机是采用<strong>CAS+ 失败重试</strong> 的方式保证更新操作的原子性；</li>
+<li>内存分配的动作 <strong> 按照线程划分在不同的空间之中进行 </strong>，即每个线程在 Java 堆中预先分配一小块内存，称为<strong> 本地线程分配缓冲</strong>（Thread Local Allocation Buffer，TLAB），哪个线程要分配内存，就在哪个线程的本地缓冲区中分配，只有本地缓冲区用完了，分配新的缓存区时才需要同步锁定</li>
+</ul>
+<p>&emsp;&emsp; 内存分配完了之后，虚拟机会为对象初始化零值。还要对对象进行必要的设置，例如类的元数据信息、对象的哈希码、对象的 GC 分代年龄等信息。</p>
+<h5 id="对象的访问定位"><a href="# 对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h5><p>&emsp;&emsp; 对象定位主要有两种方式：句柄访问和直接指针访问</p>
+<ul>
+<li>句柄访问：从堆中划分一块内存作为句柄池，reference 中存放着句柄地址，句柄中存放着对象实例数据与类型数据的具体地址信息。<ul>
+<li>特点：当对象被移动时，只会改变句柄池中的 <strong> 实例数据指针 </strong>，<strong>reference 本身并不需要被修改</strong>。<strong> 多了一次间接访问的开销</strong><img src="https://api2.mubu.com/v3/document_image/c52d6c3e-b864-4b84-a834-e2e67c529c8d-12259280.jpg" alt="img"></li>
 </ul>
 </li>
 <li>直接指针：<ul>
@@ -38,86 +244,86 @@
 </li>
 </ul>
 <hr>
-<h5 id="垃圾回收理论和垃圾回收器"><a href="#垃圾回收理论和垃圾回收器" class="headerlink" title="垃圾回收理论和垃圾回收器"></a>垃圾回收理论和垃圾回收器</h5><p>&emsp;&emsp;垃圾回收要考虑的三件事：哪些内存需要回收、何时回收、怎么回收</p>
+<h5 id="垃圾回收理论和垃圾回收器"><a href="# 垃圾回收理论和垃圾回收器" class="headerlink" title="垃圾回收理论和垃圾回收器"></a>垃圾回收理论和垃圾回收器</h5><p>&emsp;&emsp; 垃圾回收要考虑的三件事：哪些内存需要回收、何时回收、怎么回收</p>
 <ul>
-<li><strong>程序计数器、虚拟机栈、本地方法栈3个区域随线程而生，随线程而灭</strong>，栈中的栈帧随着方法的进入和退出而有条不紊地执行着出栈和入栈操作。每一个栈帧中分配多少内存基本上是在类结构确定下来时就已知的，因此<strong>这几个区域的内存分配和回收都具备确定性</strong>，在这几个区域内就不需要过多考虑如何回收的问题，<strong>当方法结束或者线程结束时，内存自然就跟随着回收了。</strong></li>
-<li>而<strong>Java堆和方法区</strong>这两个区域则有着很显著的不确定性：只有处于运行期间，我们才能知道程序究竟会创建哪些对象，创建多少个对象，<strong>这部分内存的分配和回收是动态的。</strong></li>
+<li><strong>程序计数器、虚拟机栈、本地方法栈 3 个区域随线程而生，随线程而灭 </strong>，栈中的栈帧随着方法的进入和退出而有条不紊地执行着出栈和入栈操作。每一个栈帧中分配多少内存基本上是在类结构确定下来时就已知的，因此<strong> 这几个区域的内存分配和回收都具备确定性 </strong>，在这几个区域内就不需要过多考虑如何回收的问题，<strong> 当方法结束或者线程结束时，内存自然就跟随着回收了。</strong></li>
+<li>而 <strong>Java 堆和方法区</strong> 这两个区域则有着很显著的不确定性：只有处于运行期间，我们才能知道程序究竟会创建哪些对象，创建多少个对象，<strong>这部分内存的分配和回收是动态的。</strong></li>
 </ul>
-<h5 id="对象已死？"><a href="#对象已死？" class="headerlink" title="对象已死？"></a>对象已死？</h5><p>&emsp;&emsp;在垃圾回收之前，最先要确定的就是哪些对象还存活，哪些对象已经死去（需要回收）。判断对象是否存活主要有两种算法：引用计数法和可达性分析。</p>
+<h5 id="对象已死？"><a href="# 对象已死？" class="headerlink" title="对象已死？"></a>对象已死？</h5><p>&emsp;&emsp; 在垃圾回收之前，最先要确定的就是哪些对象还存活，哪些对象已经死去（需要回收）。判断对象是否存活主要有两种算法：引用计数法和可达性分析。</p>
 <ul>
 <li>引用计数法：在对象中添加一个引用计数器，每当有一个地方引用它时，计数器值就加一。当引用失效时，计数器值就减一；<ul>
-<li>Python在对象回收时就使用了引用计数法。</li>
+<li>Python 在对象回收时就使用了引用计数法。</li>
 <li>特点：原理简单，判定效率高。但是难以解决对象之间相互引用的问题（此时需要配合大量额外处理才能保证正确地工作）。</li>
 </ul>
 </li>
-<li>可达性分析：通过GC Roots根对象作为起始节点集，若GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的<img src="https://api2.mubu.com/v3/document_image/917fc3c1-7a71-4570-8ecb-d6d6a0443c96-12259280.jpg" alt="img"></li>
+<li>可达性分析：通过 GC Roots 根对象作为起始节点集，若 GC Roots 到这个对象不可达时，则证明此对象是不可能再被使用的<img src="https://api2.mubu.com/v3/document_image/917fc3c1-7a71-4570-8ecb-d6d6a0443c96-12259280.jpg" alt="img"></li>
 </ul>
-<h5 id="可作为GC-Roots的对象"><a href="#可作为GC-Roots的对象" class="headerlink" title="可作为GC Roots的对象"></a>可作为GC Roots的对象</h5><ul>
-<li>在<strong>虚拟机栈（栈帧中的本地变量表）中引用的对象</strong>，譬如各个线程被调用的方法堆栈中使用到的 参数、局部变量、临时变量等。 </li>
-<li>在方法区中<strong>类静态属性引用的对象</strong>，譬如Java类的引用类型静态变量。</li>
-<li>在方法区中<strong>常量引用的对象</strong>，譬如字符串常量池（String Table）里的引用。</li>
+<h5 id="可作为 GC-Roots 的对象"><a href="# 可作为 GC-Roots 的对象" class="headerlink" title="可作为 GC Roots 的对象"></a>可作为 GC Roots 的对象</h5><ul>
+<li>在 <strong> 虚拟机栈（栈帧中的本地变量表）中引用的对象</strong>，譬如各个线程被调用的方法堆栈中使用到的 参数、局部变量、临时变量等。 </li>
+<li>在方法区中 <strong> 类静态属性引用的对象</strong>，譬如 Java 类的引用类型静态变量。</li>
+<li>在方法区中 <strong> 常量引用的对象</strong>，譬如字符串常量池（String Table）里的引用。</li>
 </ul>
-<h5 id="再谈引用"><a href="#再谈引用" class="headerlink" title="再谈引用"></a>再谈引用</h5><p>&emsp;&emsp;在JDK1.2之前，Java引用就是传统定义，一个对象在这种定义下只有“被引用”或者“未被引用”两种状态未免有点过于狭隘。如果我们希望描述一类对象：当<strong>内存空间还足够时，能保留在内存之中</strong>，如果内存空间在进行垃圾收集后<strong>仍然非常紧张，那就可以抛弃这些对象</strong>。</p>
-<p>&emsp;&emsp;在JDK 1.2版之后，Java对引用的概念进行了扩充，将引用分为强引用、软引用、弱引用和虚引用</p>
+<h5 id="再谈引用"><a href="# 再谈引用" class="headerlink" title="再谈引用"></a>再谈引用 </h5><p>&emsp;&emsp; 在 JDK1.2 之前，Java 引用就是传统定义，一个对象在这种定义下只有“被引用”或者“未被引用”两种状态未免有点过于狭隘。如果我们希望描述一类对象：当<strong> 内存空间还足够时，能保留在内存之中 </strong>，如果内存空间在进行垃圾收集后<strong> 仍然非常紧张，那就可以抛弃这些对象</strong>。</p>
+<p>&emsp;&emsp; 在 JDK 1.2 版之后，Java 对引用的概念进行了扩充，将引用分为强引用、软引用、弱引用和虚引用</p>
 <ul>
 <li>强引用：类似 <code>Object obj=new Object()</code> 这种引用关系。无论任何情况下，只要强引用关系还存在，垃圾收集器就永远不会回 收掉被引用的对象</li>
-<li>软引用：<strong>还有用，但非必须的对象</strong>。只被软引用关联着的对象，在系统将要发生内存溢出异常前，会把这些对象列进回收范围之中进行第二次回收，<strong>如果这次回收还没有足够的内存， 才会抛出内存溢出异常</strong></li>
+<li>软引用：<strong>还有用，但非必须的对象 </strong>。只被软引用关联着的对象，在系统将要发生内存溢出异常前，会把这些对象列进回收范围之中进行第二次回收，<strong> 如果这次回收还没有足够的内存， 才会抛出内存溢出异常</strong></li>
 <li>弱引用：非必须对象，但是它的强度比软引用更弱一些，<strong>无论当前内存是否足够，都会回收掉只被弱引用关联的对象</strong></li>
-<li>虚引用：为一个对象设置虚引用关联的<strong>唯一目的只是为了能在这个对象被收集器回收时收到一个系统通知</strong></li>
+<li>虚引用：为一个对象设置虚引用关联的 <strong> 唯一目的只是为了能在这个对象被收集器回收时收到一个系统通知</strong></li>
 </ul>
-<h5 id="finalize-方法"><a href="#finalize-方法" class="headerlink" title="finalize()方法"></a>finalize()方法</h5><p>&emsp;&emsp;要宣告一个对象的死亡至少要经历两次标记过程，如果对象在进行可达性分析后发现没有与GC Roots相连接的引用链，那它将会被第一次标记，随后进行一次筛选，筛选的条件是此对象是否有必要执行finalize()方法。如果有必要执行finalize()方法，那么该对象将会被放置在一个名为F-Queue的队列之中。稍后虚拟机会创建一个线程去筛选F-Queue中的对象。</p>
-<p>&emsp;&emsp;finalize()方法只会执行1次——只要重新与引用链上的任何一个对象建立关联即可，譬如把自己 （this关键字）赋值给某个类变量或者对象的成员变量。<strong>在第二次标记时它将被移出“即将回收”的集合；如果对象这时候还没有逃脱，那基本上它就真的要被回收了。</strong></p>
-<h5 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h5><p>&emsp;&emsp;<font color="#FF0000">  方法区实际上是有垃圾回收的。 </font>方法区的垃圾收集主要回收两部分内容：<strong>废弃的常量和不再使用的类型。</strong></p>
+<h5 id="finalize- 方法"><a href="#finalize- 方法" class="headerlink" title="finalize()方法"></a>finalize()方法 </h5><p>&emsp;&emsp; 要宣告一个对象的死亡至少要经历两次标记过程，如果对象在进行可达性分析后发现没有与 GC Roots 相连接的引用链，那它将会被第一次标记，随后进行一次筛选，筛选的条件是此对象是否有必要执行 finalize() 方法。如果有必要执行 finalize()方法，那么该对象将会被放置在一个名为 F-Queue 的队列之中。稍后虚拟机会创建一个线程去筛选 F-Queue 中的对象。</p>
+<p>&emsp;&emsp;finalize()方法只会执行 1 次——只要重新与引用链上的任何一个对象建立关联即可，譬如把自己 （this 关键字）赋值给某个类变量或者对象的成员变量。<strong>在第二次标记时它将被移出“即将回收”的集合；如果对象这时候还没有逃脱，那基本上它就真的要被回收了。</strong></p>
+<h5 id="回收方法区"><a href="# 回收方法区" class="headerlink" title="回收方法区"></a>回收方法区 </h5><p>&emsp;&emsp;<font color="#FF0000">  方法区实际上是有垃圾回收的。 </font> 方法区的垃圾收集主要回收两部分内容：<strong>废弃的常量和不再使用的类型。</strong></p>
 <ul>
 <li>废弃常量：假如 “ABC” 在常量池中，但是现在没有任何字符串对象引用常量池中的 “ABC” 常量，如果在这时发生内存回收，这个 “ABC” 常量就将会被系统清理出常量池。<strong>常量池中其他类（接 口）、方法、字段的符号引用也与此类似。</strong></li>
 </ul>
-<h5 id="判定一个类型是否属于“不再被使用的类”的条件"><a href="#判定一个类型是否属于“不再被使用的类”的条件" class="headerlink" title="判定一个类型是否属于“不再被使用的类”的条件"></a>判定一个类型是否属于“不再被使用的类”的条件</h5><p>&emsp;&emsp;判定一个类是否属于 <font color="red">不再被使用的类</font>需要同时满足三个条件</p>
+<h5 id="判定一个类型是否属于“不再被使用的类”的条件"><a href="# 判定一个类型是否属于“不再被使用的类”的条件" class="headerlink" title="判定一个类型是否属于“不再被使用的类”的条件"></a>判定一个类型是否属于“不再被使用的类”的条件 </h5><p>&emsp;&emsp; 判定一个类是否属于 <font color="red"> 不再被使用的类 </font> 需要同时满足三个条件</p>
 <ul>
-<li>该类所有的实例都已经被回收，也就是Java堆中不存在该类及其任何派生子类的实例。 </li>
-<li>加载该类的类加载器已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如 OSGi、JSP的重加载等，否则通常是很难达成的。 </li>
-<li>该类对应的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法</li>
+<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类及其任何派生子类的实例。 </li>
+<li>加载该类的类加载器已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如 OSGi、JSP 的重加载等，否则通常是很难达成的。 </li>
+<li>该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法</li>
 </ul>
-<h5 id="垃圾回收的几个假说-垃圾回收的前提-："><a href="#垃圾回收的几个假说-垃圾回收的前提-：" class="headerlink" title="垃圾回收的几个假说(垃圾回收的前提)："></a>垃圾回收的几个假说(垃圾回收的前提)：</h5><ul>
-<li><p>弱分代假说：绝大多数对象都是<strong>朝生夕灭</strong>的</p>
+<h5 id="垃圾回收的几个假说 - 垃圾回收的前提 -："><a href="# 垃圾回收的几个假说 - 垃圾回收的前提 -：" class="headerlink" title="垃圾回收的几个假说 (垃圾回收的前提)："></a> 垃圾回收的几个假说(垃圾回收的前提)：</h5><ul>
+<li><p>弱分代假说：绝大多数对象都是 <strong> 朝生夕灭 </strong> 的</p>
 </li>
-<li><p>强分代假说：熬过越多次垃圾收集过程的对象就<strong>越难以消亡</strong></p>
+<li><p>强分代假说：熬过越多次垃圾收集过程的对象就 <strong> 越难以消亡</strong></p>
 </li>
 <li><p>跨代引用假说：跨代引用相对于同代引用来说仅占极少数。</p>
 <p>基于前两个假说，垃圾收集器有了一下原则：</p>
 <ul>
-<li>收集器应该将Java堆划分出不同的区域，然后将回收对象依据其年龄（年龄即对象熬过垃圾收集过程的次数）分配到不同的区域之中存储，也就是<strong>新生代和老年代</strong></li>
+<li>收集器应该将 Java 堆划分出不同的区域，然后将回收对象依据其年龄（年龄即对象熬过垃圾收集过程的次数）分配到不同的区域之中存储，也就是 <strong> 新生代和老年代</strong></li>
 </ul>
-<p>基于第三个假说，我们就<strong>不应再为了少量的跨代引用去扫描整个老年代</strong>，也不必浪费空间专门记录每一个对象是否存在及存在哪些跨代引用，只需在新生代上建立一个全局的数据结构（该结构被称为<strong>“记忆集”</strong>），这个结构把老年代划分成若干小块，标识出老年代的哪一块内存会存在跨代引用。此后当发生Minor GC时，只有<strong>包含了跨代引用的小块内存里的对象才会被加入到GC Roots进行扫描</strong>。虽然这种方法需要在对象改变引用关系（如将自己或者某个属性赋值）时维护记录数据的正确性，会增加一些运行时的开销，但<strong>比起收集时扫描整个老年代来说仍然是划算的</strong>。</p>
+<p>基于第三个假说，我们就 <strong> 不应再为了少量的跨代引用去扫描整个老年代 </strong>，也不必浪费空间专门记录每一个对象是否存在及存在哪些跨代引用，只需在新生代上建立一个全局的数据结构（该结构被称为<strong>“记忆集”</strong>），这个结构把老年代划分成若干小块，标识出老年代的哪一块内存会存在跨代引用。此后当发生 Minor GC 时，只有<strong> 包含了跨代引用的小块内存里的对象才会被加入到 GC Roots 进行扫描 </strong>。虽然这种方法需要在对象改变引用关系（如将自己或者某个属性赋值）时维护记录数据的正确性，会增加一些运行时的开销，但<strong> 比起收集时扫描整个老年代来说仍然是划算的</strong>。</p>
 </li>
 </ul>
-<h5 id="标记-清除"><a href="#标记-清除" class="headerlink" title="标记-清除"></a>标记-清除</h5><p>&emsp;&emsp;首先标记出所有需要回收的对象，在标记完成后，统一回收掉所有被标记的对象。</p>
-<p>&emsp;&emsp;特点：</p>
+<h5 id="标记 - 清除"><a href="# 标记 - 清除" class="headerlink" title="标记 - 清除"></a>标记 - 清除</h5><p>&emsp;&emsp; 首先标记出所有需要回收的对象，在标记完成后，统一回收掉所有被标记的对象。</p>
+<p>&emsp;&emsp; 特点：</p>
 <ul>
 <li>执行效率不稳定（如果有大量对象需要回收的话，需要进行大量的标记和清除的动作）</li>
-<li>会导致内存空间的碎片化问题，导致分配大对象时由于<strong>无法找到足够大的连续内存空间而提前触发另一次垃圾回收</strong>。</li>
+<li>会导致内存空间的碎片化问题，导致分配大对象时由于 <strong> 无法找到足够大的连续内存空间而提前触发另一次垃圾回收</strong>。</li>
 </ul>
-<h5 id="标记-复制"><a href="#标记-复制" class="headerlink" title="标记-复制"></a>标记-复制</h5><p>&emsp;&emsp;半区复制：将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
-<p>&emsp;&emsp;特点：1.内存规整，不会产生空间碎片问题，但是如果多数对象存活，会产生大量的内存复制间的开销。2.内存利用率低，可用内存缩小为了原来的一半。</p>
-<p>&emsp;&emsp;改进：根据新生代对象朝生夕死的特点，把新生代分为Eden区和S1区、S2区。默认比例是8：1：1</p>
-<h5 id="标记-整理"><a href="#标记-整理" class="headerlink" title="标记-整理"></a>标记-整理</h5><p>&emsp;&emsp;标记过程与标记清除一样，然后让所有存活对象<strong>都向内存空间一端移动</strong>，再直接清理掉边界以外的内存。</p>
-<p>&emsp;&emsp;标记整理和标记清除的区别在于，标记整理是<strong>移动式回收算法</strong>，标记清理是非移动式算法。对象移动操作必须<font color="red">全程暂停用户应用程序</font>才能进行，也就是STW</p>
-<h5 id="并发的可达性分析"><a href="#并发的可达性分析" class="headerlink" title="并发的可达性分析"></a>并发的可达性分析</h5><p>&emsp;&emsp;两种后果：收集器在对象图上标记颜色时，用户线程可能在修改引用关系，导致错误的GC。<strong>把原本消亡的对象标记为存活（问题不大，下次收集清理掉就好）或者把存活的对象标记为已消亡（非常致命）</strong></p>
-<p>&emsp;&emsp;解决方案：增量更新和内存快照</p>
+<h5 id="标记 - 复制"><a href="# 标记 - 复制" class="headerlink" title="标记 - 复制"></a>标记 - 复制</h5><p>&emsp;&emsp; 半区复制：将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
+<p>&emsp;&emsp; 特点：1. 内存规整，不会产生空间碎片问题，但是如果多数对象存活，会产生大量的内存复制间的开销。2. 内存利用率低，可用内存缩小为了原来的一半。</p>
+<p>&emsp;&emsp; 改进：根据新生代对象朝生夕死的特点，把新生代分为 Eden 区和 S1 区、S2 区。默认比例是 8：1：1</p>
+<h5 id="标记 - 整理"><a href="# 标记 - 整理" class="headerlink" title="标记 - 整理"></a>标记 - 整理 </h5><p>&emsp;&emsp; 标记过程与标记清除一样，然后让所有存活对象<strong> 都向内存空间一端移动</strong>，再直接清理掉边界以外的内存。</p>
+<p>&emsp;&emsp; 标记整理和标记清除的区别在于，标记整理是 <strong> 移动式回收算法 </strong>，标记清理是非移动式算法。对象移动操作必须<font color="red"> 全程暂停用户应用程序 </font> 才能进行，也就是 STW</p>
+<h5 id="并发的可达性分析"><a href="# 并发的可达性分析" class="headerlink" title="并发的可达性分析"></a>并发的可达性分析 </h5><p>&emsp;&emsp; 两种后果：收集器在对象图上标记颜色时，用户线程可能在修改引用关系，导致错误的 GC。<strong> 把原本消亡的对象标记为存活（问题不大，下次收集清理掉就好）或者把存活的对象标记为已消亡（非常致命）</strong></p>
+<p>&emsp;&emsp; 解决方案：增量更新和内存快照</p>
 <ul>
-<li><p>增量更新：当黑色对象插入新的指向白色对象的引用关系时，就<strong>将这个新插入的引用记录下来</strong>，等并发扫描结束之后，再<strong>将这些记录过的引用关系中的黑色对象为根，重新扫描一次</strong>。</p>
+<li><p>增量更新：当黑色对象插入新的指向白色对象的引用关系时，就 <strong> 将这个新插入的引用记录下来 </strong>，等并发扫描结束之后，再<strong> 将这些记录过的引用关系中的黑色对象为根，重新扫描一次</strong>。</p>
 </li>
 <li><p>内存快照：无论引用关系删除与否，都会按照刚刚开始扫描那一刻的对象图快照来进行搜索。</p>
-<p>CMS是基于增量更新来做<strong>并发标记</strong>的，G1、Shenandoah则是用原始快照来实现。</p>
+<p>CMS 是基于增量更新来做 <strong> 并发标记 </strong> 的，G1、Shenandoah 则是用原始快照来实现。</p>
 </li>
 </ul>
-<h5 id="经典垃圾收集器"><a href="#经典垃圾收集器" class="headerlink" title="经典垃圾收集器"></a>经典垃圾收集器</h5><h6 id="emsp-CMS（标记-清除算法）"><a href="#emsp-CMS（标记-清除算法）" class="headerlink" title="&emsp;CMS（标记-清除算法）"></a>&emsp;CMS（标记-清除算法）</h6><p>&emsp;&emsp;老年代<strong>并行收集器</strong>，以获取最短回收停顿时间为目标的收集器，具有<strong>高并发、低停顿</strong>的特点，追求最短GC回收停顿时间<img src="https://api2.mubu.com/v3/document_image/27cc5986-593c-4797-bca5-8eb0d89b53f5-12259280.jpg" alt="img"></p>
+<h5 id="经典垃圾收集器"><a href="# 经典垃圾收集器" class="headerlink" title="经典垃圾收集器"></a>经典垃圾收集器 </h5><h6 id="emsp-CMS（标记 - 清除算法）"><a href="#emsp-CMS（标记 - 清除算法）" class="headerlink" title="&emsp;CMS（标记 - 清除算法）"></a>&emsp;CMS（标记 - 清除算法）</h6><p>&emsp;&emsp; 老年代<strong> 并行收集器 </strong>，以获取最短回收停顿时间为目标的收集器，具有<strong> 高并发、低停顿 </strong> 的特点，追求最短 GC 回收停顿时间<img src="https://api2.mubu.com/v3/document_image/27cc5986-593c-4797-bca5-8eb0d89b53f5-12259280.jpg" alt="img"></p>
 <p>&emsp;&emsp;    回收步骤:</p>
 <ul>
-<li><p>初始标记: 只是标记一下GC Roots能直接关联到的对象，速度很快，<strong>需要STW</strong></p>
+<li><p>初始标记: 只是标记一下 GC Roots 能直接关联到的对象，速度很快，<strong>需要 STW</strong></p>
 </li>
-<li><p>并发标记：进行GC Roots Tracing的过程，<strong>在整个过程中耗时最长</strong>。</p>
+<li><p>并发标记：进行 GC Roots Tracing 的过程，<strong>在整个过程中耗时最长</strong>。</p>
 </li>
-<li><p>重新标记：为了修正并发标记期间因用户程序继续运作而导致标记<strong>产生变动的那一部分对象的标记记录</strong>，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。此阶段<strong>也需要STW</strong></p>
+<li><p>重新标记：为了修正并发标记期间因用户程序继续运作而导致标记 <strong> 产生变动的那一部分对象的标记记录 </strong>，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。此阶段<strong> 也需要 STW</strong></p>
 </li>
 <li><p>并发清除（CMS concurrent sweep）</p>
 </li>
@@ -125,27 +331,27 @@
 </li>
 <li><p>缺点：<strong>无法处理浮动垃圾、标记清除算法带来的空间碎片</strong></p>
 <ul>
-<li><strong>标记-清除算法导致的空间碎片</strong>： CMS收集结束时会有大量空间碎片产生。空间碎片过多时，将会给大对象分配带来很大麻烦，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象。</li>
-<li><strong>浮动垃圾：</strong>由于CMS并发清理阶段用户线程还在运行着，伴随程序运行自然就还会有新的垃圾不断产生。这一部分垃圾出现在标记过程之后，CMS无法再当次收集中处理掉它们，只好留待下一次GC时再清理掉。</li>
-<li>解决方案：<strong>标记整理算法，也就是配合ParNew收集器</strong><ul>
-<li>为了解决空间碎片问题，CMS收集器提供了一个-XX：+UseCMS-CompactAtFullCollection开关参数（默认是开启的，此参数从JDK 9开始废弃），用于在CMS收集器不得不进行Full GC时开启内存碎片的合并整理过程，由于这个内存整理必须移动存活对象，（在Shenandoah和ZGC出现前）是无法并发的。这样空间碎片问题是解决了，但停顿时间又会变长，因此虚拟机设计者们还提供了另外一个参数-XX：CMSFullGCsBeforeCompaction（此参数从JDK 9开始废弃），<strong>这个参数的作用是要求CMS收集器在执行过若干次（数量由参数值决定）不整理空间的Full GC之后，下一次进入Full GC前会先进行碎片整理（默认值为0，表示每次进入Full GC时都进行碎片整理）。</strong></li>
+<li><strong>标记 - 清除算法导致的空间碎片</strong>： CMS 收集结束时会有大量空间碎片产生。空间碎片过多时，将会给大对象分配带来很大麻烦，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象。</li>
+<li><strong>浮动垃圾：</strong>由于 CMS 并发清理阶段用户线程还在运行着，伴随程序运行自然就还会有新的垃圾不断产生。这一部分垃圾出现在标记过程之后，CMS 无法再当次收集中处理掉它们，只好留待下一次 GC 时再清理掉。</li>
+<li>解决方案：<strong>标记整理算法，也就是配合 ParNew 收集器</strong><ul>
+<li>为了解决空间碎片问题，CMS 收集器提供了一个 -XX：+UseCMS-CompactAtFullCollection 开关参数（默认是开启的，此参数从 JDK 9 开始废弃），用于在 CMS 收集器不得不进行 Full GC 时开启内存碎片的合并整理过程，由于这个内存整理必须移动存活对象，（在 Shenandoah 和 ZGC 出现前）是无法并发的。这样空间碎片问题是解决了，但停顿时间又会变长，因此虚拟机设计者们还提供了另外一个参数 -XX：CMSFullGCsBeforeCompaction（此参数从 JDK 9 开始废弃），<strong>这个参数的作用是要求 CMS 收集器在执行过若干次（数量由参数值决定）不整理空间的 Full GC 之后，下一次进入 Full GC 前会先进行碎片整理（默认值为 0，表示每次进入 Full GC 时都进行碎片整理）。</strong></li>
 </ul>
 </li>
 </ul>
-<h6 id="G1收集器（标记-整理，不会产生内存空间碎片问题）"><a href="#G1收集器（标记-整理，不会产生内存空间碎片问题）" class="headerlink" title="G1收集器（标记-整理，不会产生内存空间碎片问题）"></a>G1收集器（标记-整理，不会产生内存空间碎片问题）</h6><p>&emsp;Java堆并行收集器，G1收集器不同于之前的收集器的一个重要特点是：G1<strong>回收的范围是整个Java堆</strong>(包括新生代，老年代)，而其他收集器仅限于新生代或老年代。</p>
-<p>&emsp;回收步骤跟CMS大概相似，注意，<strong>最终标记阶段处理的是原始快照记录。</strong></p>
+<h6 id="G1 收集器（标记 - 整理，不会产生内存空间碎片问题）"><a href="#G1 收集器（标记 - 整理，不会产生内存空间碎片问题）" class="headerlink" title="G1 收集器（标记 - 整理，不会产生内存空间碎片问题）"></a>G1 收集器（标记 - 整理，不会产生内存空间碎片问题）</h6><p>&emsp;Java 堆并行收集器，G1 收集器不同于之前的收集器的一个重要特点是：G1<strong>回收的范围是整个 Java 堆</strong>(包括新生代，老年代)，而其他收集器仅限于新生代或老年代。</p>
+<p>&emsp; 回收步骤跟 CMS 大概相似，注意，<strong>最终标记阶段处理的是原始快照记录。</strong></p>
 <ul>
 <li>特点：<ul>
-<li>优点：G1从<strong>整体来看是基于“标记-整理”算法</strong>实现的收集器，但从<strong>局部</strong>（两个Region之间）上看又是<strong>基于“标记-复制”算法</strong>实现，这两种算法都意味着G1运作期间<strong>不会产生内存空间碎片</strong></li>
-<li>缺点：巨型区域（Humongous Region）用来专门存放巨型对象。如果一个 H 区装不下一个巨型对象，那么 G1 会寻找连续的 H 分区来存储。<strong>为了能找到连续的 H 区，有时候不得不启动 Full GC</strong>。 虽然G1和CMS都使用卡表来处理跨代指针，<strong>但G1的卡表实现更为复杂</strong></li>
+<li>优点：G1 从 <strong> 整体来看是基于“标记 - 整理”算法 </strong> 实现的收集器，但从 <strong> 局部 </strong>（两个 Region 之间）上看又是<strong> 基于“标记 - 复制”算法 </strong> 实现，这两种算法都意味着 G1 运作期间 <strong> 不会产生内存空间碎片</strong></li>
+<li>缺点：巨型区域（Humongous Region）用来专门存放巨型对象。如果一个 H 区装不下一个巨型对象，那么 G1 会寻找连续的 H 分区来存储。<strong>为了能找到连续的 H 区，有时候不得不启动 Full GC</strong>。 虽然 G1 和 CMS 都使用卡表来处理跨代指针，<strong>但 G1 的卡表实现更为复杂</strong></li>
 </ul>
 </li>
 </ul>
 <p><img src="https://api2.mubu.com/v3/document_image/ff1e23ec-c0da-42ae-aee9-861e9bef469f-12259280.jpg" alt="img"></p>
 </li>
 </ul>
-<h6 id="3-6-2-ZGC收集器"><a href="#3-6-2-ZGC收集器" class="headerlink" title="3.6.2 ZGC收集器"></a>3.6.2 ZGC收集器</h6><ul>
-<li><p>ZGC也采用基于Region的堆内存布局，但与它们不同的是，ZGC的Region可以具有大、中、小三类容量</p>
+<h6 id="3-6-2-ZGC 收集器"><a href="#3-6-2-ZGC 收集器" class="headerlink" title="3.6.2 ZGC 收集器"></a>3.6.2 ZGC 收集器</h6><ul>
+<li><p>ZGC 也采用基于 Region 的堆内存布局，但与它们不同的是，ZGC 的 Region 可以具有大、中、小三类容量</p>
 </li>
 <li><p>核心：并发整理算法</p>
 <ul>
@@ -156,48 +362,48 @@
 </ul>
 </li>
 </ul>
-<h5 id="内存分配策略"><a href="#内存分配策略" class="headerlink" title="内存分配策略"></a>内存分配策略</h5><ul>
+<h5 id="内存分配策略"><a href="# 内存分配策略" class="headerlink" title="内存分配策略"></a>内存分配策略</h5><ul>
 <li><p>虚拟机对于内存的分配还是会遵循以下几种「普世」规则：</p>
 <ul>
-<li><p>对象优先在 Eden 区分配，当Eden区没有足够空间进行分配时，虚拟机将发起 一次Minor GC</p>
+<li><p>对象优先在 Eden 区分配，当 Eden 区没有足够空间进行分配时，虚拟机将发起 一次 Minor GC</p>
 </li>
-<li><p>大对象直接进入老年代：复制对象时，大对象就意味着高额的内存复制开销。HotSpot虚拟机提供了-XX：PretenureSizeThreshold 参数，指定大于该设置值的对象直接在老年代分配，这样做的目的就是<strong>避免在Eden区及两个Survivor区之间来回复制，产生大量的内存复制操作。</strong></p>
+<li><p>大对象直接进入老年代：复制对象时，大对象就意味着高额的内存复制开销。HotSpot 虚拟机提供了 -XX：PretenureSizeThreshold 参数，指定大于该设置值的对象直接在老年代分配，这样做的目的就是 <strong> 避免在 Eden 区及两个 Survivor 区之间来回复制，产生大量的内存复制操作。</strong></p>
 </li>
-<li><p>长期存活对象将进入老年代：CMS默认值位15，G1为6</p>
-</li>
-</ul>
+<li><p>长期存活对象将进入老年代：CMS 默认值位 15，G1 为 6</p>
 </li>
 </ul>
-<h5 id="动态对象年龄判定"><a href="#动态对象年龄判定" class="headerlink" title="动态对象年龄判定"></a>动态对象年龄判定</h5><p>&emsp;并不要求对象的年龄必须得到某个阈值才能晋升老年代，如果在Survivor空间中<strong>相同年龄所有对象大小的总和大于 Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代</strong>，无须等到-XX： MaxTenuringThreshold中要求的年龄。</p>
-<h5 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h5><ul>
-<li>如果另外一块Survivor空间<strong>没有足够空间存放上一次新生代收集下来的存活对象</strong>，这些对象便将通过分配担保机制直接进入老年代</li>
-<li>在发生Minor GC之前，虚拟机必须先<strong>检查老年代最大可用的连续空间是否大于新生代所有对象总空间</strong>，如果成立，那这一次Minor GC可以确保是安全的。如果不成立，虚拟机会先查看HandlePromotionFailure参数的设置值<strong>是否允许担保失败</strong>（Handle Promotion Failure）；如果允许，那会继续检查<strong>老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试进行一次Minor GC，尽管这次Minor GC是有风险的</strong>；如果小于，或者-XX：HandlePromotionFailure设置<strong>不允许冒险，那这时就要改为进行一次Full GC。</strong></li>
-<li>“冒险”是冒了什么风险：前面提到过，新生代使用复制收集算法，但为了内存利用率，只使用其中一个Survivor空间来作为轮换备份，因此当出现大量对象在Minor GC后仍然存活的情况——<strong>最极端的情况就是内存回收后新生代中所有对象都存活</strong>，需要老年代进行分配担保，把Survivor无法容纳的对象直接送入老年代，<strong>但一共有多少对象会在这次回收中活下来在实际完成内存回收之前是无法明确知道的，所以只能取之前每一次回收晋升到老年代对象容量的平均大小作为经验值。如果赌赢了，就只需要Minor GC，赌输了还是需要Full GC，这样停顿时间就很长了</strong>。</li>
+</li>
 </ul>
-<h5 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h5><p>&emsp;类的生命周期：加载、验证、准备、解析、初始化、使用和卸载<img src="https://api2.mubu.com/v3/document_image/7b7fd4c0-2228-481a-b2db-7c796db28dad-12259280.jpg" alt="img"></p>
-<h6 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h6><ul>
+<h5 id="动态对象年龄判定"><a href="# 动态对象年龄判定" class="headerlink" title="动态对象年龄判定"></a>动态对象年龄判定 </h5><p>&emsp; 并不要求对象的年龄必须得到某个阈值才能晋升老年代，如果在 Survivor 空间中<strong> 相同年龄所有对象大小的总和大于 Survivor 空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代</strong>，无须等到 -XX： MaxTenuringThreshold 中要求的年龄。</p>
+<h5 id="空间分配担保"><a href="# 空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h5><ul>
+<li>如果另外一块 Survivor 空间 <strong> 没有足够空间存放上一次新生代收集下来的存活对象</strong>，这些对象便将通过分配担保机制直接进入老年代</li>
+<li>在发生 Minor GC 之前，虚拟机必须先 <strong> 检查老年代最大可用的连续空间是否大于新生代所有对象总空间 </strong>，如果成立，那这一次 Minor GC 可以确保是安全的。如果不成立，虚拟机会先查看 HandlePromotionFailure 参数的设置值<strong> 是否允许担保失败 </strong>（Handle Promotion Failure）；如果允许，那会继续检查<strong> 老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试进行一次 Minor GC，尽管这次 Minor GC 是有风险的 </strong>；如果小于，或者 -XX：HandlePromotionFailure 设置<strong> 不允许冒险，那这时就要改为进行一次 Full GC。</strong></li>
+<li>“冒险”是冒了什么风险：前面提到过，新生代使用复制收集算法，但为了内存利用率，只使用其中一个 Survivor 空间来作为轮换备份，因此当出现大量对象在 Minor GC 后仍然存活的情况——<strong>最极端的情况就是内存回收后新生代中所有对象都存活 </strong>，需要老年代进行分配担保，把 Survivor 无法容纳的对象直接送入老年代，<strong> 但一共有多少对象会在这次回收中活下来在实际完成内存回收之前是无法明确知道的，所以只能取之前每一次回收晋升到老年代对象容量的平均大小作为经验值。如果赌赢了，就只需要 Minor GC，赌输了还是需要 Full GC，这样停顿时间就很长了</strong>。</li>
+</ul>
+<h5 id="类加载机制"><a href="# 类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h5><p>&emsp; 类的生命周期：加载、验证、准备、解析、初始化、使用和卸载<img src="https://api2.mubu.com/v3/document_image/7b7fd4c0-2228-481a-b2db-7c796db28dad-12259280.jpg" alt="img"></p>
+<h6 id="类加载过程"><a href="# 类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h6><ul>
 <li>加载：根据查找路径找到相应的 class 文件然后导入；</li>
 <li>验证：检查加载的 class 文件的正确性(文件格式验证、元数据验证、字节码验证)</li>
-<li>准备：正式为<strong>类中定义的变量（即静态变量）</strong>分配内存并<strong>设置类变量初始值</strong>。</li>
+<li>准备：正式为 <strong> 类中定义的变量（即静态变量）</strong>分配内存并 <strong> 设置类变量初始值</strong>。</li>
 <li>解析：虚拟机将常量池中的符号引用替换成直接引用的过程。符号引用就理解为一个标示，而在直接引用直接指向内存中的地址；</li>
 <li>初始化：对静态变量和静态代码块执行初始化工作</li>
 </ul>
-<h6 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h6><p>&emsp;如果一个类加载器收到了类加载的请求，它首先<strong>不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成</strong>，每一个层次的类加载器都是如此，因此所有的<strong>加载请求最终都应该传送到最顶层的启动类加载器中</strong>，只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需的类）时，子加载器才会尝试自己去完成加载。</p>
-<p>&emsp;好处：是Java中的类随着它的类加载器一起具备了一种带有优先级的层次关系。</p>
+<h6 id="双亲委派模型"><a href="# 双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型 </h6><p>&emsp; 如果一个类加载器收到了类加载的请求，它首先<strong> 不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成 </strong>，每一个层次的类加载器都是如此，因此所有的<strong> 加载请求最终都应该传送到最顶层的启动类加载器中</strong>，只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需的类）时，子加载器才会尝试自己去完成加载。</p>
+<p>&emsp; 好处：是 Java 中的类随着它的类加载器一起具备了一种带有优先级的层次关系。</p>
 <p><img src="https://api2.mubu.com/v3/document_image/36cb3d78-4a3d-4f20-8623-4428282459e5-12259280.jpg" alt="img"></p>
-<h5 id="类加载的时机（什么时候会对类进行初始化）"><a href="#类加载的时机（什么时候会对类进行初始化）" class="headerlink" title="类加载的时机（什么时候会对类进行初始化）"></a>类加载的时机（什么时候会对类进行初始化）</h5><ul>
-<li>遇到new关键字</li>
-<li>读取类中的<strong>静态字段</strong>或者调用类中的<strong>静态方法</strong>的时候</li>
-<li>初始化类的时候如果发现其父类还没初始化，那么<strong>先触发其父类的初始化</strong></li>
-<li>虚拟机启动时，用户需要制定一个执行的主类 也就是包含main方法的类，虚拟机会先初始化这个类</li>
+<h5 id="类加载的时机（什么时候会对类进行初始化）"><a href="# 类加载的时机（什么时候会对类进行初始化）" class="headerlink" title="类加载的时机（什么时候会对类进行初始化）"></a>类加载的时机（什么时候会对类进行初始化）</h5><ul>
+<li>遇到 new 关键字</li>
+<li>读取类中的 <strong> 静态字段 </strong> 或者调用类中的 <strong> 静态方法 </strong> 的时候</li>
+<li>初始化类的时候如果发现其父类还没初始化，那么 <strong> 先触发其父类的初始化</strong></li>
+<li>虚拟机启动时，用户需要制定一个执行的主类 也就是包含 main 方法的类，虚拟机会先初始化这个类</li>
 </ul>
-<h5 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h5><p>&emsp;<font color="red">泛型的本质是参数化类型或者参数化多态的应用，</font>泛型让程序员能够针对泛化的数据类型编写同样的算法，增强了编程语言的抽象能力。</p>
-<h6 id="Java与C-的泛型"><a href="#Java与C-的泛型" class="headerlink" title="Java与C#的泛型"></a>Java与C#的泛型</h6><p>&emsp;Java选择的泛型实现方式叫作<font color="red">类型擦除式泛型</font>，而C#选择的泛型实现方式是<font color="red">具现化式泛型</font>。</p>
-<p>&emsp;C#里面泛型无论在程序源码里面还是编译后的中间语言表示里面，List&lt;string<String>&gt;与 List&lt;int<int>&gt;就是两个不同的类型，它们<strong>由系统在运行期生成，有着自己独立的虚方法表和类型数据</strong>。 </int></String></p>
-<p>&emsp;而Java语言中的泛型则不同，它只在程序源码中存在，在编译后的字节码文件中，全部泛型都被<strong>替换为原来的裸类型（裸类型应被视为所有该类型泛型化实例的共同父类型）</strong>了，并且在相应的地方插入了强制转型代码，因此<strong>对于运行期的Java语言来说，ArrayList&lt;int<int>&gt;与ArrayList&lt;string<string>&gt;其实是同一个类型</string></int></strong></p>
-<p>&emsp;Java的类型擦除式泛型无论在使用效果上还是运行效率上，几乎是全面落后于C#的具现化式泛型，而它的<strong>唯一优势</strong>是在于实现这种泛型的影响范围上：<strong>擦除式泛型的实现</strong>几乎只需要在Javac编译器上做出改进即可，<strong>不需要改动字节码、不需要改动Java虚拟机</strong>。</p>
-<h5 id="后端编译与优化"><a href="#后端编译与优化" class="headerlink" title="后端编译与优化"></a>后端编译与优化</h5><h6 id="emsp-编译器和解释器"><a href="#emsp-编译器和解释器" class="headerlink" title="&emsp;编译器和解释器"></a>&emsp;编译器和解释器</h6><p>&emsp;&emsp;主流的Java虚拟机内部都同时包含解释器和编译器，所以说<strong>Java是半编译半解释的语言</strong>。</p>
-<p>&emsp;&emsp;编译器和解释器的优势</p>
+<h5 id="泛型"><a href="# 泛型" class="headerlink" title="泛型"></a>泛型 </h5><p>&emsp;<font color="red"> 泛型的本质是参数化类型或者参数化多态的应用，</font>泛型让程序员能够针对泛化的数据类型编写同样的算法，增强了编程语言的抽象能力。</p>
+<h6 id="Java 与 C- 的泛型"><a href="#Java 与 C- 的泛型" class="headerlink" title="Java 与 C#的泛型"></a>Java 与 C# 的泛型 </h6><p>&emsp;Java 选择的泛型实现方式叫作<font color="red"> 类型擦除式泛型 </font>，而 C# 选择的泛型实现方式是<font color="red"> 具现化式泛型</font>。</p>
+<p>&emsp;C# 里面泛型无论在程序源码里面还是编译后的中间语言表示里面，List&lt;string<String>&gt; 与 List&lt;int<int>&gt; 就是两个不同的类型，它们 <strong> 由系统在运行期生成，有着自己独立的虚方法表和类型数据</strong>。 </int></String></p>
+<p>&emsp; 而 Java 语言中的泛型则不同，它只在程序源码中存在，在编译后的字节码文件中，全部泛型都被 <strong> 替换为原来的裸类型（裸类型应被视为所有该类型泛型化实例的共同父类型）</strong>了，并且在相应的地方插入了强制转型代码，因此 <strong> 对于运行期的 Java 语言来说，ArrayList&lt;int<int>&gt; 与 ArrayList&lt;string<string>&gt; 其实是同一个类型</string></int></strong></p>
+<p>&emsp;Java 的类型擦除式泛型无论在使用效果上还是运行效率上，几乎是全面落后于 C# 的具现化式泛型，而它的 <strong> 唯一优势 </strong> 是在于实现这种泛型的影响范围上：<strong>擦除式泛型的实现 </strong> 几乎只需要在 Javac 编译器上做出改进即可，<strong>不需要改动字节码、不需要改动 Java 虚拟机</strong>。</p>
+<h5 id="后端编译与优化"><a href="# 后端编译与优化" class="headerlink" title="后端编译与优化"></a>后端编译与优化</h5><h6 id="emsp- 编译器和解释器"><a href="#emsp- 编译器和解释器" class="headerlink" title="&emsp; 编译器和解释器"></a>&emsp; 编译器和解释器</h6><p>&emsp;&emsp; 主流的 Java 虚拟机内部都同时包含解释器和编译器，所以说<strong>Java 是半编译半解释的语言</strong>。</p>
+<p>&emsp;&emsp; 编译器和解释器的优势</p>
 <ul>
 <li>当程序需要迅速启动和执行的时候，解释器可以首先发挥作用，省去编译的时间，立即运行。</li>
 <li>当程序启动后，随着时间的推移，编译器逐渐发挥作用，把越来越多的代码编译成本地代码，这样可以减少解释器的中间损耗，获得更高的执行效率。</li>
@@ -640,30 +846,30 @@
   <entry>
     <title>跨平台性、编译型语言、解释型语言</title>
     <url>/2021/10/17/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%80%A7%E3%80%81%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80%E3%80%81%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%80%A7%E3%80%81%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80%E3%80%81%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/</url>
-    <content><![CDATA[<h5 id="跨平台性是什么意思？"><a href="#跨平台性是什么意思？" class="headerlink" title="跨平台性是什么意思？"></a>跨平台性是什么意思？</h5><p>&emsp;&emsp;要知道，不同操作系统支持的函数、数据类型都可能不同，所以基于某个操作系统下编写的源代码一般是不能直接拿到另一个操作系统下编译的。注意<strong>我们所说的跨平台指的是源代码跨平台，而不是解释器跨平台</strong>。</p>
+    <content><![CDATA[<h5 id="跨平台性是什么意思？"><a href="# 跨平台性是什么意思？" class="headerlink" title="跨平台性是什么意思？"></a>跨平台性是什么意思？</h5><p>&emsp;&emsp; 要知道，不同操作系统支持的函数、数据类型都可能不同，所以基于某个操作系统下编写的源代码一般是不能直接拿到另一个操作系统下编译的。注意 <strong> 我们所说的跨平台指的是源代码跨平台，而不是解释器跨平台</strong>。</p>
 <span id="more"></span>
 
-<h5 id="为什么说Java是跨平台性的语言？"><a href="#为什么说Java是跨平台性的语言？" class="headerlink" title="为什么说Java是跨平台性的语言？"></a>为什么说Java是跨平台性的语言？</h5><p>&emsp;&emsp;跨平台性是指使用Java语言编写的程序，经过一次编译后，可以在不同操作系统上运行。其原理就是Java程序是通过Java虚拟机在操作系统上运行的，只要该操作系统安装了对应的Java虚拟机，这个系统就可以运行Java程序。<br>&emsp;&emsp;也就是说，Java程序只需要跟虚拟机打交道，与操作系统的交互都由虚拟机来负责。</p>
-<h5 id="编译型语言、解释型语言、混合型语言"><a href="#编译型语言、解释型语言、混合型语言" class="headerlink" title="编译型语言、解释型语言、混合型语言"></a>编译型语言、解释型语言、混合型语言</h5><p>&emsp;&emsp;计算机只能识别二进制指令，我们学习的Java、C++、Python都是高级语言，高级语言程序代码带运行之前要将源代码转换成二进制指令，也就是机器码，机器码是CPU可识别的硬件层面的代码。<br>&emsp;&emsp;那么，到底在何时将源代码转换成机器码呢?根据转换时机的不同，便有了不同类型的语言。</p>
+<h5 id="为什么说 Java 是跨平台性的语言？"><a href="# 为什么说 Java 是跨平台性的语言？" class="headerlink" title="为什么说 Java 是跨平台性的语言？"></a>为什么说 Java 是跨平台性的语言？</h5><p>&emsp;&emsp; 跨平台性是指使用 Java 语言编写的程序，经过一次编译后，可以在不同操作系统上运行。其原理就是 Java 程序是通过 Java 虚拟机在操作系统上运行的，只要该操作系统安装了对应的 Java 虚拟机，这个系统就可以运行 Java 程序。<br>&emsp;&emsp; 也就是说，Java 程序只需要跟虚拟机打交道，与操作系统的交互都由虚拟机来负责。</p>
+<h5 id="编译型语言、解释型语言、混合型语言"><a href="# 编译型语言、解释型语言、混合型语言" class="headerlink" title="编译型语言、解释型语言、混合型语言"></a>编译型语言、解释型语言、混合型语言</h5><p>&emsp;&emsp; 计算机只能识别二进制指令，我们学习的 Java、C++、Python 都是高级语言，高级语言程序代码带运行之前要将源代码转换成二进制指令，也就是机器码，机器码是 CPU 可识别的硬件层面的代码。<br>&emsp;&emsp; 那么，到底在何时将源代码转换成机器码呢? 根据转换时机的不同，便有了不同类型的语言。</p>
 <ul>
-<li>编译型语言：提前将源代码通过<strong>编译器</strong>一次性全部转换成机器码，也就是生成一个可执行程序，比如windows下的.exe文件，常见的编译型语言有C、C++、Go、汇编语言<ul>
-<li>优点：可以脱离开发环境运行，比如window下，通过编译后生成.exe可执行文件，可执行文件所包含的就是机器码，只要拥有了可执行程序就可以到处运行，不需要再重新编译了（不需要源代码和编译器了），可以做到<strong>一次编译，无限次运行</strong>。</li>
+<li>编译型语言：提前将源代码通过 <strong> 编译器 </strong> 一次性全部转换成机器码，也就是生成一个可执行程序，比如 windows 下的.exe 文件，常见的编译型语言有 C、C++、Go、汇编语言<ul>
+<li>优点：可以脱离开发环境运行，比如 window 下，通过编译后生成.exe 可执行文件，可执行文件所包含的就是机器码，只要拥有了可执行程序就可以到处运行，不需要再重新编译了（不需要源代码和编译器了），可以做到 <strong> 一次编译，无限次运行</strong>。</li>
 <li>缺点：可移植性差，因为不同操作系统的可执行文件几乎不兼容。</li>
 </ul>
 </li>
-<li>解释型语言：通过<strong>解释器</strong>一边执行一边转换，<strong>解释型语言不会生成可执行程序</strong>，常见的解释型语言有Python、Matlab<ul>
-<li>优点:可移植性好，因为有了中间层：<strong>解释器</strong>，官方针对不同操作系统开发不同的解释器，使得同样的源代码在不同操作系统下的执行结果是完全相同的。故解释型语言天生具有良好的可移植性。</li>
+<li>解释型语言：通过 <strong> 解释器 </strong> 一边执行一边转换，<strong>解释型语言不会生成可执行程序</strong>，常见的解释型语言有 Python、Matlab<ul>
+<li>优点: 可移植性好，因为有了中间层：<strong>解释器</strong>，官方针对不同操作系统开发不同的解释器，使得同样的源代码在不同操作系统下的执行结果是完全相同的。故解释型语言天生具有良好的可移植性。</li>
 <li>缺点：相对编译型语言来说，解释型语言执行效率比较慢，甚至存在量级上的差距。</li>
 </ul>
 </li>
-<li>混合型语言：半编译半解释，先将源代码转换成一种中间文件（在Java中就是字节码文件），然后再将中间文件拿到虚拟机中执行。常见的有Java、C#</li>
+<li>混合型语言：半编译半解释，先将源代码转换成一种中间文件（在 Java 中就是字节码文件），然后再将中间文件拿到虚拟机中执行。常见的有 Java、C#</li>
 </ul>
-<p>&emsp;&emsp;当我们说“下载一个程序（软件）”时，不同类型的语言有不同的含义：</p>
-<p>&emsp;&emsp;&emsp;&emsp;对于编译型语言，我们下载到的是可执行文件，源代码被作者保留，所以编译型语言的程序一般是<strong>闭源</strong>的。</p>
-<p>&emsp;&emsp;&emsp;&emsp;对于解释型语言，我们下载到的是所有的源代码，因为作者不给源代码就没法运行，所以解释型语言的程序一般是<strong>开源</strong>的</p>
-<p>&emsp;&emsp;编译型语言和解释型语言的执行流程如下图所示：</p>
+<p>&emsp;&emsp; 当我们说“下载一个程序（软件）”时，不同类型的语言有不同的含义：</p>
+<p>&emsp;&emsp;&emsp;&emsp; 对于编译型语言，我们下载到的是可执行文件，源代码被作者保留，所以编译型语言的程序一般是 <strong> 闭源 </strong> 的。</p>
+<p>&emsp;&emsp;&emsp;&emsp; 对于解释型语言，我们下载到的是所有的源代码，因为作者不给源代码就没法运行，所以解释型语言的程序一般是 <strong> 开源 </strong> 的</p>
+<p>&emsp;&emsp; 编译型语言和解释型语言的执行流程如下图所示：</p>
 <p><img src="https://api2.mubu.com/v3/document_image/74a0fec7-97de-41a0-82e6-b8eda78fb014-12259280.jpg" alt="编译型语言和解释型语言的执行流程"></p>
-<p>&emsp;&emsp;有次面试被问到过<strong>Java和Python的区别</strong>，当时只答了一些语法层面，还有强类型语言弱类型语言的东西，包括垃圾回收机制（Python也是有自动垃圾回收的，而且用的是引用计数法）。面试官说我理解得不够深刻，我想他应该是想让我从这个层面来说吧。</p>
+<p>&emsp;&emsp; 有次面试被问到过<strong>Java 和 Python 的区别</strong>，当时只答了一些语法层面，还有强类型语言弱类型语言的东西，包括垃圾回收机制（Python 也是有自动垃圾回收的，而且用的是引用计数法）。面试官说我理解得不够深刻，我想他应该是想让我从这个层面来说吧。</p>
 ]]></content>
       <tags>
         <tag>语言类型的差异</tag>
