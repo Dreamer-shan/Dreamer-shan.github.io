@@ -194,7 +194,8 @@
 </ul>
 <h5 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h5><p>　出现的原因：主从复制不能实现高可用、业务需要更高的 QPS，而主从复制中单机的 QPS 可能无法满足业务需求</p>
 <p>​    节点取余方式：对每个数据进行 hash 运算之后，与节点数进行取余运算，根据余数不同保存在不同的节点上，<strong>优点是配置简单，缺点是数据节点伸缩时，导致数据迁移</strong></p>
-<p>　一致性哈希方式：将所有的数据当做一个哈希环，哈希环中的数据范围是 0-2＾32。然后为每一个数据节点分配一个哈希值，<strong>这个节点就负责保存这个范围内的数据 </strong>。对<strong> 每一个 key 进行 hash 运算，被哈希后的结果在哪个 node 的范围内，则 <font color="red"> 按顺时针去找最近的节点 </font>&gt;，这个 key 将会被保存在这个节点上。</strong> 优点是 **<font color="red">节点伸缩时，只影响邻近节点</font>&gt;<img src="https://api2.mubu.com/v3/document_image/42cee358-df0c-4e1d-b0f1-655e92f976d1-12259280.jpg" alt="img">**</p>
+<p>　一致性哈希方式：将所有的数据当做一个哈希环，哈希环中的数据范围是 0-2＾32。然后为每一个数据节点分配一个哈希值，<strong>这个节点就负责保存这个范围内的数据 </strong>。对<strong> 每一个 key 进行 hash 运算，被哈希后的结果在哪个 node 的范围内，则 <font color="red"> 按顺时针去找最近的节点 </font>&gt;，这个 key 将会被保存在这个节点上。</strong> 优点是 <font color="red"> 节点伸缩时，只影响邻近节点</font></p>
+<p><img src="https://api2.mubu.com/v3/document_image/42cee358-df0c-4e1d-b0f1-655e92f976d1-12259280.jpg" alt="img">**</p>
 <h6 id="分配槽"><a href="# 分配槽" class="headerlink" title="分配槽"></a>分配槽 </h6><p>　1. 每个节点通过通信都会共享 Redis Cluster 中<strong> 槽和集群中对应节点的关系</strong></p>
 <p>　2. 客户端向 Redis Cluster 的任意节点发送命令，接收命令的节点会根据 CRC16 规则进行<strong>hash 运算与 16383 取余</strong>，计算自己的槽和对应节点 </p>
 <p>　3. 如果保存数据的槽被分配给当前节点，则去槽中执行命令，并把命令执行结果返回给客户端 </p>
@@ -224,8 +225,8 @@
 <p>&emsp;&emsp; 程序计数器：可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时，代码的分支、循环、跳转、异常处理、线程恢复，都需要依赖这个计数器来完成。此内存区域是唯一一个在《Java 虚拟机规范》中 <strong> 没有规定任何 OutOfMemoryError</strong>情况的区域。</p>
 <h5 id="new 一个对象的时候会发生什么？"><a href="#new 一个对象的时候会发生什么？" class="headerlink" title="new 一个对象的时候会发生什么？"></a>new 一个对象的时候会发生什么？</h5><p>&emsp;&emsp;Java 虚拟机遇到一条字节码 new 指令时，首先将去检查这个指令的参数是否能在常量池中定位到 一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，先要执行类加载过程。也就是加载 -&gt; 验证 -&gt; 准备 -&gt; 解析 -&gt; 初始化 -&gt; 使用 -&gt; 卸载。</p>
 <p>&emsp;&emsp; 类加载通过后，虚拟机需要为新对象 <strong> 分配内存 </strong>。对象的内存大小在<strong> 类加载完成后就可以确定</strong>。根据内存是否规整，分配内存有两种方式。内存规整时使用指针碰撞方式，不规整时使用空闲列表方式。</p>
-<p>​        &emsp;&emsp; 指针碰撞：维护一个指针作为可用内存空间和不可用内存空间的分界点。内存分配就是将这个指针向着空闲内存的方向移动一段与对象内存大小相等的距离。Serial、ParNew 收集器有空间压缩整理的能力（标记复制 or 整理算法），故这两款收集器使用指针碰撞方式来分配内存。</p>
-<p>&emsp;&emsp;&emsp;&emsp; 空闲列表：维护一个列表来记录哪些内存块是可用的，在分配内存时，从列表中找到一块足够大的空间划分给对象实例。CMS 收集器使用的是标记清除法，理论上内存是不规整的，所以使用空闲列表的方式来分配内存。</p>
+<p>　　指针碰撞：维护一个指针作为可用内存空间和不可用内存空间的分界点。内存分配就是将这个指针向着空闲内存的方向移动一段与对象内存大小相等的距离。Serial、ParNew 收集器有空间压缩整理的能力（标记复制 or 整理算法），故这两款收集器使用指针碰撞方式来分配内存。</p>
+<p>　　空闲列表：维护一个列表来记录哪些内存块是可用的，在分配内存时，从列表中找到一块足够大的空间划分给对象实例。CMS 收集器使用的是标记清除法，理论上内存是不规整的，所以使用空闲列表的方式来分配内存。</p>
 <p>&emsp;&emsp; 在并发情况下，即使只是修改一个指针所指向的位置，也不一定是线程安全的。可能会出现这种情况：给对象 A 分配内存时，指针还没来得及修改，对象 B 使用了原来的指针分配内存。解决这个问题 有两种可选方案：</p>
 <ul>
 <li><strong>对分配内存空间的动作进行同步处理 </strong>——实际上虚拟机是采用<strong>CAS+ 失败重试</strong> 的方式保证更新操作的原子性；</li>
@@ -413,6 +414,98 @@
       <tags>
         <tag>JVM</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Java 基础</title>
+    <url>/2021/11/09/Java%E5%9F%BA%E7%A1%80/Java%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h5 id="Java 基础"><a href="#Java 基础" class="headerlink" title="Java 基础"></a>Java 基础</h5><h6 id="Java 数据类型"><a href="#Java 数据类型" class="headerlink" title="Java 数据类型"></a>Java 数据类型</h6><ul>
+<li><p>整型：byte、short、long、int</p>
+</li>
+<li><p>浮点型：单精度浮点型 float、双精度浮点型 double</p>
+</li>
+<li><p>字符型：char</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>占用内存</th>
+<th>成员变量默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>1B</td>
+<td>0</td>
+</tr>
+<tr>
+<td>short</td>
+<td>2B</td>
+<td>0</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4B</td>
+<td>0</td>
+</tr>
+<tr>
+<td>long</td>
+<td>8B</td>
+<td>0L</td>
+</tr>
+<tr>
+<td>float</td>
+<td>4B</td>
+<td>0.0F</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8B</td>
+<td>0.0D</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>1B</td>
+<td>false</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h6 id="单精度浮点型和双精度浮点型的区别"><a href="# 单精度浮点型和双精度浮点型的区别" class="headerlink" title="单精度浮点型和双精度浮点型的区别"></a>单精度浮点型和双精度浮点型的区别</h6><p>　单精度（float），一般在计算机中存储占用 4 字节，双精度（double）在计算机中存储占用 8 字节，由于位数存储位不同，他们能表示的数值的范围就不同，也就是能准确表示的数的位数就不同</p>
+<h6 id="final 关键字"><a href="#final 关键字" class="headerlink" title="final 关键字"></a>final 关键字</h6><ul>
+<li>被 final 修饰的类不可以被继承</li>
+<li>被 final 修饰的方法不可以被重写</li>
+<li>被 final 修饰的变量不可以被改变，被 final 修饰不可变的是变量的引用，而不是引用指向的内容，引用指向的内容是可以改变的</li>
+</ul>
+<h6 id="static 关键字"><a href="#static 关键字" class="headerlink" title="static 关键字"></a>static 关键字 </h6><p>　1. 创建独立于具体对象的域变量或者方法：<strong> 即使没有创建对象，也能使用属性和调用方法 </strong>，可以通过类名.(字段) 或者类名.(方法)调用</p>
+<p>　2. 优化程序性能：类被加载的时候，会按照 static 块的顺序来执行每个 static 块，<strong>只会执行一次 </strong>，因此一些<strong> 只需要进行一次的初始化操作 </strong> 都放在 static 代码块中进行。</p>
+<p>　注意事项：1、静态只能访问静态。 2、非静态既可以访问非静态的，也可以访问静态的。</p>
+<h6 id="为什么静态方法（变量）只能调用静态方法（变量），不能调用非静态方法？"><a href="# 为什么静态方法（变量）只能调用静态方法（变量），不能调用非静态方法？" class="headerlink" title="为什么静态方法（变量）只能调用静态方法（变量），不能调用非静态方法？"></a>为什么静态方法（变量）只能调用静态方法（变量），不能调用非静态方法？</h6><p>　被 static 修饰的变量或者方法 <strong> 是优先于对象存在的 </strong>，也就是说当一个类加载完毕之后，<strong> 即便没有创建对象，也可以去访问 </strong>。如果静态方法去访问非静态方法，可能<strong> 此时非静态方法所处的类还没有被实例化，如果这个时候访问就会出错</strong>。</p>
+<h6 id="抽象类和接口对比"><a href="# 抽象类和接口对比" class="headerlink" title="抽象类和接口对比"></a>抽象类和接口对比 </h6><p>　抽象类是用来捕捉子类的共性的，接口是抽象方法的集合。它们都<strong> 不能被实例化，都包含抽象方法。</strong></p>
+<p>　使用场景：</p>
+<ul>
+<li><p>行为模型应该通过接口而不是抽象类定义，所以通常 <strong> 优先选用接口，尽量少用抽象类</strong>。</p>
+</li>
+<li><p>选择抽象类的时候通常是如下情况：<strong>需要定义子类的行为，又要为子类提供通用的功能</strong></p>
+<p><img src="https://api2.mubu.com/v3/document_image/77fbbce7-4bd4-47d4-9030-da75c687bb35-12259280.jpg" alt="img"></p>
+</li>
+</ul>
+<h6 id="对象实例与对象引用有何不同？"><a href="# 对象实例与对象引用有何不同？" class="headerlink" title="对象实例与对象引用有何不同？"></a>对象实例与对象引用有何不同？</h6><p>　对象实例在 <strong> 堆内存 </strong> 中，对象引用在 <strong> 栈内存 </strong> 中。一个对象引用可以指向 0 或者 1 个对象（１个指针最多指向１个对象），但是１个对象实例可能有多个引用指向它（１个对象可能有多个指针同时指向它）</p>
+<h6 id="重写与重载"><a href="# 重写与重载" class="headerlink" title="重写与重载"></a>重写与重载 </h6><p>　方法的重载和重写<strong> 都是实现多态的方式 </strong>，区别在于前者实现的是<strong> 编译时的多态性 </strong>，而后者实现的是<strong> 运行时的多态性 </strong>。多态的三个条件：1. 继承关系　2. 子类重写父类的方法　3. 父类引用指向子类对象（<strong> 左父右子</strong>）</p>
+<p>　重载：发生在同一个类中，方法名相同参数列表不同或者顺序不同</p>
+<p>　重写：发生在父子类中，方法名、参数列表必须相同。抛出的异常 <strong> 小于等于 </strong> 父类，访问修饰符 <strong> 大于等于 </strong> 父类</p>
+<h6 id="和 equals 方法"><a href="# 和 equals 方法" class="headerlink" title="== 和 equals 方法"></a>== 和 equals 方法 </h6><p>　==：判断地址是否相等，<strong> 基本类型比较的是值，引用类型比较的是地址</strong>。</p>
+<p>　equals：如果没有重写 equals() 方法，等价于’==’，一般都会重写 equals() 方法来判断，若两个对象的内容相等，则返回 true</p>
+<p>　注意：String 中的 equals 方法是被重写过的，<strong>因为 object 的 equals 方法是比较的对象的内存地址，而 String 的 equals 方法比较的是对象的值</strong></p>
+<h6 id="为什么要用 hashcode？"><a href="# 为什么要用 hashcode？" class="headerlink" title="为什么要用 hashcode？"></a>为什么要用 hashcode？</h6><p>　把对象加入 HashSet 时，HashSet 会先计算对象的 hashcode 值来判断对象加入的位置，判断 <strong> 是否发生了哈希冲突 </strong>，如果发生了哈希冲突，这时会<strong> 调用 equals()方法来检查 hashcode 相等的对象是否真的相同</strong>。如果两者相同，HashSet 就不会让其加入操作成功。如果不同的话，就会重新散列到其他位置。就大大减少了 equals 的次数。</p>
+<h5 id="反射"><a href="# 反射" class="headerlink" title="反射"></a>反射 </h5><h6 id="什么是反射"><a href="# 什么是反射" class="headerlink" title="什么是反射"></a> 什么是反射</h6><p>　在运行状态中，对于任意一个类（对象），都能够知道这个类（对象）的所有属性和方法；这种动态获取的信息以及动态调用对象的方法的功能称为 java 语言的反射机制</p>
+<h6 id="获取反射的三种方式"><a href="# 获取反射的三种方式" class="headerlink" title="获取反射的三种方式"></a>获取反射的三种方式</h6><p>　1. 类名.class   2.  实例对象.getClass  3.Class.forName(“全限定名”)</p>
+<h6 id="反射的应用场景"><a href="# 反射的应用场景" class="headerlink" title="反射的应用场景"></a>反射的应用场景 </h6><p>　动态代理、Spring 通过 xml 文件装载 Bean、使用 JDBC 连接数据库时 Class.forName() 通过反射加载数据库的驱动程序</p>
+<h5 id="string 为什么不可变"><a href="#string 为什么不可变" class="headerlink" title="string 为什么不可变"></a>string 为什么不可变 </h5><p> 在 JDK1.8 中，String 的源码如下，可以看到 String 类本身和字符数组 value 都是使用 final 修饰的，所以 String 类是不能被继承的，字符数组是不能改变的。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/d915c05d-ed12-4dc5-9f39-7351894f03f6-12259280.jpg" alt="img"></p>
+<p>注意：String 不可变但不代表引用不可以变，s1 的内容是不变的，但是指向地址变了，原来指向 <code>aaa</code> 的内存地址，现在指向 <code>aaabbb</code> 的内存地址。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">s1 = s1 + <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line">System.out.println(s1);</span><br><span class="line">输出： aaabbb</span><br></pre></td></tr></table></figure>
+
+]]></content>
   </entry>
   <entry>
     <title>JVM实战</title>
@@ -873,18 +966,6 @@
 ]]></content>
       <tags>
         <tag>语言类型的差异</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JAVA基础</title>
-    <url>/2021/10/16/JAVA%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h5 id="为什么说Java是跨平台性的语言？"><a href="#为什么说Java是跨平台性的语言？" class="headerlink" title="为什么说Java是跨平台性的语言？"></a>为什么说Java是跨平台性的语言？</h5><p>&emsp;&emsp;跨平台性是指使用Java语言编写的程序，经过一次编译后，可以在不同操作系统上运行。其原理就是Java程序是通过Java虚拟机在操作系统上运行的，只要该操作系统安装了对应的Java虚拟机，这个系统就可以运行Java程序。<br>&emsp;&emsp;也就是说，Java程序只需要跟虚拟机打交道，与操作系统的交互都由虚拟机来负责。</p>
-<span id="more"></span>
-
-<h5 id="什么是字节码-为什么Java采用字节码呢"><a href="#什么是字节码-为什么Java采用字节码呢" class="headerlink" title="什么是字节码?为什么Java采用字节码呢?"></a>什么是字节码?为什么Java采用字节码呢?</h5><p>&emsp;&emsp;字节码是Java程序经过虚拟机编译后产生的代码，该代码不是面向处理器的，而是面向虚拟机的，也就是说编译后产生的字节码需要符合虚拟机规范。<br>&emsp;&emsp;正是因为采用了字节码，所以Java在一定程度上<strong>既解决了解释型语言执行速度慢的问题，又解决了解释型语言可移植性的特点</strong>。</p>
-<h5 id><a href="#" class="headerlink" title></a></h5>]]></content>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>

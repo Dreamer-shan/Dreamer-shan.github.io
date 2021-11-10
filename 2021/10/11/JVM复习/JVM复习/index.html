@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/7b7fd4c0-2228-481a-b2db-7c796db28dad-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/36cb3d78-4a3d-4f20-8623-4428282459e5-12259280.jpg">
 <meta property="article:published_time" content="2021-10-11T11:50:02.000Z">
-<meta property="article:modified_time" content="2021-10-25T14:40:23.884Z">
+<meta property="article:modified_time" content="2021-11-03T09:00:19.769Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-25 22:40:23" itemprop="dateModified" datetime="2021-10-25T22:40:23+08:00">2021-10-25</time>
+                <time title="修改时间：2021-11-03 17:00:19" itemprop="dateModified" datetime="2021-11-03T17:00:19+08:00">2021-11-03</time>
               </span>
 
           
@@ -253,7 +253,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.1k</span>
+              <span>9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -287,8 +287,8 @@
 <p>&emsp;&emsp; 程序计数器：可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时，代码的分支、循环、跳转、异常处理、线程恢复，都需要依赖这个计数器来完成。此内存区域是唯一一个在《Java 虚拟机规范》中 <strong> 没有规定任何 OutOfMemoryError</strong>情况的区域。</p>
 <h5 id="new 一个对象的时候会发生什么？"><a href="#new 一个对象的时候会发生什么？" class="headerlink" title="new 一个对象的时候会发生什么？"></a>new 一个对象的时候会发生什么？</h5><p>&emsp;&emsp;Java 虚拟机遇到一条字节码 new 指令时，首先将去检查这个指令的参数是否能在常量池中定位到 一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，先要执行类加载过程。也就是加载 -&gt; 验证 -&gt; 准备 -&gt; 解析 -&gt; 初始化 -&gt; 使用 -&gt; 卸载。</p>
 <p>&emsp;&emsp; 类加载通过后，虚拟机需要为新对象 <strong> 分配内存 </strong>。对象的内存大小在<strong> 类加载完成后就可以确定</strong>。根据内存是否规整，分配内存有两种方式。内存规整时使用指针碰撞方式，不规整时使用空闲列表方式。</p>
-<p>​        &emsp;&emsp; 指针碰撞：维护一个指针作为可用内存空间和不可用内存空间的分界点。内存分配就是将这个指针向着空闲内存的方向移动一段与对象内存大小相等的距离。Serial、ParNew 收集器有空间压缩整理的能力（标记复制 or 整理算法），故这两款收集器使用指针碰撞方式来分配内存。</p>
-<p>&emsp;&emsp;&emsp;&emsp; 空闲列表：维护一个列表来记录哪些内存块是可用的，在分配内存时，从列表中找到一块足够大的空间划分给对象实例。CMS 收集器使用的是标记清除法，理论上内存是不规整的，所以使用空闲列表的方式来分配内存。</p>
+<p>　　指针碰撞：维护一个指针作为可用内存空间和不可用内存空间的分界点。内存分配就是将这个指针向着空闲内存的方向移动一段与对象内存大小相等的距离。Serial、ParNew 收集器有空间压缩整理的能力（标记复制 or 整理算法），故这两款收集器使用指针碰撞方式来分配内存。</p>
+<p>　　空闲列表：维护一个列表来记录哪些内存块是可用的，在分配内存时，从列表中找到一块足够大的空间划分给对象实例。CMS 收集器使用的是标记清除法，理论上内存是不规整的，所以使用空闲列表的方式来分配内存。</p>
 <p>&emsp;&emsp; 在并发情况下，即使只是修改一个指针所指向的位置，也不一定是线程安全的。可能会出现这种情况：给对象 A 分配内存时，指针还没来得及修改，对象 B 使用了原来的指针分配内存。解决这个问题 有两种可选方案：</p>
 <ul>
 <li><strong>对分配内存空间的动作进行同步处理 </strong>——实际上虚拟机是采用<strong>CAS+ 失败重试</strong> 的方式保证更新操作的原子性；</li>
@@ -584,7 +584,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -633,12 +633,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">25k</span>
+    <span title="站点总字数">27k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">23 分钟</span>
+    <span title="站点阅读时长">24 分钟</span>
 </div>
 
 

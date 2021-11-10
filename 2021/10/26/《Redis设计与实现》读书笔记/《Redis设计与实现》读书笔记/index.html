@@ -53,7 +53,7 @@
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/42cee358-df0c-4e1d-b0f1-655e92f976d1-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/ea429ae5-bc25-492b-b584-303d4c5c7e76-12259280.jpg">
 <meta property="article:published_time" content="2021-10-26T06:57:39.000Z">
-<meta property="article:modified_time" content="2021-11-03T08:30:18.414Z">
+<meta property="article:modified_time" content="2021-11-09T02:30:01.299Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta property="article:tag" content="读书笔记">
 <meta name="twitter:card" content="summary">
@@ -251,7 +251,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-03 16:30:18" itemprop="dateModified" datetime="2021-11-03T16:30:18+08:00">2021-11-03</time>
+                <time title="修改时间：2021-11-09 10:30:01" itemprop="dateModified" datetime="2021-11-09T10:30:01+08:00">2021-11-09</time>
               </span>
 
           
@@ -477,7 +477,8 @@
 </ul>
 <h5 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h5><p>　出现的原因：主从复制不能实现高可用、业务需要更高的 QPS，而主从复制中单机的 QPS 可能无法满足业务需求</p>
 <p>​    节点取余方式：对每个数据进行 hash 运算之后，与节点数进行取余运算，根据余数不同保存在不同的节点上，<strong>优点是配置简单，缺点是数据节点伸缩时，导致数据迁移</strong></p>
-<p>　一致性哈希方式：将所有的数据当做一个哈希环，哈希环中的数据范围是 0-2＾32。然后为每一个数据节点分配一个哈希值，<strong>这个节点就负责保存这个范围内的数据 </strong>。对<strong> 每一个 key 进行 hash 运算，被哈希后的结果在哪个 node 的范围内，则 <font color="red"> 按顺时针去找最近的节点 </font>&gt;，这个 key 将会被保存在这个节点上。</strong> 优点是 **<font color="red">节点伸缩时，只影响邻近节点</font>&gt;<img src="https://api2.mubu.com/v3/document_image/42cee358-df0c-4e1d-b0f1-655e92f976d1-12259280.jpg" alt="img">**</p>
+<p>　一致性哈希方式：将所有的数据当做一个哈希环，哈希环中的数据范围是 0-2＾32。然后为每一个数据节点分配一个哈希值，<strong>这个节点就负责保存这个范围内的数据 </strong>。对<strong> 每一个 key 进行 hash 运算，被哈希后的结果在哪个 node 的范围内，则 <font color="red"> 按顺时针去找最近的节点 </font>&gt;，这个 key 将会被保存在这个节点上。</strong> 优点是 <font color="red"> 节点伸缩时，只影响邻近节点</font></p>
+<p><img src="https://api2.mubu.com/v3/document_image/42cee358-df0c-4e1d-b0f1-655e92f976d1-12259280.jpg" alt="img">**</p>
 <h6 id="分配槽"><a href="# 分配槽" class="headerlink" title="分配槽"></a>分配槽 </h6><p>　1. 每个节点通过通信都会共享 Redis Cluster 中<strong> 槽和集群中对应节点的关系</strong></p>
 <p>　2. 客户端向 Redis Cluster 的任意节点发送命令，接收命令的节点会根据 CRC16 规则进行<strong>hash 运算与 16383 取余</strong>，计算自己的槽和对应节点 </p>
 <p>　3. 如果保存数据的槽被分配给当前节点，则去槽中执行命令，并把命令执行结果返回给客户端 </p>
@@ -505,7 +506,10 @@
     <a href="/2021/10/20/JVM%E5%AE%9E%E6%88%98/JVM%E5%AE%9E%E6%88%98/" rel="prev" title="JVM实战">
       <i class="fa fa-chevron-left"></i> JVM实战
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/09/Java%E5%9F%BA%E7%A1%80/Java%E5%9F%BA%E7%A1%80/" rel="next" title="Java 基础">
+      Java 基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -593,7 +597,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -642,12 +646,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">25k</span>
+    <span title="站点总字数">27k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">23 分钟</span>
+    <span title="站点阅读时长">24 分钟</span>
 </div>
 
 
