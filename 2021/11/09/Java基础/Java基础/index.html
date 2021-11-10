@@ -23,17 +23,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Java 基础Java 数据类型 整型：byte、short、long、int  浮点型：单精度浮点型 float、双精度浮点型 double  字符型：char    关键字 占用内存 成员变量默认值    byte 1B 0   short 2B 0   int 4B 0   long 8B 0L   float 4B 0.0F   double 8B 0.0D   boolean 1B fa">
+  <meta name="description" content="Java基础Java基本数据类型 整型：byte、short、long、int 浮点型：单精度浮点型float、双精度浮点型double 字符型：char  注意，String不是基本数据类型。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 基础">
 <meta property="og:url" content="http://example.com/2021/11/09/Java%E5%9F%BA%E7%A1%80/Java%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Dreamer-shan&#39;s Blog">
-<meta property="og:description" content="Java 基础Java 数据类型 整型：byte、short、long、int  浮点型：单精度浮点型 float、双精度浮点型 double  字符型：char    关键字 占用内存 成员变量默认值    byte 1B 0   short 2B 0   int 4B 0   long 8B 0L   float 4B 0.0F   double 8B 0.0D   boolean 1B fa">
+<meta property="og:description" content="Java基础Java基本数据类型 整型：byte、short、long、int 浮点型：单精度浮点型float、双精度浮点型double 字符型：char  注意，String不是基本数据类型。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/77fbbce7-4bd4-47d4-9030-da75c687bb35-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/d915c05d-ed12-4dc5-9f39-7351894f03f6-12259280.jpg">
 <meta property="article:published_time" content="2021-11-09T06:46:02.000Z">
-<meta property="article:modified_time" content="2021-11-10T02:30:01.155Z">
+<meta property="article:modified_time" content="2021-11-10T03:13:31.153Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://api2.mubu.com/v3/document_image/77fbbce7-4bd4-47d4-9030-da75c687bb35-12259280.jpg">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-10 10:30:01" itemprop="dateModified" datetime="2021-11-10T10:30:01+08:00">2021-11-10</time>
+                <time title="修改时间：2021-11-10 11:13:31" itemprop="dateModified" datetime="2021-11-10T11:13:31+08:00">2021-11-10</time>
               </span>
 
           
@@ -242,14 +242,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
+              <span>2.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -261,12 +261,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="Java 基础"><a href="#Java 基础" class="headerlink" title="Java 基础"></a>Java 基础</h5><h6 id="Java 数据类型"><a href="#Java 数据类型" class="headerlink" title="Java 数据类型"></a>Java 数据类型</h6><ul>
-<li><p>整型：byte、short、long、int</p>
-</li>
-<li><p>浮点型：单精度浮点型 float、双精度浮点型 double</p>
-</li>
-<li><p>字符型：char</p>
+        <h5 id="Java 基础"><a href="#Java 基础" class="headerlink" title="Java 基础"></a>Java 基础</h5><h6 id="Java 基本数据类型"><a href="#Java 基本数据类型" class="headerlink" title="Java 基本数据类型"></a>Java 基本数据类型</h6><ul>
+<li>整型：byte、short、long、int</li>
+<li>浮点型：单精度浮点型 float、双精度浮点型 double</li>
+<li>字符型：char</li>
+</ul>
+<p>注意，<code>String</code>不是基本数据类型。</p>
+<span id="more"></span>
+
 <table>
 <thead>
 <tr>
@@ -311,8 +313,6 @@
 <td>false</td>
 </tr>
 </tbody></table>
-</li>
-</ul>
 <h6 id="单精度浮点型和双精度浮点型的区别"><a href="# 单精度浮点型和双精度浮点型的区别" class="headerlink" title="单精度浮点型和双精度浮点型的区别"></a>单精度浮点型和双精度浮点型的区别</h6><p>　单精度（float），一般在计算机中存储占用 4 字节，双精度（double）在计算机中存储占用 8 字节，由于位数存储位不同，他们能表示的数值的范围就不同，也就是能准确表示的数的位数就不同</p>
 <h6 id="final 关键字"><a href="#final 关键字" class="headerlink" title="final 关键字"></a>final 关键字</h6><ul>
 <li>被 final 修饰的类不可以被继承</li>
@@ -345,8 +345,17 @@
 <h6 id="反射的应用场景"><a href="# 反射的应用场景" class="headerlink" title="反射的应用场景"></a>反射的应用场景 </h6><p>　动态代理、Spring 通过 xml 文件装载 Bean、使用 JDBC 连接数据库时 Class.forName() 通过反射加载数据库的驱动程序</p>
 <h5 id="string 为什么不可变"><a href="#string 为什么不可变" class="headerlink" title="string 为什么不可变"></a>string 为什么不可变 </h5><p> 在 JDK1.8 中，String 的源码如下，可以看到 String 类本身和字符数组 value 都是使用 final 修饰的，所以 String 类是不能被继承的，字符数组是不能改变的。</p>
 <p><img src="https://api2.mubu.com/v3/document_image/d915c05d-ed12-4dc5-9f39-7351894f03f6-12259280.jpg" alt="img"></p>
-<p>注意：String 不可变但不代表引用不可以变，s1 的内容是不变的，但是指向地址变了，原来指向 <code>aaa</code> 的内存地址，现在指向 <code>aaabbb</code> 的内存地址。</p>
+<p>注意：</p>
+<ol>
+<li>String 不可变但不代表引用不可以变，s1 的内容是不变的，但是指向地址变了，原来指向 <code>aaa</code> 的内存地址，现在指向 <code>aaabbb</code> 的内存地址</li>
+<li>通过 <strong> 反射可以暴力修改</strong>。</li>
+</ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">s1 = s1 + <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line">System.out.println(s1);</span><br><span class="line">输出： aaabbb</span><br></pre></td></tr></table></figure>
+
+<h5 id="String-str-”i”与 -String-str-new-String-“i”- 有什么区别？"><a href="#String-str-”i”与 -String-str-new-String-“i”- 有什么区别？" class="headerlink" title="String str=”i”与 String str=new String(“i”)有什么区别？"></a>String str=”i”与 String str=new String(“i”)有什么区别？</h5><p>　他们的内存分配方式不一样。<code>String str=&quot;i&quot;</code>，虚拟机会将其分配到字符串常量池中；而 <code>String str=new String(“i”) </code>会被分到堆内存中。</p>
+<h5 id="string 有哪些特性？"><a href="#string 有哪些特性？" class="headerlink" title="string 有哪些特性？"></a>string 有哪些特性？</h5><p>　1. 不变性：字符串是不可变的，所以也是 <font color="red"> 线程安全 </font> 的。对字符串所有的操作，实际上都是创建一个新的对象，再把引用指向该对象。</p>
+<p>　2. 常量池优化：String 对象创建之后，会在字符串常量池中进行缓存，如果下次创建同样的对象时，会直接返回缓存的引用，提高访问速度。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;shy&quot;</span>; <span class="comment">//s1 指向常量池</span></span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">&quot;shy&quot;</span>);  <span class="comment">//s2 指向堆上的对象</span></span><br><span class="line">String s3 = <span class="string">&quot;shy&quot;</span>;</span><br><span class="line">String s4 = <span class="keyword">new</span> String(<span class="string">&quot;shy&quot;</span>);</span><br><span class="line">System.out.println(s1.equals(s2)); <span class="comment">//true 重写 equals 方法 比较的是字符串的值</span></span><br><span class="line">System.out.println(s1 == s2); <span class="comment">//false == 比较的是地址,s1 和 s2 地址不同</span></span><br><span class="line">System.out.println(s1 == s3); <span class="comment">//true 常量池优化,s3 不会开辟新的内存空间</span></span><br><span class="line">System.out.println(s2 == s4); <span class="comment">//false s2 和 s4 是两个对象</span></span><br><span class="line">System.out.println(s2 == <span class="string">&quot;shy&quot;</span>); <span class="comment">//false  s2 是堆内存中的对象,shy 在字符串常量池中, 内存地址不一样</span></span><br><span class="line">s2 = s1;    <span class="comment">// 改变 s2 的指向, 让 s2 指向常量池</span></span><br><span class="line">System.out.println(s2 == <span class="string">&quot;shy&quot;</span>); <span class="comment">//true  s2 指向常量池</span></span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -425,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%20%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Java 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Java%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">Java 数据类型</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8D%95%E7%B2%BE%E5%BA%A6%E6%B5%AE%E7%82%B9%E5%9E%8B%E5%92%8C%E5%8F%8C%E7%B2%BE%E5%BA%A6%E6%B5%AE%E7%82%B9%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.</span> <span class="nav-text">单精度浮点型和双精度浮点型的区别</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#final%20%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.3.</span> <span class="nav-text">final 关键字</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#static%20%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.4.</span> <span class="nav-text">static 关键字 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%EF%BC%88%E5%8F%98%E9%87%8F%EF%BC%89%E5%8F%AA%E8%83%BD%E8%B0%83%E7%94%A8%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%EF%BC%88%E5%8F%98%E9%87%8F%EF%BC%89%EF%BC%8C%E4%B8%8D%E8%83%BD%E8%B0%83%E7%94%A8%E9%9D%9E%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-number">1.5.</span> <span class="nav-text">为什么静态方法（变量）只能调用静态方法（变量），不能调用非静态方法？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3%E5%AF%B9%E6%AF%94"><span class="nav-number">1.6.</span> <span class="nav-text">抽象类和接口对比 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%AE%9E%E4%BE%8B%E4%B8%8E%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8%E6%9C%89%E4%BD%95%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="nav-number">1.7.</span> <span class="nav-text">对象实例与对象引用有何不同？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%87%8D%E5%86%99%E4%B8%8E%E9%87%8D%E8%BD%BD"><span class="nav-number">1.8.</span> <span class="nav-text">重写与重载 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%92%8C%20equals%20%E6%96%B9%E6%B3%95"><span class="nav-number">1.9.</span> <span class="nav-text">&#x3D;&#x3D; 和 equals 方法 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%20hashcode%EF%BC%9F"><span class="nav-number">1.10.</span> <span class="nav-text">为什么要用 hashcode？</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84"><span class="nav-number">2.</span> <span class="nav-text">反射 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%B0%84"><span class="nav-number">2.1.</span> <span class="nav-text"> 什么是反射</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%8F%8D%E5%B0%84%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">获取反射的三种方式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.3.</span> <span class="nav-text">反射的应用场景 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#string%20%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%8F%AF%E5%8F%98"><span class="nav-number">3.</span> <span class="nav-text">string 为什么不可变 </span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%20%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Java 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Java%20%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">Java 基本数据类型</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8D%95%E7%B2%BE%E5%BA%A6%E6%B5%AE%E7%82%B9%E5%9E%8B%E5%92%8C%E5%8F%8C%E7%B2%BE%E5%BA%A6%E6%B5%AE%E7%82%B9%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.</span> <span class="nav-text">单精度浮点型和双精度浮点型的区别</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#final%20%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.3.</span> <span class="nav-text">final 关键字</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#static%20%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.4.</span> <span class="nav-text">static 关键字 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%EF%BC%88%E5%8F%98%E9%87%8F%EF%BC%89%E5%8F%AA%E8%83%BD%E8%B0%83%E7%94%A8%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%EF%BC%88%E5%8F%98%E9%87%8F%EF%BC%89%EF%BC%8C%E4%B8%8D%E8%83%BD%E8%B0%83%E7%94%A8%E9%9D%9E%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-number">1.5.</span> <span class="nav-text">为什么静态方法（变量）只能调用静态方法（变量），不能调用非静态方法？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3%E5%AF%B9%E6%AF%94"><span class="nav-number">1.6.</span> <span class="nav-text">抽象类和接口对比 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%AE%9E%E4%BE%8B%E4%B8%8E%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8%E6%9C%89%E4%BD%95%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="nav-number">1.7.</span> <span class="nav-text">对象实例与对象引用有何不同？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%87%8D%E5%86%99%E4%B8%8E%E9%87%8D%E8%BD%BD"><span class="nav-number">1.8.</span> <span class="nav-text">重写与重载 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%92%8C%20equals%20%E6%96%B9%E6%B3%95"><span class="nav-number">1.9.</span> <span class="nav-text">&#x3D;&#x3D; 和 equals 方法 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%20hashcode%EF%BC%9F"><span class="nav-number">1.10.</span> <span class="nav-text">为什么要用 hashcode？</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84"><span class="nav-number">2.</span> <span class="nav-text">反射 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%B0%84"><span class="nav-number">2.1.</span> <span class="nav-text"> 什么是反射</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%8F%8D%E5%B0%84%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">获取反射的三种方式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.3.</span> <span class="nav-text">反射的应用场景 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#string%20%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%8F%AF%E5%8F%98"><span class="nav-number">3.</span> <span class="nav-text">string 为什么不可变 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#String-str-%E2%80%9Di%E2%80%9D%E4%B8%8E%20-String-str-new-String-%E2%80%9Ci%E2%80%9D-%20%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">String str&#x3D;”i”与 String str&#x3D;new String(“i”)有什么区别？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#string%20%E6%9C%89%E5%93%AA%E4%BA%9B%E7%89%B9%E6%80%A7%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">string 有哪些特性？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -503,12 +512,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">27k</span>
+    <span title="站点总字数">28k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">24 分钟</span>
+    <span title="站点阅读时长">25 分钟</span>
 </div>
 
 
