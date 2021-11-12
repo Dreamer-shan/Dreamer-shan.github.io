@@ -33,8 +33,9 @@
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/77fbbce7-4bd4-47d4-9030-da75c687bb35-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/d915c05d-ed12-4dc5-9f39-7351894f03f6-12259280.jpg">
 <meta property="article:published_time" content="2021-11-09T06:46:02.000Z">
-<meta property="article:modified_time" content="2021-11-10T03:13:31.153Z">
+<meta property="article:modified_time" content="2021-11-10T06:40:04.523Z">
 <meta property="article:author" content="Dreamer-shan">
+<meta property="article:tag" content="Java基础知识">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://api2.mubu.com/v3/document_image/77fbbce7-4bd4-47d4-9030-da75c687bb35-12259280.jpg">
 
@@ -226,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-10 11:13:31" itemprop="dateModified" datetime="2021-11-10T11:13:31+08:00">2021-11-10</time>
+                <time title="修改时间：2021-11-10 14:40:04" itemprop="dateModified" datetime="2021-11-10T14:40:04+08:00">2021-11-10</time>
               </span>
 
           
@@ -266,9 +267,9 @@
 <li>浮点型：单精度浮点型 float、双精度浮点型 double</li>
 <li>字符型：char</li>
 </ul>
-<p>注意，<code>String</code>不是基本数据类型。</p>
+<p>注意，<font color="red"><code>String</code>不是基本数据类型</font>。</p>
 <span id="more"></span>
-
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -277,7 +278,8 @@
 <th>成员变量默认值</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>byte</td>
 <td>1B</td>
 <td>0</td>
@@ -312,7 +314,9 @@
 <td>1B</td>
 <td>false</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h6 id="单精度浮点型和双精度浮点型的区别"><a href="# 单精度浮点型和双精度浮点型的区别" class="headerlink" title="单精度浮点型和双精度浮点型的区别"></a>单精度浮点型和双精度浮点型的区别</h6><p>　单精度（float），一般在计算机中存储占用 4 字节，双精度（double）在计算机中存储占用 8 字节，由于位数存储位不同，他们能表示的数值的范围就不同，也就是能准确表示的数的位数就不同</p>
 <h6 id="final 关键字"><a href="#final 关键字" class="headerlink" title="final 关键字"></a>final 关键字</h6><ul>
 <li>被 final 修饰的类不可以被继承</li>
@@ -351,12 +355,10 @@
 <li>通过 <strong> 反射可以暴力修改</strong>。</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">s1 = s1 + <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line">System.out.println(s1);</span><br><span class="line">输出： aaabbb</span><br></pre></td></tr></table></figure>
-
-<h5 id="String-str-”i”与 -String-str-new-String-“i”- 有什么区别？"><a href="#String-str-”i”与 -String-str-new-String-“i”- 有什么区别？" class="headerlink" title="String str=”i”与 String str=new String(“i”)有什么区别？"></a>String str=”i”与 String str=new String(“i”)有什么区别？</h5><p>　他们的内存分配方式不一样。<code>String str=&quot;i&quot;</code>，虚拟机会将其分配到字符串常量池中；而 <code>String str=new String(“i”) </code>会被分到堆内存中。</p>
+<h5 id="String-str-”i”与 -String-str-new-String-“i”- 有什么区别？"><a href="#String-str-”i”与 -String-str-new-String-“i”- 有什么区别？" class="headerlink" title="String str=”i”与 String str=new String(“i”)有什么区别？"></a>String str=”i”与 String str=new String(“i”)有什么区别？</h5><p>　他们的内存分配方式不一样。<code>String str=&quot;i&quot;</code>，虚拟机会将其分配到字符串常量池中；而 <code>String str=new String(“i”)</code>会被分到堆内存中。</p>
 <h5 id="string 有哪些特性？"><a href="#string 有哪些特性？" class="headerlink" title="string 有哪些特性？"></a>string 有哪些特性？</h5><p>　1. 不变性：字符串是不可变的，所以也是 <font color="red"> 线程安全 </font> 的。对字符串所有的操作，实际上都是创建一个新的对象，再把引用指向该对象。</p>
 <p>　2. 常量池优化：String 对象创建之后，会在字符串常量池中进行缓存，如果下次创建同样的对象时，会直接返回缓存的引用，提高访问速度。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;shy&quot;</span>; <span class="comment">//s1 指向常量池</span></span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">&quot;shy&quot;</span>);  <span class="comment">//s2 指向堆上的对象</span></span><br><span class="line">String s3 = <span class="string">&quot;shy&quot;</span>;</span><br><span class="line">String s4 = <span class="keyword">new</span> String(<span class="string">&quot;shy&quot;</span>);</span><br><span class="line">System.out.println(s1.equals(s2)); <span class="comment">//true 重写 equals 方法 比较的是字符串的值</span></span><br><span class="line">System.out.println(s1 == s2); <span class="comment">//false == 比较的是地址,s1 和 s2 地址不同</span></span><br><span class="line">System.out.println(s1 == s3); <span class="comment">//true 常量池优化,s3 不会开辟新的内存空间</span></span><br><span class="line">System.out.println(s2 == s4); <span class="comment">//false s2 和 s4 是两个对象</span></span><br><span class="line">System.out.println(s2 == <span class="string">&quot;shy&quot;</span>); <span class="comment">//false  s2 是堆内存中的对象,shy 在字符串常量池中, 内存地址不一样</span></span><br><span class="line">s2 = s1;    <span class="comment">// 改变 s2 的指向, 让 s2 指向常量池</span></span><br><span class="line">System.out.println(s2 == <span class="string">&quot;shy&quot;</span>); <span class="comment">//true  s2 指向常量池</span></span><br></pre></td></tr></table></figure>
-
 
     </div>
 
@@ -365,6 +367,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag"># Java基础知识</a>
+          </div>
 
         
 
@@ -375,7 +380,10 @@
     <a href="/2021/10/26/%E3%80%8ARedis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8ARedis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="prev" title="《Redis 设计与实现》读书笔记">
       <i class="fa fa-chevron-left"></i> 《Redis 设计与实现》读书笔记
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/10/Java%E9%9B%86%E5%90%88/Java%E9%9B%86%E5%90%88/" rel="next" title="Java 集合">
+      Java 集合 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -450,20 +458,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -512,12 +520,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">28k</span>
+    <span title="站点总字数">32k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">25 分钟</span>
+    <span title="站点阅读时长">29 分钟</span>
 </div>
 
 
@@ -657,6 +665,8 @@ window.addEventListener('pjax:success', () => {
 
 
     <div id="pjax">
+  
+
   
 
   

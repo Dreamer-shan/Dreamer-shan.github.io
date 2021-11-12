@@ -253,7 +253,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9k</span>
+              <span>8.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -272,9 +272,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="Java 和 C- 的一个重要区别"><a href="#Java 和 C- 的一个重要区别" class="headerlink" title="Java 和 C++ 的一个重要区别"></a>Java 和 C++ 的一个重要区别 </h5><p>&emsp;&emsp;Java 和 C++ 都是面向对象的，但是 C++ 需要程序员手动开辟(malloc) 和回收 (free) 内存，但是有了 JVM 内存管理的存在，所以 Java 不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
-<span id="more"></span>
-
+        <h5 id="Java 和 C- 的一个重要区别"><a href="#Java 和 C- 的一个重要区别" class="headerlink" title="Java 和 C++ 的一个重要区别"></a>Java 和 C++ 的一个重要区别 </h5><p>&emsp;&emsp;Java 和 C++ 都是面向对象的，但是 C++ 需要程序员手动开辟(malloc) 和回收 (free) 内存，但是有了 JVM 内存管理的存在，所以 Java 不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。<br><span id="more"></span></p>
 <h5 id="为什么需要 JVM？"><a href="# 为什么需要 JVM？" class="headerlink" title="为什么需要 JVM？"></a>为什么需要 JVM？</h5><p>&emsp;&emsp;Java 语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过 JVM 执行。</p>
 <p>&emsp;&emsp; 优点：减少了开发的难度，兼容不同操作系统。</p>
 <p>&emsp;&emsp; 缺点：比直接在操作系统上执行的程序的运行速度要慢。在早期这确实是一个问题，但是由于硬件技术的发展，这些问题一直在优化。</p>
@@ -462,8 +460,8 @@
 </ul>
 <h5 id="泛型"><a href="# 泛型" class="headerlink" title="泛型"></a>泛型 </h5><p>&emsp;<font color="red"> 泛型的本质是参数化类型或者参数化多态的应用，</font>泛型让程序员能够针对泛化的数据类型编写同样的算法，增强了编程语言的抽象能力。</p>
 <h6 id="Java 与 C- 的泛型"><a href="#Java 与 C- 的泛型" class="headerlink" title="Java 与 C#的泛型"></a>Java 与 C# 的泛型 </h6><p>&emsp;Java 选择的泛型实现方式叫作<font color="red"> 类型擦除式泛型 </font>，而 C# 选择的泛型实现方式是<font color="red"> 具现化式泛型</font>。</p>
-<p>&emsp;C# 里面泛型无论在程序源码里面还是编译后的中间语言表示里面，List&lt;string<String>&gt; 与 List&lt;int<int>&gt; 就是两个不同的类型，它们 <strong> 由系统在运行期生成，有着自己独立的虚方法表和类型数据</strong>。 </int></String></p>
-<p>&emsp; 而 Java 语言中的泛型则不同，它只在程序源码中存在，在编译后的字节码文件中，全部泛型都被 <strong> 替换为原来的裸类型（裸类型应被视为所有该类型泛型化实例的共同父类型）</strong>了，并且在相应的地方插入了强制转型代码，因此 <strong> 对于运行期的 Java 语言来说，ArrayList&lt;int<int>&gt; 与 ArrayList&lt;string<string>&gt; 其实是同一个类型</string></int></strong></p>
+<p>&emsp;C# 里面泛型无论在程序源码里面还是编译后的中间语言表示里面，List<string<String>&gt; 与 List<int<int>&gt; 就是两个不同的类型，它们 <strong> 由系统在运行期生成，有着自己独立的虚方法表和类型数据</strong>。 </int<int></string<String></p>
+<p>&emsp; 而 Java 语言中的泛型则不同，它只在程序源码中存在，在编译后的字节码文件中，全部泛型都被 <strong> 替换为原来的裸类型（裸类型应被视为所有该类型泛型化实例的共同父类型）</strong>了，并且在相应的地方插入了强制转型代码，因此 <strong> 对于运行期的 Java 语言来说，ArrayList<int<int>&gt; 与 ArrayList<string<string>&gt; 其实是同一个类型</string<string></int<int></strong></p>
 <p>&emsp;Java 的类型擦除式泛型无论在使用效果上还是运行效率上，几乎是全面落后于 C# 的具现化式泛型，而它的 <strong> 唯一优势 </strong> 是在于实现这种泛型的影响范围上：<strong>擦除式泛型的实现 </strong> 几乎只需要在 Javac 编译器上做出改进即可，<strong>不需要改动字节码、不需要改动 Java 虚拟机</strong>。</p>
 <h5 id="后端编译与优化"><a href="# 后端编译与优化" class="headerlink" title="后端编译与优化"></a>后端编译与优化</h5><h6 id="emsp- 编译器和解释器"><a href="#emsp- 编译器和解释器" class="headerlink" title="&emsp; 编译器和解释器"></a>&emsp; 编译器和解释器</h6><p>&emsp;&emsp; 主流的 Java 虚拟机内部都同时包含解释器和编译器，所以说<strong>Java 是半编译半解释的语言</strong>。</p>
 <p>&emsp;&emsp; 编译器和解释器的优势</p>
@@ -494,8 +492,8 @@
       <i class="fa fa-chevron-left"></i> Hello World
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/10/12/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/" rel="next" title="python批量修改文件后缀名">
-      python批量修改文件后缀名 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/10/12/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/" rel="next" title="python 批量修改文件后缀名">
+      python 批量修改文件后缀名 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -571,20 +569,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -633,12 +631,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">28k</span>
+    <span title="站点总字数">32k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">25 分钟</span>
+    <span title="站点阅读时长">29 分钟</span>
 </div>
 
 
@@ -778,6 +776,8 @@ window.addEventListener('pjax:success', () => {
 
 
     <div id="pjax">
+  
+
   
 
   

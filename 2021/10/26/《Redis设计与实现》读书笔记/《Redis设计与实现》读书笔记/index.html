@@ -288,7 +288,6 @@
       
         <h5 id="Redis 中的数据结构"><a href="#Redis 中的数据结构" class="headerlink" title="Redis 中的数据结构"></a>Redis 中的数据结构 </h5><h6 id="字符串"><a href="# 字符串" class="headerlink" title="字符串"></a> 字符串</h6><p>&emsp;&emsp; 简单动态字符串的结构：使用一个结构体来表示，其内部有一个<strong>buf 数组(保存字符串)，以及字符串长度 len，剩余长度 free 等字段</strong>，优点是通过长度限制写入，避免缓冲区溢出，另外剩余长度不足时会自动扩容，扩展性较好，不需要频繁分配内存。</p>
 <span id="more"></span>
-
 <p><img src="https://api2.mubu.com/v3/document_image/aef323e1-d81e-45b5-bc34-78f82fca759f-12259280.jpg" alt="img"></p>
 <p>&emsp; 简单动态字符串 (SDS) 与 C 语言字符串的区别</p>
 <ul>
@@ -379,15 +378,15 @@
 <h6 id="跳表"><a href="# 跳表" class="headerlink" title="跳表"></a>跳表 </h6><p>　跳跃表是一种<strong> 有序的 </strong> 数据结构，通过在每个节点 <strong> 维持多个指向其他节点的指针</strong>，达到快速访问节点的目的。Redis 只有在两个地方用到了跳跃表，一个是实现有序集合键，另一个是在集群节点中作为内部数据结构。</p>
 <p><img src="https://api2.mubu.com/v3/document_image/cf9cb1d2-8ec5-4026-b32c-e8c7f22db422-12259280.jpg" alt="img"></p>
 <p><img src="https://api2.mubu.com/v3/document_image/ea8f1d97-b799-4ee3-ace2-d64bc5598109-12259280.jpg" alt="img"></p>
-<p>　1. 层–level</p>
+<p>　1. 层—level</p>
 <p>　　跳跃表的每个节点都会包含多个层，每次创建一个新跳跃表时，都会根据 <strong> 幂次定律</strong>，随机生成一个<strong>1~32 之间的数作为层的大小</strong>。每个层都会包含前进指针和跨度</p>
 <p>　2. 前进指针（forword）</p>
 <p>　　用于访问下一个节点。跨度表示两个节点之间的距离，指向 NULL 的所有前进指针的跨度为 0。跨度用于计算排位，访问某一结点的 <strong> 经过的跨度之和就是当前节点的排位</strong></p>
-<p>　3. 后退指针–backward</p>
+<p>　3. 后退指针—backward</p>
 <p>　　用于从表尾向表头方向访问节点，<strong>前进指针可以一次跳过多个节点 </strong>，<strong> 后退指针只能后退至前一个节点</strong>，因为每个节点只有一个后退指针。</p>
-<p>　4. 分值–score</p>
+<p>　4. 分值—score</p>
 <p>　　分值是一个 double 类型的浮点数，跳跃表中节点都按照分值排序。</p>
-<p>　5. 成员对象–obj</p>
+<p>　5. 成员对象—obj</p>
 <p>　　是一个指针，指向字符串 SDS 对象。一个跳跃表中，对象必须是唯一的，但分值可以相同。相同时按对象字典序来排序。</p>
 <p>　Redis 的 level 个数 <strong> 为什么要用幂次定律生成</strong>（随机生成节点的层数）？</p>
 <p>　　通过幂次定律能保证 <strong> 越高 level 的结点数量越少 。保证索引等级越高，参与索引建立的元素越少，如果每层都有很多 level，那么这个索引建立的就没有意义了。</strong></p>
@@ -441,13 +440,13 @@
 <li>同步用于把 slave 的数据库状态更新至 master 的数据库状态</li>
 <li>命令传播是在 master 的数据库状态被修改时，导致主从数据库状态不一致，让主从回到一致的过程</li>
 </ul>
-<h6 id="同步和命令传播过程"><a href="# 同步和命令传播过程" class="headerlink" title="同步和命令传播过程"></a>同步和命令传播过程 </h6><h6 id="同步"><a href="# 同步" class="headerlink" title="同步"></a> 同步</h6><ul>
+<h6 id="同步和命令传播过程"><a href="# 同步和命令传播过程" class="headerlink" title="同步和命令传播过程"></a>　同步和命令传播过程 </h6><h6 id="同步"><a href="# 同步" class="headerlink" title="同步"></a> 同步</h6><ul>
 <li>slave 向主发送 SYNC 命令。</li>
 <li>master 接收并执行 BGSAVE，后台生成 RDB 文件，并用 <strong> 一个缓冲区记录现在开始执行的所有写命令</strong>。</li>
 <li>BGSAVE 执行完毕时，master 将 RDB 文件发给 slave，slave 接收并载入，更新数据库状态。</li>
 <li>master<strong>将其记录在缓冲区的所有写命令发给 slave</strong>，slave 执行写命令<img src="https://api2.mubu.com/v3/document_image/0502a38d-b4a5-42a7-bde5-666c372ded94-12259280.jpg" alt="img"></li>
 </ul>
-<h6 id="命令传播"><a href="# 命令传播" class="headerlink" title="命令传播"></a>命令传播</h6><p>　　当 master 发生写操作时，主从同步需要通过命令传播，master 将写命令发送给 slave，slave 接收并执行相同的写命令</p>
+<h6 id="命令传播"><a href="# 命令传播" class="headerlink" title="命令传播"></a>　命令传播</h6><p>　　当 master 发生写操作时，主从同步需要通过命令传播，master 将写命令发送给 slave，slave 接收并执行相同的写命令</p>
 <h5 id="一次完整的主从复制过程"><a href="# 一次完整的主从复制过程" class="headerlink" title="一次完整的主从复制过程"></a>一次完整的主从复制过程 </h5><p>　一次完整的复制过程可以分为<strong> 设置主服务器的地址和端口、建立套接字连接、发送 PING 命令、身份验证、发送端口信息、同步、命令传播</strong></p>
 <ul>
 <li>1. 设置主服务器的地址和端口：当客户端向 slave 发送 slaveof 127.0.0.1:6379 时，slave 要将客户端给定的 ip 和端口号都保存后发送 OK。这是一个异步命令，所以复制工作在回复 OK 后再执行。</li>
@@ -466,7 +465,7 @@
 </ul>
 <p>如图所示，这时会将复制缓冲区里面复制偏移量为 201-233 的命令重发</p>
 <h5 id="Sentinel 机制"><a href="#Sentinel 机制" class="headerlink" title="Sentinel 机制"></a><strong>Sentinel 机制 </strong></h5><p>　Sentinel（哨兵）是 Redis 的<strong> 高可用性 </strong> 的解决方案，由一个或多个 Sentinel 实例组成的 Sentinel 系统可以监视任意多个主服务器以及属下的所有从服务器。当主服务器下线时，自动将下线的某个主服务器属下的某个从服务器升级为新的主服务器。从而实现故障转移，<strong>当原来的主服务器重新上线时，会被降级为从服务器。</strong></p>
-<h6 id="Sentinel 系统对主服务器执行故障转移的过程"><a href="#Sentinel 系统对主服务器执行故障转移的过程" class="headerlink" title="Sentinel 系统对主服务器执行故障转移的过程"></a>Sentinel 系统对主服务器执行故障转移的过程</h6><ul>
+<h6 id="Sentinel 系统对主服务器执行故障转移的过程"><a href="#Sentinel 系统对主服务器执行故障转移的过程" class="headerlink" title="Sentinel 系统对主服务器执行故障转移的过程"></a>　Sentinel 系统对主服务器执行故障转移的过程</h6><ul>
 <li>检测 <strong> 主观下线 </strong> 状态：Sentinel 默认每秒与创建命令连接的实例 <strong> 发送 PING 命令 </strong>，通过回复判断是否在线。由于每个 Sentinel 中的<strong> 主观下线时间配置都可以不同，所有有可能某个 Sentinel 判断主观下线时，另一个 Sentinel 认为在线状态</strong></li>
 <li>检查 <strong> 客观下线 </strong> 状态：当 Sentinel 判断主服务器为主观下线时，还会向其他 Sentinel 询问，得到足量数据已下线判断后，就会判定服务器为客观下线，并执行故障转移。</li>
 <li><strong>选举领头 Sentinel</strong><ul>
@@ -503,8 +502,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/10/20/JVM%E5%AE%9E%E6%88%98/JVM%E5%AE%9E%E6%88%98/" rel="prev" title="JVM实战">
-      <i class="fa fa-chevron-left"></i> JVM实战
+    <a href="/2021/10/20/JVM%E5%AE%9E%E6%88%98/JVM%E5%AE%9E%E6%88%98/" rel="prev" title="JVM 实战">
+      <i class="fa fa-chevron-left"></i> JVM 实战
     </a></div>
       <div class="post-nav-item">
     <a href="/2021/11/09/Java%E5%9F%BA%E7%A1%80/Java%E5%9F%BA%E7%A1%80/" rel="next" title="Java 基础">
@@ -568,7 +567,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Redis%20%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">Redis 中的数据结构 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.1.</span> <span class="nav-text"> 字符串</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%80%BB%E7%BB%93"><span class="nav-number">1.2.</span> <span class="nav-text">字符串总结 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">1.3.</span> <span class="nav-text"> 链表 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%97%E5%85%B8"><span class="nav-number">1.4.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%B7%B3%E8%A1%A8"><span class="nav-number">1.5.</span> <span class="nav-text">跳表 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="nav-number">2.1.</span> <span class="nav-text">存储过期时间</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BF%87%E6%9C%9F%E9%94%AE%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5"><span class="nav-number">2.2.</span> <span class="nav-text">过期键删除策略</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">删除策略的特点 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#redis%20%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">redis 持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#RDB%20%E4%B8%8E%20AOF%20%E5%85%B1%E5%AD%98%E7%9A%84%E8%BD%BD%E5%85%A5%E6%83%85%E5%86%B5"><span class="nav-number">3.1.</span> <span class="nav-text">RDB 与 AOF 共存的载入情况 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#SAVE%20%E5%92%8C%20BGSAVE%20%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">SAVE 和 BGSAVE 的区别 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%98%AF%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AE%20save%20%E9%80%89%E9%A1%B9%E6%9D%A5%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%20BGSAVE%20%E7%9A%84%EF%BC%9F"><span class="nav-number">3.3.</span> <span class="nav-text">服务器是如何根据 save 选项来自动执行 BGSAVE 的？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AOF%20%E6%96%87%E4%BB%B6%E7%9A%84%E8%BD%BD%E5%85%A5%E4%B8%8E%E6%95%B0%E6%8D%AE%E8%BF%98%E5%8E%9F"><span class="nav-number">3.4.</span> <span class="nav-text">AOF 文件的载入与数据还原</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AOF%20%E9%87%8D%E5%86%99"><span class="nav-number">3.5.</span> <span class="nav-text">AOF 重写 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AOF%20%E9%87%8D%E5%86%99%E8%BF%87%E7%A8%8B"><span class="nav-number">3.6.</span> <span class="nav-text">AOF 重写过程 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">4.</span> <span class="nav-text">主从复制 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E5%92%8C%E5%91%BD%E4%BB%A4%E4%BC%A0%E6%92%AD%E8%BF%87%E7%A8%8B"><span class="nav-number">4.1.</span> <span class="nav-text">同步和命令传播过程 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5"><span class="nav-number">4.2.</span> <span class="nav-text"> 同步</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E4%BC%A0%E6%92%AD"><span class="nav-number">4.3.</span> <span class="nav-text">命令传播</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E5%AE%8C%E6%95%B4%E7%9A%84%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">一次完整的主从复制过程 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BF%83%E8%B7%B3%E6%9C%BA%E5%88%B6"><span class="nav-number">5.1.</span> <span class="nav-text">心跳机制 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sentinel%20%E6%9C%BA%E5%88%B6"><span class="nav-number">6.</span> <span class="nav-text">Sentinel 机制 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Sentinel%20%E7%B3%BB%E7%BB%9F%E5%AF%B9%E4%B8%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%A7%E8%A1%8C%E6%95%85%E9%9A%9C%E8%BD%AC%E7%A7%BB%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">6.1.</span> <span class="nav-text">Sentinel 系统对主服务器执行故障转移的过程</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Redis-Cluster"><span class="nav-number">7.</span> <span class="nav-text">Redis Cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E6%A7%BD"><span class="nav-number">7.1.</span> <span class="nav-text">分配槽 </span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Redis%20%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">Redis 中的数据结构 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.1.</span> <span class="nav-text"> 字符串</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%80%BB%E7%BB%93"><span class="nav-number">1.2.</span> <span class="nav-text">字符串总结 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">1.3.</span> <span class="nav-text"> 链表 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%97%E5%85%B8"><span class="nav-number">1.4.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%B7%B3%E8%A1%A8"><span class="nav-number">1.5.</span> <span class="nav-text">跳表 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="nav-number">2.1.</span> <span class="nav-text">存储过期时间</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BF%87%E6%9C%9F%E9%94%AE%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5"><span class="nav-number">2.2.</span> <span class="nav-text">过期键删除策略</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">删除策略的特点 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#redis%20%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">redis 持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#RDB%20%E4%B8%8E%20AOF%20%E5%85%B1%E5%AD%98%E7%9A%84%E8%BD%BD%E5%85%A5%E6%83%85%E5%86%B5"><span class="nav-number">3.1.</span> <span class="nav-text">RDB 与 AOF 共存的载入情况 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#SAVE%20%E5%92%8C%20BGSAVE%20%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">SAVE 和 BGSAVE 的区别 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%98%AF%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AE%20save%20%E9%80%89%E9%A1%B9%E6%9D%A5%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%20BGSAVE%20%E7%9A%84%EF%BC%9F"><span class="nav-number">3.3.</span> <span class="nav-text">服务器是如何根据 save 选项来自动执行 BGSAVE 的？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AOF%20%E6%96%87%E4%BB%B6%E7%9A%84%E8%BD%BD%E5%85%A5%E4%B8%8E%E6%95%B0%E6%8D%AE%E8%BF%98%E5%8E%9F"><span class="nav-number">3.4.</span> <span class="nav-text">AOF 文件的载入与数据还原</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AOF%20%E9%87%8D%E5%86%99"><span class="nav-number">3.5.</span> <span class="nav-text">AOF 重写 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AOF%20%E9%87%8D%E5%86%99%E8%BF%87%E7%A8%8B"><span class="nav-number">3.6.</span> <span class="nav-text">AOF 重写过程 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">4.</span> <span class="nav-text">主从复制 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E5%92%8C%E5%91%BD%E4%BB%A4%E4%BC%A0%E6%92%AD%E8%BF%87%E7%A8%8B"><span class="nav-number">4.1.</span> <span class="nav-text">　同步和命令传播过程 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5"><span class="nav-number">4.2.</span> <span class="nav-text"> 同步</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E4%BC%A0%E6%92%AD"><span class="nav-number">4.3.</span> <span class="nav-text">　命令传播</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E5%AE%8C%E6%95%B4%E7%9A%84%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">一次完整的主从复制过程 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BF%83%E8%B7%B3%E6%9C%BA%E5%88%B6"><span class="nav-number">5.1.</span> <span class="nav-text">心跳机制 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sentinel%20%E6%9C%BA%E5%88%B6"><span class="nav-number">6.</span> <span class="nav-text">Sentinel 机制 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Sentinel%20%E7%B3%BB%E7%BB%9F%E5%AF%B9%E4%B8%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%A7%E8%A1%8C%E6%95%85%E9%9A%9C%E8%BD%AC%E7%A7%BB%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">6.1.</span> <span class="nav-text">　Sentinel 系统对主服务器执行故障转移的过程</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Redis-Cluster"><span class="nav-number">7.</span> <span class="nav-text">Redis Cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E6%A7%BD"><span class="nav-number">7.1.</span> <span class="nav-text">分配槽 </span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -584,20 +583,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -646,12 +645,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">28k</span>
+    <span title="站点总字数">32k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">25 分钟</span>
+    <span title="站点阅读时长">29 分钟</span>
 </div>
 
 
@@ -791,6 +790,8 @@ window.addEventListener('pjax:success', () => {
 
 
     <div id="pjax">
+  
+
   
 
   

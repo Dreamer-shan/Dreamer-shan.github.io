@@ -1,75 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/09/29/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+    <title>《Redis 设计与实现》读书笔记</title>
+    <url>/2021/10/26/%E3%80%8ARedis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8ARedis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h5 id="Redis 中的数据结构"><a href="#Redis 中的数据结构" class="headerlink" title="Redis 中的数据结构"></a>Redis 中的数据结构 </h5><h6 id="字符串"><a href="# 字符串" class="headerlink" title="字符串"></a> 字符串</h6><p>&emsp;&emsp; 简单动态字符串的结构：使用一个结构体来表示，其内部有一个<strong>buf 数组(保存字符串)，以及字符串长度 len，剩余长度 free 等字段</strong>，优点是通过长度限制写入，避免缓冲区溢出，另外剩余长度不足时会自动扩容，扩展性较好，不需要频繁分配内存。</p>
 <span id="more"></span>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>跨平台性、编译型语言、解释型语言</title>
-    <url>/2021/10/17/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%80%A7%E3%80%81%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80%E3%80%81%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%80%A7%E3%80%81%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80%E3%80%81%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/</url>
-    <content><![CDATA[<h5 id="跨平台性是什么意思？"><a href="# 跨平台性是什么意思？" class="headerlink" title="跨平台性是什么意思？"></a>跨平台性是什么意思？</h5><p>&emsp;&emsp; 要知道，不同操作系统支持的函数、数据类型都可能不同，所以基于某个操作系统下编写的源代码一般是不能直接拿到另一个操作系统下编译的。注意 <strong> 我们所说的跨平台指的是源代码跨平台，而不是解释器跨平台</strong>。</p>
-<span id="more"></span>
-
-<h5 id="为什么说 Java 是跨平台性的语言？"><a href="# 为什么说 Java 是跨平台性的语言？" class="headerlink" title="为什么说 Java 是跨平台性的语言？"></a>为什么说 Java 是跨平台性的语言？</h5><p>&emsp;&emsp; 跨平台性是指使用 Java 语言编写的程序，经过一次编译后，可以在不同操作系统上运行。其原理就是 Java 程序是通过 Java 虚拟机在操作系统上运行的，只要该操作系统安装了对应的 Java 虚拟机，这个系统就可以运行 Java 程序。<br>&emsp;&emsp; 也就是说，Java 程序只需要跟虚拟机打交道，与操作系统的交互都由虚拟机来负责。</p>
-<h5 id="编译型语言、解释型语言、混合型语言"><a href="# 编译型语言、解释型语言、混合型语言" class="headerlink" title="编译型语言、解释型语言、混合型语言"></a>编译型语言、解释型语言、混合型语言</h5><p>&emsp;&emsp; 计算机只能识别二进制指令，我们学习的 Java、C++、Python 都是高级语言，高级语言程序代码带运行之前要将源代码转换成二进制指令，也就是机器码，机器码是 CPU 可识别的硬件层面的代码。<br>&emsp;&emsp; 那么，到底在何时将源代码转换成机器码呢? 根据转换时机的不同，便有了不同类型的语言。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/aef323e1-d81e-45b5-bc34-78f82fca759f-12259280.jpg" alt="img"></p>
+<p>&emsp; 简单动态字符串 (SDS) 与 C 语言字符串的区别</p>
 <ul>
-<li>编译型语言：提前将源代码通过 <strong> 编译器 </strong> 一次性全部转换成机器码，也就是生成一个可执行程序，比如 windows 下的.exe 文件，常见的编译型语言有 C、C++、Go、汇编语言<ul>
-<li>优点：可以脱离开发环境运行，比如 window 下，通过编译后生成.exe 可执行文件，可执行文件所包含的就是机器码，只要拥有了可执行程序就可以到处运行，不需要再重新编译了（不需要源代码和编译器了），可以做到 <strong> 一次编译，无限次运行</strong>。</li>
-<li>缺点：可移植性差，因为不同操作系统的可执行文件几乎不兼容。</li>
+<li><p>1. 常数复杂度获取字符串长度</p>
+<ul>
+<li>len 表示已经使用字节的数量 (也就是字符串的长度，这样就可以 O(1) 复杂度获取字符串的长度)</li>
+<li>即使对一个非常长的字符串键执行 strlen 命令，也不会对系统性能造成影响，因为 strlen 复杂度仅为 O(1)</li>
 </ul>
 </li>
-<li>解释型语言：通过 <strong> 解释器 </strong> 一边执行一边转换，<strong>解释型语言不会生成可执行程序</strong>，常见的解释型语言有 Python、Matlab<ul>
-<li>优点: 可移植性好，因为有了中间层：<strong>解释器</strong>，官方针对不同操作系统开发不同的解释器，使得同样的源代码在不同操作系统下的执行结果是完全相同的。故解释型语言天生具有良好的可移植性。</li>
-<li>缺点：相对编译型语言来说，解释型语言执行效率比较慢，甚至存在量级上的差距。</li>
+<li><p>2. 杜绝缓冲区溢出</p>
+<p><img src="https://api2.mubu.com/v3/document_image/d531493d-261f-42e3-a5d0-a1249a3655d9-12259280.jpg" alt="img"></p>
+<ul>
+<li>C 字符串不记录自身长度带来的一个问题是容易造成缓冲区溢出：执行 strcat 时如果忘记分配足够空间，s1 的数据就会溢出到 s2 所在的空间中  如图，执行 strcat 之前没有分配足够空间，s1 就变成了 rediscluster，也就是 s1 的内容溢出到了 s2 所在位置<img src="https://api2.mubu.com/v3/document_image/81fcb70e-7b3e-4d79-b919-4262e4695044-12259280.jpg" alt="img"></li>
+<li>SDS 空间分配策略：需要对 SDS 进行修改时，<strong>先会检查 SDS 的空间是否满足修改所需的要求，不满足要求的话就先拓展 SDS 的空间</strong>，再执行 sdscat 拼接操作</li>
 </ul>
 </li>
-<li>混合型语言：半编译半解释，先将源代码转换成一种中间文件（在 Java 中就是字节码文件），然后再将中间文件拿到虚拟机中执行。常见的有 Java、C#</li>
+<li><p>3. 减少修改字符串时带来的内存重分配次数</p>
+<ul>
+<li><p>对于一个包含了 N 个字符的 C 字符串来说，底层实现总是一个 N+1 个字符长的数组(‘\0’作为结束标志)，所以每次增长或者缩短 C 字符串，都要对保存这个 C 字符串的数组进行内存重分配操作。</p>
+<ul>
+<li><p>如果是拼接操作 append，执行这个操作之前，程序先要内存重分配来扩展底层数组的大小——如果忘了这一步就会产生 <strong> 缓冲区溢出</strong></p>
+</li>
+<li><p>如果是裁剪操作 trim，执行这个操作之后，程序需要内存重分配来释放字符串不再使用的那部分空间——如果忘了这一步就会产生 <strong> 内存泄露</strong></p>
+</li>
 </ul>
-<p>&emsp;&emsp; 当我们说“下载一个程序（软件）”时，不同类型的语言有不同的含义：</p>
-<p>&emsp;&emsp;&emsp;&emsp; 对于编译型语言，我们下载到的是可执行文件，源代码被作者保留，所以编译型语言的程序一般是 <strong> 闭源 </strong> 的。</p>
-<p>&emsp;&emsp;&emsp;&emsp; 对于解释型语言，我们下载到的是所有的源代码，因为作者不给源代码就没法运行，所以解释型语言的程序一般是 <strong> 开源 </strong> 的</p>
-<p>&emsp;&emsp; 编译型语言和解释型语言的执行流程如下图所示：</p>
-<p><img src="https://api2.mubu.com/v3/document_image/74a0fec7-97de-41a0-82e6-b8eda78fb014-12259280.jpg" alt="编译型语言和解释型语言的执行流程"></p>
-<p>&emsp;&emsp; 有次面试被问到过<strong>Java 和 Python 的区别</strong>，当时只答了一些语法层面，还有强类型语言弱类型语言的东西，包括垃圾回收机制（Python 也是有自动垃圾回收的，而且用的是引用计数法）。面试官说我理解得不够深刻，我想他应该是想让我从这个层面来说吧。</p>
+</li>
+<li><p>在一般程序中，如果修改字符串长度的情况不经常出现，那么每次修改都执行一次内存重分配是可以接受的，但是<strong>redis 作为数据库，经常被用于速度要求严苛、数据被频繁修改的场合，如果每次修改字符串的长度都需要执行一次内存重分配的话</strong>，内存重分配的时间就会占据修改字符串所用时间段一大部分，如果频繁修改还可能对性能造成影响。</p>
+</li>
+</ul>
+</li>
+<li><p>4. 减少内存分配次数采取的策略：<strong>空间预分配 </strong> 以及 <strong> 惰性空间释放</strong></p>
+<ul>
+<li>空间预分配：<ul>
+<li>修改后的 SDS&lt;1MB，程序分配和 len 属性同样大小的未使用空间，此时 SDS 的 len 与 free 大小相等。比如修改后实际存储字符串的空间变为 13 字节，那么 len=13，free=13，buf 数组整体的长度 =13+13+1=27（额外 1 字节保存结束符）</li>
+<li>修改后 SDS&gt;=1MB。程序会分配 1MB 的未使用空间。比如修改后实际存储字符串的空间变为 2MB，那么 len=2M，free=1MB，buf 数组整体的长度 =2MB+1MB+1byte</li>
+</ul>
+</li>
+<li>惰性空间释放：用于优化 SDS 字符串 <strong> 缩短操作 </strong>。当 SDS API 需要缩短保存的字符串时，程序并<strong> 不立即回收这部分内存，而是使用 free 属性将字节的数量记录，等待使用。</strong>与此同时，SDS 提供了相关 API，<strong>在有需要时，真正释放未使用空间</strong></li>
+</ul>
+</li>
+</ul>
+<h6 id="字符串总结"><a href="# 字符串总结" class="headerlink" title="字符串总结"></a>字符串总结 <img src="https://api2.mubu.com/v3/document_image/a41abab9-9440-4535-b78d-7475be0c171b-12259280.jpg" alt="img"></h6><h6 id="链表"><a href="# 链表" class="headerlink" title="链表"></a> 链表 </h6><p> 双向链表结构，使用 adlist.h/list 来持有，操作链表<img src="https://api2.mubu.com/v3/document_image/f104c56b-d380-44cd-a64a-28fb51eeba76-12259280.jpg" alt="img"><img src="https://api2.mubu.com/v3/document_image/81d2b496-b86c-4d50-8900-c95034f36dc1-12259280.jpg" alt="img"></p>
+<p>链表总结</p>
+<ul>
+<li>双端：链表节点带有 prev 和 next 指针，获取前置和后置节点的复杂度都是 O(1)</li>
+<li>无环：表头节点的 prev 指针和表尾节点的 next 指针都指向 NULL，对链表的访问以 NULL 为终点。 带表头指针和表尾指针，带链表长度计数器 </li>
+<li>头尾指针：将程序获取头尾节点的复杂度降为 O(1)</li>
+<li>长度计数器：将程序获取表长的复杂度降为 O(1)</li>
+<li>多态：链表节点使用 void* 指针来保存节点值，并且可以通过 list 结构的 dup、free、match 为节点值设置类型特定函数，所以链表可以用于保存各种不同类型的值</li>
+</ul>
+<h6 id="字典"><a href="# 字典" class="headerlink" title="字典"></a>字典</h6><p>&emsp; 数组中的每个元素都是指向 dict.h/dictht 的结构，dictEntry 就是一个键值对<img src="https://api2.mubu.com/v3/document_image/2ce1d861-37a6-4e50-bd6a-f31a52b72403-12259280.jpg" alt="img"></p>
+<p>Redis 中的字典由 dict.h/dict 实现，由这个数据结构将字典组织在一起</p>
+<p><img src="https://api2.mubu.com/v3/document_image/d5280468-3589-4c38-8a7a-c457c4c0c608-12259280.jpg" alt="img"></p>
+<ul>
+<li>ht 属性是包含两个项的数组，<strong>每项都是一个哈希表 </strong>，<strong>ht[0] 平时使用，而 ht[1]仅在 rehash 时使用</strong>。</li>
+<li>rehashidx 记录了 rehash 的进度，初始为 -1</li>
+<li>解决键冲突：链地址法，为了提高速度，每次都是 <strong> 将新节点添加到链表的表头位置</strong>，复杂度为 O(1)（这点跟 hashmap 不一样）</li>
+</ul>
+<p>rehash 的过程</p>
+<ul>
+<li>1. 为字典 ht[1]哈希表分配空间，大小取决于要执行的操作与 ht[0]当前键值对的数量，将保存在 ht[0]中的所有键值对存放到 ht[1]指定的位置</li>
+<li>2. 当 ht[0]的所有键值对都迁移完毕后，释放 ht[0]，并指向 ht[1]，并在 ht[1]上创建一个空的哈希表，为下次 rehash 准备。</li>
+</ul>
+<p>扩容的条件</p>
+<ul>
+<li>服务器目前 <strong> 没有在执行 </strong>BGSAVE 命令或 BGREWRITEAOF 命令，并且哈希表的<strong> 负载因子 &gt;=1</strong></li>
+<li>服务器 <strong> 正在执行 </strong>BGSAVE 命令或 BGREWRITEAOF 命令，并且哈希表的<strong> 负载因子 &gt;=5</strong></li>
+</ul>
+<p>为什么根据 BGSAVE 命令或 BGREWRITEAOF 命令来判断是否扩展？</p>
+<ul>
+<li>执行这些命令时，Redis 需要创建当前服务器进程的子进程，大多数操作系统采用 <strong> 写时复制技术 </strong> 来优化子进程使用效率，此时提高负载因子，可以尽量避免子进程对哈希表扩展，避免不必要的内存写入操作，节约内存。</li>
+<li>Redis 在持久化时，如果是采用 BGSAVE 命令或者 BGREWRITEAOF 的方式，那 Redis 会 <strong>fork 出一个子进程来读取数据，从而写到磁盘中</strong>。如果子进程存在期间，发生了大量的写操作，那可能就会出现很多的分页错误(页异常中断 page-fault)，这样就得耗费不少性能在复制上。<strong> 而在 rehash 阶段上，写操作是无法避免的。</strong>所以 Redis 在 fork 出子进程之后，将负载因子阈值提高，尽量减少写操作，避免不必要的内存写入操作，最大限度地节约内存。</li>
+</ul>
+<p>渐进式 hash</p>
+<ul>
+<li>rehash 时会将 ht[0]中所有的键值对 rehash 到 ht[1]，如果 <strong> 键值对很多并且一次性操作的话，容易导致服务器在一段时间内停止服务 </strong>。为避免这种情况，Redis 采用渐进式 rehash，将 ht[0] 中的键值对 <strong> 分多次，慢慢的 rehash 到 ht[1]之中</strong>。</li>
+</ul>
+<p>渐进式 hash 的步骤</p>
+<ul>
+<li>1. 为 ht[1]分配空间，让字典同时持有两个哈希表。</li>
+<li>2. 在字典中维持一个索引计数器变量 rehashidx，将其设置为 0，表示 rehash 正式开始。</li>
+<li>3. 在 rehash 进行期间，每次对字典进行添加，删除，查找或更新操作时，程序除了执行指定的操作外，还会将 ht[0]哈希表在 rehashidx 索引上的所有键值对 rehash 到 ht[1]，当 rehash 工作完成后，将 rehashidx++。</li>
+<li>4. 某个时刻，ht[0]中的所有键值对都被 rehash 至 ht[1]，此时设置 rehashidx= -1 时，表示 rehash 操作已经完成。</li>
+</ul>
+<p>渐进式 hash 的好处</p>
+<p>&emsp; 采用了分而治之的方式，将 rehash 键值对所需的计算工作均摊到对字典的每个操作中，从而避免集中式 rehash 带来庞大计算量</p>
+<p>&emsp; 在 rehash 的期间，字典同时使用 ht[0]，ht[1]两个哈希表。对哈希表的操作会在两个表上进行，比如查找键时，<strong>先在 ht[0]里面查找，如果为空，就继续到 ht[1]里查找 </strong>。在此期间，<strong> 新增的键值对都会被添加到 ht[1]中 </strong>，ht[0] 不承担任何添加操作，<strong>保证 ht[0]中的键值对只能是越来越少</strong>。</p>
+<h6 id="跳表"><a href="# 跳表" class="headerlink" title="跳表"></a>跳表 </h6><p>　跳跃表是一种<strong> 有序的 </strong> 数据结构，通过在每个节点 <strong> 维持多个指向其他节点的指针</strong>，达到快速访问节点的目的。Redis 只有在两个地方用到了跳跃表，一个是实现有序集合键，另一个是在集群节点中作为内部数据结构。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/cf9cb1d2-8ec5-4026-b32c-e8c7f22db422-12259280.jpg" alt="img"></p>
+<p><img src="https://api2.mubu.com/v3/document_image/ea8f1d97-b799-4ee3-ace2-d64bc5598109-12259280.jpg" alt="img"></p>
+<p>　1. 层—level</p>
+<p>　　跳跃表的每个节点都会包含多个层，每次创建一个新跳跃表时，都会根据 <strong> 幂次定律</strong>，随机生成一个<strong>1~32 之间的数作为层的大小</strong>。每个层都会包含前进指针和跨度</p>
+<p>　2. 前进指针（forword）</p>
+<p>　　用于访问下一个节点。跨度表示两个节点之间的距离，指向 NULL 的所有前进指针的跨度为 0。跨度用于计算排位，访问某一结点的 <strong> 经过的跨度之和就是当前节点的排位</strong></p>
+<p>　3. 后退指针—backward</p>
+<p>　　用于从表尾向表头方向访问节点，<strong>前进指针可以一次跳过多个节点 </strong>，<strong> 后退指针只能后退至前一个节点</strong>，因为每个节点只有一个后退指针。</p>
+<p>　4. 分值—score</p>
+<p>　　分值是一个 double 类型的浮点数，跳跃表中节点都按照分值排序。</p>
+<p>　5. 成员对象—obj</p>
+<p>　　是一个指针，指向字符串 SDS 对象。一个跳跃表中，对象必须是唯一的，但分值可以相同。相同时按对象字典序来排序。</p>
+<p>　Redis 的 level 个数 <strong> 为什么要用幂次定律生成</strong>（随机生成节点的层数）？</p>
+<p>　　通过幂次定律能保证 <strong> 越高 level 的结点数量越少 。保证索引等级越高，参与索引建立的元素越少，如果每层都有很多 level，那么这个索引建立的就没有意义了。</strong></p>
+<p>　为什么不用最均衡的方式，按照节点分数的排序情况均匀建立索引？</p>
+<p>　　考虑到下一个插入的元素具有随机性，这样设计不容易出现最坏的情况。如果每次都以均匀固定的方式建索引，维护的成本很高，跳跃表的优点就是维持结构平衡的成本低，完全依靠随机。跳跃表相比二叉树有一个优势就在于不需要主动 rebalance 去维护平衡。</p>
+<p>　跳表的查找过程</p>
+<p>　　此时跳跃表查找 10，会先从 header 节点（O1）的最高层（L3）寻找，发现要查找的数小于 23.２则返回，继续从下一个有后继的层开始寻找，当发现要查找的数小于 11.0 时，则从 O1 的下一层找，此时到 O2 的 L1，发现要查找的数大于 7.0，则从 L1 找，直到查找到相邻节点为止。<img src="https://api2.mubu.com/v3/document_image/4dbbfdf9-4dfe-41f1-a0b2-f3fc8c0a1ddd-12259280.jpg" alt="img"></p>
+<p>　为什么有序集合需要同时使用跳跃表和字典来实现？</p>
+<p>　　如果 <strong> 只使用字典存储，由于是无序的，所以每次在范围查询时，需要排序 </strong>，时间复杂度 O(nlogn) 为和额外 O(n)  的内存空间，因为要创建一个数组存储排序后的元素。 如果 <strong> 只用跳跃表实现，根据成员查找分值时，复杂度将为 O(logn)</strong> 。综上，为了让有序集合的分值查找和范围查找都尽可能快地执行，Redis 选择字典和跳跃表两种数据结构结合的方式</p>
+<p>　跳表时间复杂度<img src="https://api2.mubu.com/v3/document_image/5b934ef8-c434-473d-88d0-faa17f1821e1-12259280.jpg" alt="img"></p>
+<h5 id="数据库"><a href="# 数据库" class="headerlink" title="数据库"></a>数据库</h5><p>　Redis 把所有库信息都保存在 redis.h/redisServer 结构的 db 数组中，数组类型是 redis.h/redisDB，dbnum 决定着应该创建多少数据库中的 db，默认为 16，clients 维护着所有连接 Redis 的客户端<img src="https://api2.mubu.com/v3/document_image/79cb9883-2f79-4a5b-8a0f-60e0eebc74ab-12259280.jpg" alt="img"></p>
+<p>切换库时，其实就是 redisClient.db 对 redisServer.db 数组的目标数据库指针的移动　<img src="https://api2.mubu.com/v3/document_image/81d85ea8-e660-4a79-b3fa-b4ffb356ee94-12259280.jpg" alt="img"></p>
+<h6 id="存储过期时间"><a href="# 存储过期时间" class="headerlink" title="存储过期时间"></a>存储过期时间</h6><p>　redisDb 中有一个 expires 的字典数据结构保存所有键的过期时间，也称为过期字典。过期字典的值是一个 long long 类型的整数，保存了键所指向的数据库键的过期时间（毫秒精度的 Unix 时间戳）</p>
+<p><img src="https://api2.mubu.com/v3/document_image/0089123b-1ace-428f-8d52-dd5d37c830be-12259280.jpg" alt="img"></p>
+<h6 id="过期键删除策略"><a href="# 过期键删除策略" class="headerlink" title="过期键删除策略"></a>过期键删除策略</h6><p>　定时删除：设置键的过期时间时，创建定时器，过期时，定时器立刻执行键的删除。</p>
+<p>　惰性删除：不着急删除过期键，每次获取时都会进行过期校验</p>
+<p>　定期删除：隔一段时间，程序就对数据库检查，删除过期键</p>
+<h6 id="删除策略的特点"><a href="# 删除策略的特点" class="headerlink" title="删除策略的特点"></a>删除策略的特点 </h6><p>　定时删除：<strong> 对内存友好，但对 CPU 不友好。</strong>过期键比较多时，删除会占用资源，特别是和删除当前任务无关的过期键，影响性能。<strong>Redis 定时器需要创建时间事件</strong>，时间事件底层由无序链表实现，查找复杂度为 O(N)，如果需要高效处理必然要创建大量的定时器，并不现实。</p>
+<p>　惰性删除：<strong>对 CPU 友好，但对内存不友好 </strong>。不需要把时间浪费在非相关键的删除上。如果有非常多的过期键，这些键又恰好没有被访问到的话，那么它们永远不会被删除，除非用户手动执行 flushdb，我们甚至可以把<strong> 这种情况下看作是一种内存泄露 </strong>。当键非常多时，会导致内存泄漏，因为<strong> 只有用到时才会判断，删除</strong>。</p>
+<p>　定期删除：<strong>定时删除占用太多 CPU 时间，影响响应时间，惰性删除浪费太多内存，有内存泄露的风险 </strong>。<font color="red"> 定期删除是一种折衷的方式</font>，隔一段时间执行一次，并限制删除操作执行的时长和频率减少对 CPU 的占用；定期删除还能减少庞大的过期键对内存的占用。</p>
+<p>　<strong>难点是如何确定时长和频率，执行得太频繁或者执行时间太长，会退化为定时删除，执行得太少或者执行时间太短，会退化为惰性删除</strong>，因此，服务器必须根据情况，合理设置删除的执行时长和执行频率。</p>
+<h5 id="redis 持久化"><a href="#redis 持久化" class="headerlink" title="redis 持久化"></a>redis 持久化</h5><p>　RDB 持久化：RDB 文件是经过压缩的二进制文件，可通过该文件还原成数据库状态</p>
+<p>　AOF 持久化：采用日志的形式来记录每个写操作，并追加到文件中</p>
+<h6 id="RDB 与 AOF 共存的载入情况"><a href="#RDB 与 AOF 共存的载入情况" class="headerlink" title="RDB 与 AOF 共存的载入情况"></a><strong>RDB 与 AOF 共存的载入情况 </strong></h6><p>　由于 AOF 文件的更新频率更高，因此开启 AOF 持久化功能后，启动时<strong> 优先加载 AOF 还原数据</strong>，只有在 AOF 处于关闭状态，才使用 RDB 文件恢复数据</p>
+<h6 id="SAVE 和 BGSAVE 的区别"><a href="#SAVE 和 BGSAVE 的区别" class="headerlink" title="SAVE 和 BGSAVE 的区别"></a>SAVE 和 BGSAVE 的区别 </h6><p>　SAVE 会<strong> 阻塞 Redis 服务器进程 </strong>，直到 RDB 文件创建完毕为止，<strong> 阻塞期间，服务器不能处理任何命令请求。</strong></p>
+<p>　<strong>BGSAVE 会 fork 出一个子进程 </strong>，由<strong> 子进程负责创建 RDB 文件，父进程继续处理命令请求</strong>。当子进程完成之后，向父进程发送信号</p>
+<h6 id="服务器是如何根据 save 选项来自动执行 BGSAVE 的？"><a href="# 服务器是如何根据 save 选项来自动执行 BGSAVE 的？" class="headerlink" title="服务器是如何根据 save 选项来自动执行 BGSAVE 的？"></a>服务器是如何根据 save 选项来自动执行 BGSAVE 的？</h6><p>　主要是根据<strong>dirty 计数器和 lastsave 属性，</strong>dirty 计数器记录距离上次成功执行 SAVE 或 BGSAVE 后数据库被修改了几次，lastsave 是一个 UNIX 时间戳，记录上次成功执行 SAVE 或 BGSAVE 的时间</p>
+<h6 id="AOF 文件的载入与数据还原"><a href="#AOF 文件的载入与数据还原" class="headerlink" title="AOF 文件的载入与数据还原"></a>AOF 文件的载入与数据还原</h6><ul>
+<li>1. 创建一个没有网络连接的伪客户端。因为 Redis 命令只能在客户端上下文中执行，并且 AOF 文件在本地而不是网络</li>
+<li>2. 解析 AOF 文件并取出一条写命令</li>
+<li>3. 使用 <strong> 伪客户端 </strong> 执行被读出的写命令</li>
+<li>4. 持续执行 2 和 3，直到所有写命令都已经执行完毕<img src="https://api2.mubu.com/v3/document_image/135f9792-2877-463e-9054-7cb6d49022f1-12259280.jpg" alt="img"></li>
+</ul>
+<h6 id="AOF 重写"><a href="#AOF 重写" class="headerlink" title="AOF 重写"></a>AOF 重写 </h6><p>　<strong> 因为 AOF 持久化会将所有的写命令都记录，所以会有冗余情况 </strong>，比如频繁地创建删除键值对，或者对同一个键的值频繁更新，都会导致文件的内容越来越多。所以需要一种<strong> 瘦身机制确保 AOF 里存的都是必不可少的精华</strong></p>
+<p>　Redis 提供 AOF 文件重写功能，让服务器创建一个新的 AOF 文件，替代现有的 AOF 文件，减少冗余命令。<strong>虽然名字叫 AOF 重写，但是在新的 AOF 文件的重写过程中，不会读取旧 AOF 文件，而是通过读取数据库状态来实现的 </strong>。首先<strong> 从数据库中读取键现在的值，然后用一条命令记录键值对</strong>，代替之前记录的多条命令。</p>
+<p>　比如 RPUSH  list “A”  RPUSH list  “B” RPUSH  list “C” RPUSH  list “D” RPUSH list  “E” ，如果没有 AOF 重写，AOF 文件要保存 5 条命令，<strong>如果服务器想要用尽量少的命令来记录 list 的状态，最简单高效的办法不是去读取和分析 AOF 文件的内容，而是直接从数据库中读取 list 键的值</strong>，然后用一条 RPUSH list “A” “B” “C” “D” “E”代替 5 条命令</p>
+<h6 id="AOF 重写过程"><a href="#AOF 重写过程" class="headerlink" title="AOF 重写过程"></a>AOF 重写过程 </h6><p>　AOF 重写的过程中会有<strong> 大量的写入操作 </strong>，为了<strong> 避免 Redis 服务器长时间的阻塞 </strong>，重写工作将被<strong> 放到子进程中进行 </strong>。这样<strong> 父进程仍然可继续处理请求</strong></p>
+<p>　子进程在执行 AOF 重写期间，服务器进程还需要继续处理命令请求，而新的命令可能会对现有的数据库状态进行修改，导致当前数据库状态与重写后的 AOF 文件保存状态不一致。为解决这个问题，<strong>设置了 AOF 重写缓冲区</strong></p>
+<p>　当重写子进程创建后，Redis 服务器执行完写命令就会将其写入 AOF 缓冲区和 AOF 重写缓冲区，子进程执行重写期间，服务器进程要执行 3 个工作：</p>
+<ul>
+<li><p>执行客户端发来的命令。</p>
+</li>
+<li><p>将执行后的写命令追加到 AOF 缓冲区</p>
+</li>
+<li><p>将执行后的写命令追加到 AOF 重写缓冲区<img src="https://api2.mubu.com/v3/document_image/f7d5cbc6-ea87-4ae1-8a78-f74561e57503-12259280.jpg" alt="img"></p>
+</li>
+</ul>
+<p>　当子进程完成重写后，<strong>会向父进程发送一个信号 </strong>，父进程接收并调用信号处理函数，将<strong> 重写缓冲区的所有内容写到新 AOF 文件中，原地覆盖现有的 AOF 文件 </strong>。因此整个 AOF 文件重写的过程中，<strong> 只有信号处理函数执行时，才会阻塞</strong>，将性能损耗降到最低。</p>
+<h5 id="主从复制"><a href="# 主从复制" class="headerlink" title="主从复制"></a>主从复制 </h5><p>　通过 SLAVEOF 命令或配置文件中设置 slaveof 选项设置主从，Redis 的复制功能分为<strong> 同步 </strong> 和<strong>命令传播 </strong> 俩操作：</p>
+<ul>
+<li>同步用于把 slave 的数据库状态更新至 master 的数据库状态</li>
+<li>命令传播是在 master 的数据库状态被修改时，导致主从数据库状态不一致，让主从回到一致的过程</li>
+</ul>
+<h6 id="同步和命令传播过程"><a href="# 同步和命令传播过程" class="headerlink" title="同步和命令传播过程"></a>　同步和命令传播过程 </h6><h6 id="同步"><a href="# 同步" class="headerlink" title="同步"></a> 同步</h6><ul>
+<li>slave 向主发送 SYNC 命令。</li>
+<li>master 接收并执行 BGSAVE，后台生成 RDB 文件，并用 <strong> 一个缓冲区记录现在开始执行的所有写命令</strong>。</li>
+<li>BGSAVE 执行完毕时，master 将 RDB 文件发给 slave，slave 接收并载入，更新数据库状态。</li>
+<li>master<strong>将其记录在缓冲区的所有写命令发给 slave</strong>，slave 执行写命令<img src="https://api2.mubu.com/v3/document_image/0502a38d-b4a5-42a7-bde5-666c372ded94-12259280.jpg" alt="img"></li>
+</ul>
+<h6 id="命令传播"><a href="# 命令传播" class="headerlink" title="命令传播"></a>　命令传播</h6><p>　　当 master 发生写操作时，主从同步需要通过命令传播，master 将写命令发送给 slave，slave 接收并执行相同的写命令</p>
+<h5 id="一次完整的主从复制过程"><a href="# 一次完整的主从复制过程" class="headerlink" title="一次完整的主从复制过程"></a>一次完整的主从复制过程 </h5><p>　一次完整的复制过程可以分为<strong> 设置主服务器的地址和端口、建立套接字连接、发送 PING 命令、身份验证、发送端口信息、同步、命令传播</strong></p>
+<ul>
+<li>1. 设置主服务器的地址和端口：当客户端向 slave 发送 slaveof 127.0.0.1:6379 时，slave 要将客户端给定的 ip 和端口号都保存后发送 OK。这是一个异步命令，所以复制工作在回复 OK 后再执行。</li>
+<li>2. 创建连向 master 的套接字连接，如果成功，slave 会给它关联一个处理复制工作的文件事件处理器（负责接收 RDB，传播的命令等）。主从成功连接后，master 会创建从服务器的客户端状态，<strong>将 slave 看做是一个客户端来看待</strong><img src="https://api2.mubu.com/v3/document_image/00a7b512-8ce2-4aab-a504-12e4d5887aa6-12259280.jpg" alt="img"></li>
+<li>发送 PING 命令：slave 在套接字连接后做的第一个工作就是发送 PING 命令，<strong>检查套接字读写状态是否正常</strong>；主服务器能否正常处理命令请求。而主服务器会根据网络状态、能够处理给出对应回复。一旦回复超时或返回错误，从服务器就会断开并重连主服务器。</li>
+<li>身份验证：收到 <strong>master 的 pong 回复</strong> 之后，检查从服务器是否设置<strong>masterauth，如果设置则进行身份验证</strong></li>
+<li>发送端口信息：slave<strong>向 master 发送自己监听的端口号</strong>，master 保存这个端口号，也就是 12345</li>
+<li>同步：从服务器发送 PSYNC 命令，主从互相成为对方的客户端，都能够执行命令并回复，执行同步操作，看是完整重同步还是部分重同步。</li>
+<li>命令传播：完成同步后，进入该阶段，主服务器将写命令发送给从服务器，从服务器接收并执行</li>
+</ul>
+<h6 id="心跳机制"><a href="# 心跳机制" class="headerlink" title="心跳机制"></a>心跳机制 </h6><p>　在命令传播阶段，从服务器默认 1 秒一次发送 REPLCONF ACK <replication_offset> 命令给主服务器，<strong>replication_offset 是复制偏移量</strong>。这么做有 3 个作用：</replication_offset></p>
+<ul>
+<li>检测主从网络状态：若主服务器超过一秒没收到从服务器的 REPLCONF ACK 则表示连接有问题。</li>
+<li>辅助实现 min-slave 选项：min-slaves-to-write 3 min-slaves-max-lag 10 表示从服务器数量少于 3 或 3 个从服务器延迟大于等于 10s 时，主服务器拒绝写命令。</li>
+<li>检测命令丢失：如果 master 传播给 slave 的写命令在半路丢失，那么 slave 向 master 发送 REPLCONF ACK 时，master 发现 slave 当前的复制偏移量少于自己的复制偏移量，就从积压缓冲区里找到并补发。<img src="https://api2.mubu.com/v3/document_image/799f8eb4-35cb-453c-b135-d8cb51f5a0a3-12259280.jpg" alt="img"></li>
+</ul>
+<p>如图所示，这时会将复制缓冲区里面复制偏移量为 201-233 的命令重发</p>
+<h5 id="Sentinel 机制"><a href="#Sentinel 机制" class="headerlink" title="Sentinel 机制"></a><strong>Sentinel 机制 </strong></h5><p>　Sentinel（哨兵）是 Redis 的<strong> 高可用性 </strong> 的解决方案，由一个或多个 Sentinel 实例组成的 Sentinel 系统可以监视任意多个主服务器以及属下的所有从服务器。当主服务器下线时，自动将下线的某个主服务器属下的某个从服务器升级为新的主服务器。从而实现故障转移，<strong>当原来的主服务器重新上线时，会被降级为从服务器。</strong></p>
+<h6 id="Sentinel 系统对主服务器执行故障转移的过程"><a href="#Sentinel 系统对主服务器执行故障转移的过程" class="headerlink" title="Sentinel 系统对主服务器执行故障转移的过程"></a>　Sentinel 系统对主服务器执行故障转移的过程</h6><ul>
+<li>检测 <strong> 主观下线 </strong> 状态：Sentinel 默认每秒与创建命令连接的实例 <strong> 发送 PING 命令 </strong>，通过回复判断是否在线。由于每个 Sentinel 中的<strong> 主观下线时间配置都可以不同，所有有可能某个 Sentinel 判断主观下线时，另一个 Sentinel 认为在线状态</strong></li>
+<li>检查 <strong> 客观下线 </strong> 状态：当 Sentinel 判断主服务器为主观下线时，还会向其他 Sentinel 询问，得到足量数据已下线判断后，就会判定服务器为客观下线，并执行故障转移。</li>
+<li><strong>选举领头 Sentinel</strong><ul>
+<li>当主服务器被判断为客观下线时，sentinel 会协商选举领头 sentinel，并由领头 sentinel 对下线主服务器执行故障转移操作</li>
+<li>当 SENTINEL is-master-down-by-addr 命令 <strong> 已经确认主服务器客观下线时 </strong>，Sentinel 还会再发送带有选举性质的命令，<strong> 并且带上自己的运行 ID</strong>。如果接收命令的 Sentinel 还没设置局部领头时，就会将这个运行 ID 作为自己的 Multi Bulk 回复参数。根据回复参数来判断多少 sentinel 将自己设置为局部领头。可能根据网络延迟，有的 Sentinel 命令比其他 Sentinel 都先到达，并且胜出（必须有半数以上的票），那么就由它负责故障转移。一次选举没有产生，一段时间后再次选举，直到选出</li>
+</ul>
+</li>
+</ul>
+<h5 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h5><p>　出现的原因：主从复制不能实现高可用、业务需要更高的 QPS，而主从复制中单机的 QPS 可能无法满足业务需求</p>
+<p>​    节点取余方式：对每个数据进行 hash 运算之后，与节点数进行取余运算，根据余数不同保存在不同的节点上，<strong>优点是配置简单，缺点是数据节点伸缩时，导致数据迁移</strong></p>
+<p>　一致性哈希方式：将所有的数据当做一个哈希环，哈希环中的数据范围是 0-2＾32。然后为每一个数据节点分配一个哈希值，<strong>这个节点就负责保存这个范围内的数据 </strong>。对<strong> 每一个 key 进行 hash 运算，被哈希后的结果在哪个 node 的范围内，则 <font color="red"> 按顺时针去找最近的节点 </font>&gt;，这个 key 将会被保存在这个节点上。</strong> 优点是 <font color="red"> 节点伸缩时，只影响邻近节点</font></p>
+<p><img src="https://api2.mubu.com/v3/document_image/42cee358-df0c-4e1d-b0f1-655e92f976d1-12259280.jpg" alt="img">**</p>
+<h6 id="分配槽"><a href="# 分配槽" class="headerlink" title="分配槽"></a>分配槽 </h6><p>　1. 每个节点通过通信都会共享 Redis Cluster 中<strong> 槽和集群中对应节点的关系</strong></p>
+<p>　2. 客户端向 Redis Cluster 的任意节点发送命令，接收命令的节点会根据 CRC16 规则进行<strong>hash 运算与 16383 取余</strong>，计算自己的槽和对应节点 </p>
+<p>　3. 如果保存数据的槽被分配给当前节点，则去槽中执行命令，并把命令执行结果返回给客户端 </p>
+<p>　4. 如果保存数据的槽不在当前节点的管理范围内，则 <strong> 向客户端返回 moved 重定向异常</strong> </p>
+<p>　5. 客户端接收到节点返回的结果，如果是 moved 异常，则 <strong> 从 moved 异常中获取目标节点的信息</strong> </p>
+<p>　6. 客户端向目标节点发送命令，获取命令执行结果<img src="https://api2.mubu.com/v3/document_image/ea429ae5-bc25-492b-b584-303d4c5c7e76-12259280.jpg" alt="img"></p>
 ]]></content>
       <tags>
-        <tag>语言类型的差异</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python批量修改文件后缀名</title>
-    <url>/2021/10/12/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/</url>
-    <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_files_list</span>(<span class="params"><span class="built_in">dir</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    实现遍历dir目录下,所有文件(包含子文件夹的文件)</span></span><br><span class="line"><span class="string">    :param dir:指定文件夹目录</span></span><br><span class="line"><span class="string">    :return:包含所有文件的列表-&gt;list</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># parent:父目录, filenames:该目录下所有文件夹,filenames:该目录下的文件名</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">r&quot;E:\test&quot;</span></span><br><span class="line">filelist = get_files_list(path)</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> filelist:</span><br><span class="line">    portion = os.path.splitext(filename)  <span class="comment"># portion为名称和后缀分离后的列表</span></span><br><span class="line">    <span class="keyword">if</span> portion[<span class="number">1</span>] ==<span class="string">&quot;.bmp&quot;</span>:</span><br><span class="line">        newname = portion[<span class="number">0</span>] + <span class="string">&quot;.jpg&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(filename)  <span class="comment"># 打印出要更改的文件名</span></span><br><span class="line">        os.chdir(path)</span><br><span class="line">        os.rename(filename, newname)</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
+        <tag>读书笔记</tag>
       </tags>
   </entry>
   <entry>
     <title>JVM 复习</title>
     <url>/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/JVM%E5%A4%8D%E4%B9%A0/</url>
-    <content><![CDATA[<h5 id="Java 和 C- 的一个重要区别"><a href="#Java 和 C- 的一个重要区别" class="headerlink" title="Java 和 C++ 的一个重要区别"></a>Java 和 C++ 的一个重要区别 </h5><p>&emsp;&emsp;Java 和 C++ 都是面向对象的，但是 C++ 需要程序员手动开辟(malloc) 和回收 (free) 内存，但是有了 JVM 内存管理的存在，所以 Java 不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。</p>
-<span id="more"></span>
-
+    <content><![CDATA[<h5 id="Java 和 C- 的一个重要区别"><a href="#Java 和 C- 的一个重要区别" class="headerlink" title="Java 和 C++ 的一个重要区别"></a>Java 和 C++ 的一个重要区别 </h5><p>&emsp;&emsp;Java 和 C++ 都是面向对象的，但是 C++ 需要程序员手动开辟(malloc) 和回收 (free) 内存，但是有了 JVM 内存管理的存在，所以 Java 不需要程序员手动释放内存，在一定程度上减少了内存泄漏问题。<br><span id="more"></span></p>
 <h5 id="为什么需要 JVM？"><a href="# 为什么需要 JVM？" class="headerlink" title="为什么需要 JVM？"></a>为什么需要 JVM？</h5><p>&emsp;&emsp;Java 语言最大的特点就是可移植性。也就是一次编译，到处运行。所有的程序并不是直接运行在操作系统上，而是通过 JVM 执行。</p>
 <p>&emsp;&emsp; 优点：减少了开发的难度，兼容不同操作系统。</p>
 <p>&emsp;&emsp; 缺点：比直接在操作系统上执行的程序的运行速度要慢。在早期这确实是一个问题，但是由于硬件技术的发展，这些问题一直在优化。</p>
@@ -257,8 +397,8 @@
 </ul>
 <h5 id="泛型"><a href="# 泛型" class="headerlink" title="泛型"></a>泛型 </h5><p>&emsp;<font color="red"> 泛型的本质是参数化类型或者参数化多态的应用，</font>泛型让程序员能够针对泛化的数据类型编写同样的算法，增强了编程语言的抽象能力。</p>
 <h6 id="Java 与 C- 的泛型"><a href="#Java 与 C- 的泛型" class="headerlink" title="Java 与 C#的泛型"></a>Java 与 C# 的泛型 </h6><p>&emsp;Java 选择的泛型实现方式叫作<font color="red"> 类型擦除式泛型 </font>，而 C# 选择的泛型实现方式是<font color="red"> 具现化式泛型</font>。</p>
-<p>&emsp;C# 里面泛型无论在程序源码里面还是编译后的中间语言表示里面，List&lt;string<String>&gt; 与 List&lt;int<int>&gt; 就是两个不同的类型，它们 <strong> 由系统在运行期生成，有着自己独立的虚方法表和类型数据</strong>。 </int></String></p>
-<p>&emsp; 而 Java 语言中的泛型则不同，它只在程序源码中存在，在编译后的字节码文件中，全部泛型都被 <strong> 替换为原来的裸类型（裸类型应被视为所有该类型泛型化实例的共同父类型）</strong>了，并且在相应的地方插入了强制转型代码，因此 <strong> 对于运行期的 Java 语言来说，ArrayList&lt;int<int>&gt; 与 ArrayList&lt;string<string>&gt; 其实是同一个类型</string></int></strong></p>
+<p>&emsp;C# 里面泛型无论在程序源码里面还是编译后的中间语言表示里面，List<string<String>&gt; 与 List<int<int>&gt; 就是两个不同的类型，它们 <strong> 由系统在运行期生成，有着自己独立的虚方法表和类型数据</strong>。 </int<int></string<String></p>
+<p>&emsp; 而 Java 语言中的泛型则不同，它只在程序源码中存在，在编译后的字节码文件中，全部泛型都被 <strong> 替换为原来的裸类型（裸类型应被视为所有该类型泛型化实例的共同父类型）</strong>了，并且在相应的地方插入了强制转型代码，因此 <strong> 对于运行期的 Java 语言来说，ArrayList<int<int>&gt; 与 ArrayList<string<string>&gt; 其实是同一个类型</string<string></int<int></strong></p>
 <p>&emsp;Java 的类型擦除式泛型无论在使用效果上还是运行效率上，几乎是全面落后于 C# 的具现化式泛型，而它的 <strong> 唯一优势 </strong> 是在于实现这种泛型的影响范围上：<strong>擦除式泛型的实现 </strong> 几乎只需要在 Javac 编译器上做出改进即可，<strong>不需要改动字节码、不需要改动 Java 虚拟机</strong>。</p>
 <h5 id="后端编译与优化"><a href="# 后端编译与优化" class="headerlink" title="后端编译与优化"></a>后端编译与优化</h5><h6 id="emsp- 编译器和解释器"><a href="#emsp- 编译器和解释器" class="headerlink" title="&emsp; 编译器和解释器"></a>&emsp; 编译器和解释器</h6><p>&emsp;&emsp; 主流的 Java 虚拟机内部都同时包含解释器和编译器，所以说<strong>Java 是半编译半解释的语言</strong>。</p>
 <p>&emsp;&emsp; 编译器和解释器的优势</p>
@@ -273,639 +413,83 @@
       </tags>
   </entry>
   <entry>
-    <title>JVM实战</title>
-    <url>/2021/10/20/JVM%E5%AE%9E%E6%88%98/JVM%E5%AE%9E%E6%88%98/</url>
-    <content><![CDATA[<p>JVM实战</p>
+    <title>Java 集合</title>
+    <url>/2021/11/10/Java%E9%9B%86%E5%90%88/Java%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[<h5 id="集合的继承关系"><a href="# 集合的继承关系" class="headerlink" title="集合的继承关系"></a>集合的继承关系</h5><p>Map 接口和 Collection 接口是所有集合框架的父接口，常见的 Java 集合类主要有：</p>
+<ul>
+<li>Collection 接口的子接口包括：Set 接口和 List 接口</li>
+<li>Map 接口的实现类：HashMap、TreeMap、Hashtable、ConcurrentHashMap</li>
+<li>Set 接口的实现类：HashSet、TreeSet</li>
+<li>List 接口的实现类主要有：ArrayList、LinkedList、Stack 以及 Vector</li>
+</ul>
 <span id="more"></span>
-
+<p><img src="https://api2.mubu.com/v3/document_image/8ad51b9d-9d66-4629-aa4e-1705a6d460af-12259280.jpg" alt="img"></p>
+<h5 id="线程安全的集合"><a href="# 线程安全的集合" class="headerlink" title="线程安全的集合"></a>线程安全的集合</h5><p>　vector、stack(继承了 stack)、hashtable，这几个集合类往往是在一些重要方法中使用了 synchronized 修饰</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">stack:</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> E <span class="title">pop</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> E <span class="title">peek</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(Object o)</span></span></span><br><span class="line"><span class="function">vector:</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">addElement</span><span class="params">(E obj)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">boolean</span> <span class="title">removeElement</span><span class="params">(Object obj)</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="fail-fast 机制"><a href="#fail-fast 机制" class="headerlink" title="fail-fast 机制"></a>fail-fast 机制</h5><p>　多个线程同时访问集合时，如果有一个线程尝试修改集合结构，就有可能触发 fail-fast 机制，例如在某一时刻，线程 A 在遍历集合，线程 B 修改集合元素个数，这是会抛出并发修改异常 ConcurrentModificationException</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        rangeCheck(index);</span><br><span class="line"></span><br><span class="line">        modCount++;</span><br><span class="line">        E oldValue = elementData(index);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> numMoved = size - index - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (numMoved &gt; <span class="number">0</span>)</span><br><span class="line">            System.arraycopy(elementData, index+<span class="number">1</span>, elementData, index,</span><br><span class="line">                             numMoved);</span><br><span class="line">        elementData[--size] = <span class="keyword">null</span>; <span class="comment">// clear to let GC do its work</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> oldValue;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>原因：如果集合结构发生变化，modCount 就会改变，每当迭代器使用 next()方法遍历下一个元素之前，都会检测 modCount 变量是否为 expectedmodCount 值，是的话就返回遍历；否则抛出异常，终止遍历。<img src="https://api2.mubu.com/v3/document_image/08efb92d-2a18-4195-a121-8e6a4575e0bd-12259280.jpg" alt="img"></p>
+<p>　</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (expectedModCount != ArrayList.<span class="keyword">this</span>.modCount)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决办法：</p>
+<p>　1. 在遍历过程中，所有涉及到改变 modCount 值得地方全部加上 synchronized（效率会变低）</p>
+<p>　2. 使用 CopyOnWriteArrayList(写时复制思想)来替换 ArrayList</p>
+<h5 id="什么是 CopyOnWrite 容器"><a href="# 什么是 CopyOnWrite 容器" class="headerlink" title="什么是 CopyOnWrite 容器"></a>什么是 CopyOnWrite 容器</h5><p>　CopyOnWrite 容器即写时复制的容器。通俗的理解是当我们往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行 Copy，复制出一个新的容器，然后新的容器里添加元素，添加完元素之后，再将原容器的引用指向新的容器。好处是可以对 CopyOnWrite 容器进行并发读，而不需要加锁，因为当前容器不会添加任何元素。所以 CopyOnWrite 容器也是一种读写分离的思想，读和写不同的容器。</p>
+<p>　<strong>CopyOnWriteArrayList</strong>读取时不加锁，只有 <strong> 增删改时加锁</strong></p>
+<p>　注意：读不需要加锁，如果读的时候有多个线程正在向 CopyOnWriteArrayList 添加数据，读还是会读到旧的数据，因为开始读的那一刻已经确定了读的对象是旧对象。</p>
+<h6 id="CopyOnWrite 的缺点"><a href="#CopyOnWrite 的缺点" class="headerlink" title="CopyOnWrite 的缺点"></a>　CopyOnWrite 的缺点</h6><p>　内存占用问题和数据一致性问题</p>
+<ol>
+<li><p>内存的使用 <br> 由于 CopyOnWriteArrayList 使用了“写时复制”，所以在进行写操作的时候，<strong> 内存里会同时存在两个 array 数组 </strong>，如果数组内存占用的太大，那么可能会<strong> 造成频繁 GC</strong>, 所以 CopyOnWriteArrayList 并不适合大数据量的场景。</p>
+</li>
+<li><p>数据一致性 <br> CopyOnWriteArrayList<strong> 只能保证数据的最终一致性，不能保证数据的实时一致性</strong>——因为读操作读到的数据只是一份快照。所以如果希望写入的数据可以立刻被读到，那 CopyOnWriteArrayList 并不适合</p>
+</li>
+</ol>
+<h5 id="CopyOnWriteArrayList 和 vector 的区别"><a href="#CopyOnWriteArrayList 和 vector 的区别" class="headerlink" title="CopyOnWriteArrayList 和 vector 的区别"></a>CopyOnWriteArrayList 和 vector 的区别 </h5><p>　他们都是并发安全的，但是<strong> 性能上存在一些差异</strong>。</p>
+<p>　Vector 是增删改查方法都加了 synchronized，保证同步，但是每个方法执行的时候都要去获取锁，性能就会大大降低</p>
+<p>　CopyOnWriteArrayList 只是在增删改上加 ReentrantLock 独占锁，但是读操作不加锁，支持并发读，因此它适合读多写少的场景</p>
+<h5 id="ArrayList- 和 -LinkedList"><a href="#ArrayList- 和 -LinkedList" class="headerlink" title="ArrayList 和 LinkedList"></a>ArrayList 和 LinkedList</h5><p>　数据结构：ArrayList 底层是 <strong> 动态数组 </strong>，LinkedList 底层是<strong> 双向链表</strong><br>　随机访问效率：ArrayList 实现了 RandomAccess 接口，只要 List 集合实现了这个接口就能支持快速随机访问。ArrayList 比 LinkedList 在随机访问的时候效率要高，因为 LinkedList 是线性的数据存储方式，所以需要移动指针从前往后依次查找<br>　增加和删除效率：在非首尾的增加和删除操作，LinkedList 要比 ArrayList 效率要高，因为 ArrayList 增删操作要影响数组内的其他数据的下标。<br>　内存空间占用：LinkedList 比 ArrayList 更占内存，因为 LinkedList 的节点除了存储数据，还存储了两个引用，一个指向前一个元素，一个指向后一个元素。<br>　线程安全：二者都不保证线程安全；</p>
+<p>　各自的优缺点：</p>
 <ul>
-<li><p>jps命令   jps是jdk提供的一个查看当前java进程的小工具，列出了现在运行的线程情况</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/a4232929-3de1-4da8-a98d-8aece0f929e9-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>查看VM参数  jinfo 命令可以用来查看 Java 进程运行的 JVM 参数</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/c37307cd-e977-4803-880c-1ce4ad63e4d6-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>具体查看某个参数  </p>
-<ul>
-<li>jinfo -flag MetaspaceSize(参数名) 55504(  pid号)<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/5e2afc97-0a8a-4c34-a052-53e88318f3f5-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>常用参数</p>
-<ul>
-<li>-Xms600m 堆空间（年轻代+老年代）的<strong>初始内存</strong>大小</li>
-<li>-Xmx600m 堆空间（年轻代+老年代）的<strong>最大内存</strong>大小</li>
-<li>开发中建议将初始堆内存和最大的堆内存设置成相同的值。</li>
-<li>-XX:NewRatio ： 设置新生代与老年代的比例。默认值是2.(一般不会调)  除非我们知道<strong>很多类对象生命周期非常长，在某些情况下还能与JVM的生命周期保持一致</strong></li>
-<li>*-*XX:SurvivorRatio ：设置新生代中Eden区与Survivor区的比例。默认值是8</li>
-</ul>
-</li>
-<li><p>为什么需要分代？不分代就不能正常工作了吗？</p>
-<ul>
-<li>经研究，不同对象的生命周期不同。70%-99%的对象都是临时对象。<ul>
-<li>新生代：有Eden、Survivor构成（s0,s1 又称为from to），to总为空</li>
-<li>老年代：存放新生代中经历多次依然存活的对象</li>
-</ul>
-</li>
-<li><strong>其实不分代完全可以，分代的唯一理由就是优化GC性能</strong>。如果没有分代，<strong>那所有的对象都在一块</strong>，就如同把一个学校的人都关在一个教室。<strong>GC的时候要找到哪些对象没用，这样就会对堆的所有区域进行扫描</strong>，而很多对象都是朝生夕死的，<strong>如果分代的话，把新创建的对象放到某一地方，当GC的时候先把这块存储“朝生夕死”对象的区域进行回收，这样就会腾出很大的空间出来。</strong></li>
-</ul>
-</li>
-<li><p>大对象直接进入老年代：分配60m堆空间，新生代 20m ，Eden 16m， s0 2m， s1 2m，buffer对象20m，Eden 区无法存放buffer， 直接晋升老年代</p>
-<ul>
-<li><em>-Xms60m -Xmx60m -XX:NewRatio=2 -XX:SurvivorRatio=8 -XX:+PrintGCDetails</em><ul>
-<li><img src="https://api2.mubu.com/v3/document_image/955732eb-5ae9-43b5-8a40-5e84472cc8d5-12259280.jpg" alt="img"></li>
-<li><img src="https://api2.mubu.com/v3/document_image/bd05e07c-8d9a-40c9-8d6f-0bc64d9b0408-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>什么是TLAB</p>
-<ul>
-<li>从内存模型而不是垃圾收集的角度，对Eden区域继续进行划分，JVM为每个线程分配了一个私有缓存区域，它包含在Eden空间内<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/f5ff4ad1-cd53-4197-bc3d-5baf37b2c2d6-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>多线程同时分配内存时，使用TLAB可以避免一系列的非线程安全问题，同时还能够提升内存分配的吞吐量，因此我们可以将这种内存分配方式称之为<strong>快速分配策略</strong></li>
-</ul>
-</li>
-<li><p>说明</p>
-<ul>
-<li>尽管不是所有的对象实例都能够在TLAB中成功分配内存，但JVM明确是是将TLAB作为内存分配的首选</li>
-<li>jinfo -flag UseTLAB 42668<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/af22140d-65df-4c86-89c9-2f3cc9bb0f4e-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>在程序中，开发人员可以通过选项“-XX:UseTLAB“ 设置是够开启TLAB空间</li>
-<li>默认情况下，TLAB空间的内存非常小，**仅占有整个EDen空间的1%**，当然我们可以通过选项 ”-XX:TLABWasteTargetPercent“ 设置TLAB空间所占用Eden空间的百分比大小</li>
-<li><strong>一旦对象在TLAB空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在Eden空间中分配了内存</strong><ul>
-<li><img src="https://api2.mubu.com/v3/document_image/35f2d985-eba5-4841-a508-f4bb9764f6e4-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>为什么有TLAB（Thread Local Allocation Buffer）</strong></p>
-<ul>
-<li>堆区是线程共享的，任何线程都可以访问到堆区中的共享数据。由于对象实例的创建在JVM中非常频繁，<strong>因此在并发环境下从堆区中划分内存空间是线程不安全的</strong></li>
-<li><strong>为避免多个线程操作同一地址，需要使用加锁等机制，进而影响分配速度</strong></li>
-<li><strong>所以有了TLAB</strong></li>
-</ul>
-</li>
-<li><p>逃逸分析   -XX:DoEscapeAnalysis 显式开启逃逸分析</p>
-<ul>
-<li>在Java虚拟机中，对象是在Java堆中分配内存的，这是一个普遍的常识。但是，有一种特殊情况，<strong>那就是如果经过逃逸分析（Escape Analysis)后发现，一个对象并没有逃逸出方法的话，那么就可能被优化成栈上分配</strong>。<strong>这样就无需在堆上分配内存，也无须进行垃圾回收了。</strong>这也是最常见的堆外存储技术。</li>
-<li>逃逸分析的基本行为就是分析对象动态作用域：<ul>
-<li>当一个对象在方法中被定义后，<strong>对象只在方法内部使用</strong>，则认为<strong>没有发生逃逸</strong>。</li>
-<li>当一个对象在方法中被定义后，<strong>它被外部方法所引用，则认为发生逃逸。</strong>例如作为调用参数传递到其他地方中。</li>
-</ul>
-</li>
-<li>如何快速的判断是否发生了逃逸分析，就<strong>看new的对象实体是否有可能在方法外被调用</strong></li>
-<li><strong>结论</strong><ul>
-<li>开发中能使用局部变量的，就不要使用在方法外定义</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>代码优化</p>
-<ul>
-<li>使用逃逸分析，编译器可以对代码做如下优化：</li>
-<li>栈上分配：将堆分配转化为栈分配。如果一个对象在子线程中被分配，要使指向该对象的指针永远不会逃逸，对象可能是栈分配的候选，而不是堆分配<ul>
-<li>JIT编译器在编译期间根据逃逸分析的结果，发现如果一个对象并没有逃逸出方法的话，就可能被优化成栈上分配。分配完成之后，继续在调用栈内执行，最后线程结束，栈空间被回收，局部变量对象也被回收。这样就无须机型垃圾回收了</li>
-<li>常见的栈上分配场景：给成员变量赋值、方法返回值、实例引用传递</li>
-</ul>
-</li>
-<li>同步省略：如果一个对象被发现只能从一个线程被访问到，那么对于这个对象的操作可以不考虑同步<ul>
-<li>在动态编译同步块的时候，JIT编译器可以借助逃逸分析来判断同步块所使用的锁对象是否只能够被一个线程访问而没有被发布到其他线程。如果没有，那么JIT编译器在编译这个同步块的时候就会取消对这部分代码的同步。这样就能大大提高并发性和性能。这个取消同步的过程就叫同步省略，也叫==锁消除==</li>
-</ul>
-</li>
-<li>分离对象或标量替换：有的对象可能不需要作为一个连续的内存结构存在也可以被访问到，那么对象的部分（或全部）可以不存储在内存，而是存储在CPU寄存器中。<ul>
-<li>如果经过逃逸分析，发现一个对象不会被外界访问的话，那么经过JIT优化，就会把这个对象拆解成若干个其中包含的若干个成员变量来替代。这个过程就是标量替换</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>逃逸分析小结</p>
-<ul>
-<li>无法保证逃逸分析的性能消耗一定能高于他的消耗。虽然经过逃逸分析可以做<strong>标量替换、栈上分配、和锁消除</strong>。但是逃逸分析自身也是需要进行一系列复杂的分析的，这其实也是一个相对耗时的过程。</li>
-<li>通过逃逸分析，JVM会在栈上分配那些不会逃逸的对象，这在理论上是可行的，但是取决于JVM设计者的选择</li>
-</ul>
-</li>
-<li><p>栈、堆和方法区的交互</p>
-<ul>
-<li>reference指向对象的实例数据，实例数据中有到对象类型数据的指针，这个指针指向方法区中的对象类型数据。<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/7a448b77-9369-48e8-b83a-ae42c10dae10-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>JVM没有使用句柄池的方式（增加了一次指针的开销）<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/2e95c125-00b0-4b68-8a4d-deab4e882a8e-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>方法区   <strong>在jdk7及以前，习惯上把方法区称为永久代。jdk8开始，使用元空间取代了永久代</strong></p>
-</li>
-<li><p>方法区的演变</p>
-<ul>
-<li>jdk1.6及之前：有永久代（permanent generation） ，静态变量存放在永久代上</li>
-<li>jdk1.7：有永久代，但已经逐步“去永久代”，<strong>字符串常量池、静态变量移除，保存在堆中</strong></li>
-<li>jdk1.8及之后： 无永久代，<strong>类型信息、字段、方法、常量保存在本地内存的元空间，但字符串常量池、静态变量仍在堆</strong></li>
-</ul>
-</li>
-<li><p>永久代为什么要被元空间替换</p>
-</li>
-<li><p>方法区的垃圾回收</p>
-</li>
-<li><p>StringTable （字符串常量池）为什么要调整到堆中</p>
-<ul>
-<li>jdk7中将StringTable放到了堆空间中。因为永久代的回收效率很低，在fullgc的时候才会触发。而full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了StringTable回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存.</li>
-</ul>
-</li>
-<li><p>内存布局</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/3d17013b-524f-4c60-83f5-1988c9617bb0-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>对象在JVM是怎么存储的？对象头中有哪些东西？</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/04430d3c-ccab-4884-9a17-252635ebeded-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>对象头（Header）</p>
-<ul>
-<li>运行时元数据</li>
-<li>类型指针：指向类元数据的InstanceKlass，确定该对象所属的类型</li>
-<li>说明：如果是数组，还需记录数组的长度</li>
-</ul>
-</li>
-<li><p>编译型语言和解释型语言</p>
-<ul>
-<li><strong>编译型语言</strong>的执行方式是：先把这10行代码通过<a href="https://baike.baidu.com/item/%E7%BC%96%E8%AF%91%E5%99%A8/8853067?fr=aladdin">编译器</a>全部编<strong>译成机器指令码的文件</strong>，然后再让计算机运行<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/a0b6d04d-ad8c-48ea-8f7e-3bf00e651de5-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><strong>解释型语言</strong>的执行方式就是：通过<a href="https://baike.baidu.com/item/%E8%A7%A3%E9%87%8A%E5%99%A8/10418965?fr=aladdin">解释器</a>一行一行的将代码翻译成机器指令码执行。<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/541878de-4caf-4609-aea1-96c6996b5096-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>Java代码来说，是将源文件（.java文件）先<strong>编译</strong>成字节码文件（.class文件），然后再在<a href="https://baike.baidu.com/item/JVM/2902369?fr=aladdin">Java虚拟机</a>（JVM）中<strong>解释</strong>执行。<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/51ede055-f9f8-4ab4-be18-cd70a2bb207c-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>JAVA是半编译半解释的语言</p>
-<ul>
-<li><strong>Java首先将源代码编译成字节码， 然后依赖各种不同平台上的虚拟机来解释执行字节码</strong>，<strong>从而实现了“一次编写，到处运行”的跨平台特性</strong>， 所以说java是半编译半解释型的语言。</li>
-<li>编译器：将源代码编译成class字节码文件</li>
-<li>解释器：将字节码文件中的内中翻译为**对应平台(windows 、linux)**的本地机器指令</li>
-</ul>
-</li>
-<li><p>四种引用：软弱虚引用在一定条件下都是可以被回收的。<strong>相对而言，强引用是造成内存泄漏的主要原因之一。</strong></p>
-<ul>
-<li>强引用：只要强引用的对象是可触及的，被强引用的对象就不会被回收。比如这个”hello 双硅谷”<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/517f7338-19b9-404d-a4b9-890040b4829a-12259280.jpg" alt="img"></li>
-<li><img src="https://api2.mubu.com/v3/document_image/f222f539-c3d1-490d-8e79-27eb5819e443-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>如果str置为null   这个时候就会被回收</li>
-<li>软引用<ul>
-<li><em>内存不足即回收   -Xms10m -Xmx10m  //在报OOM之前，垃圾回收器会回收软引用的可达对象。</em><ul>
-<li><img src="https://api2.mubu.com/v3/document_image/4049e061-4129-4167-b40e-cfdd9cfc32bf-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>弱引用<ul>
-<li>// 不管当前内存空间足够与否，都会回收它的内存</li>
-</ul>
-</li>
-<li><h2 id="虚引用"><a href="#虚引用" class="headerlink" title="虚引用"></a>虚引用</h2></li>
-</ul>
-</li>
-<li><p>GC性能的几大指标</p>
-</li>
-<li><p>JVM调优篇</p>
-<ul>
-<li>生产环境中的问题<ul>
-<li>发生了内存移除怎么处理</li>
-<li>给服务器分配多少内存合适</li>
-<li>怎么对垃圾回收器调优</li>
-<li>CPU负载高怎么处理</li>
-<li>分配多少线程比较合适</li>
-<li>不加log  怎么确定请求是否实行了某一行代码</li>
-<li>不加log  怎么实时查看某个方法的入参和返回值</li>
-</ul>
-</li>
-<li>为什么要调优  防止OOM  解决OOM  减少Full GC出现的频率</li>
-</ul>
-</li>
-<li><p>调优步骤</p>
-<ul>
-<li>性能监控、性能分析、性能调优<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/ce90f4e4-9aa1-4b6a-b962-030198e0d9cf-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>JVM命令</p>
-<ul>
-<li>查看运行的Java进程<ul>
-<li>jps Java Virtual Machine Process Status Tool</li>
-<li>jps  显示pid和类名</li>
-<li>jps -q  显示pid</li>
-<li>jps -l  显示pid和全限定名</li>
-<li>jps -v  显示JVM参数</li>
-</ul>
-</li>
-<li>查看JVM统计信息<ul>
-<li>jstat Java Virtual Machine statistics monitoring tool<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/b3a763dd-aae4-4e7f-b10c-10d33645edea-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>jstat -class pid<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/3899f590-e60a-4340-96ce-6f33017e02a3-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>每秒打印1次<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/915abbf5-56c2-4219-87fb-a0de77955ed1-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>类加载统计<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/2a642908-d15b-4927-873a-9206edbf7b51-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>垃圾回收统计   jstat -gc 2060<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/6f571dc1-8ef0-4e1e-85bc-9eddf338907f-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>堆内存统计  jstat -gccapacity 2060<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/fe0fd382-d937-4c95-be10-c1838c1a03fe-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>新生代垃圾回收统计<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/400b51e0-c385-4b21-9011-e4781f2d155f-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>总结垃圾回收统计<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/8efc6046-dd8d-4141-bc94-441e3d8c7879-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>查看JVM参数   jinfo<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/bc7e9da1-3957-4ff8-9563-d28761ee7666-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>导出内存映像文件   获取dump文件 作用  出现了堆溢出时可以用dump文件分析<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/1f928e57-bb28-4b3f-bcc0-b96295137a84-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><ul>
-<li><img src="https://api2.mubu.com/v3/document_image/1912078b-7ce1-4c95-9861-ba7f9d208833-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>打印线程快照  jstack pid</p>
-</li>
-<li><p>排查</p>
-</li>
-<li><p>jstack实战之高cpu占用率排查</p>
-<ul>
-<li><strong>1、</strong>使用top指令，定位CPU占用较高的进程。<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/0251434d-d9dd-4bd5-bafe-4266e9506909-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>2.使用top -H -p ${进程id}指令，查看指定进程下各个线程的cpu使用情况<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/e739a85b-0208-41a3-bedc-35bc736402b3-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>注意：PID虽然名为进程控制符，<strong>但其用途不限于特指进程id</strong>。如上图中PID列指的就是线程的id</li>
-<li>3.使用printf “%x” xxx指令，将1977转换为16进制<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/4609dd90-6770-4fa7-bcd0-b93de9159260-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><strong>4</strong>使用jstack pid指令，查看当前的堆栈信息；并<strong>根据上一步得到的16进制的线程id，找到肇事线程</strong>。<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/b705c322-4bcb-4d2f-a20c-679e9bb3d3b4-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>如果线程较多的话，我们可以使用grep指定来根据关键字定位行，jstack 1956 | grep -10 7b9 显示10行</li>
-<li><strong>5：</strong>分析肇事线程堆栈信息。<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/d510fb6a-e43b-490d-a9cc-22228356acbf-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>我们已经定位到位置6，然后去找代码即可<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/2827bed2-0a3d-466e-908b-c2aa6ecef481-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>jstack之死锁排查</p>
-<ul>
-<li><strong>1、</strong>使用jps指令，查看所有java进程。<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/0659ef78-4f38-493f-8da8-604708b74515-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><strong>2、</strong>使用jstack pid指令，查看指定进程的堆栈信息,观察并定位到死锁线程。<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/bb313bdc-ae62-47f5-b37b-02259adfb9ee-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>jcmd  包括了之前 的所有  jcmd -l 列出所有进程pid号</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/5be5237a-7cd7-4a39-abb4-96b01ade100b-12259280.jpg" alt="img"></li>
-<li><img src="https://api2.mubu.com/v3/document_image/cbc0cd05-760c-4128-886c-093b94fec7f8-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>内存泄漏和内存溢出</p>
-<ul>
-<li>内存泄露：对象不会再被程序引用了，但是GC又不会回收他们</li>
-<li>内存溢出：内存不够分配新对象了</li>
-<li>两者关系：内存泄漏的增多最终会导致内存溢出。</li>
-</ul>
-</li>
-<li><p>JAVA中内存泄漏的情况</p>
-<ul>
-<li><p><img src="https://api2.mubu.com/v3/document_image/89af9633-3827-4eb5-b611-2a4675fe023b-12259280.jpg" alt="img"></p>
-</li>
-<li><p>静态集合类</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/0fdd6986-18a2-46bd-8a72-ddd1320c82e6-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>单例模式</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/4f05caf6-0f14-40ab-9107-20bcd27e1dc3-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>内部类持有外部类</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/a2e9b2b7-8c36-466f-8c3b-267e3a89b70f-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>不释放连接</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/a52b8862-bac3-4812-b850-79608684003b-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>改变哈希值  当我们想把自定义对象存入map时就要保证对象的hashcode不变</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/f1c15ebe-5199-4313-a900-4bd84caa2524-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>缓存问题</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/5e4b4094-7e36-432e-b3c3-944a76e0ee37-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>内存泄漏案例</p>
-<ul>
-<li>第一个只是移动了指针，实际上栈顶的数据还在，没有被回收<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/8ae1dd10-9486-4e31-a4a6-492cf016fef2-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li>解决   将栈顶元素置空</li>
-</ul>
-</li>
-<li><p>Eden区和两个S区理论上是8:1:1，但实际上是150:25:25，也就是6:1:1，原因是有一个参数UseAdaptiveSizePolicy，默认开启，它会自动选择各区大小的比例。虽然查出来SurvivoRatio=8,但没有启用，当UseAdaptiveSizePolicy禁用时 且显式地写出SurvivoRatio=8才会出现8:1:1的比例</p>
-<ul>
-<li><img src="https://api2.mubu.com/v3/document_image/33ae6bd9-0aa6-4530-a9d1-4bf42dd7b74f-12259280.jpg" alt="img"></li>
-<li><img src="https://api2.mubu.com/v3/document_image/cdc67e2a-9551-47ea-b304-d38657a79644-12259280.jpg" alt="img"></li>
-<li><img src="https://api2.mubu.com/v3/document_image/3c415e11-318c-4806-b4a6-cbfed2572dd0-12259280.jpg" alt="img"></li>
-<li><img src="https://api2.mubu.com/v3/document_image/ca3725c0-fb71-4d52-bbf1-c54a5cfe2e82-12259280.jpg" alt="img"></li>
-<li><img src="https://api2.mubu.com/v3/document_image/7df214b3-2fea-4370-837b-33beb3d76b87-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><p>1.4 动态对象年龄判定</p>
-</li>
-<li><p>“Hotspot遍历所有对象时，按照年龄从小到大对其所占用的大小进行累积，当<strong>累积的某个年龄大小超过了survivor区的一半时</strong>，<strong>取这个年龄和MaxTenuringThreshold中更小的一个值，作为新的晋升年龄阈值”。</strong></p>
-</li>
-<li><p>需要注意的是：<strong>对象默认晋升年龄并不都是15，这个是要区分垃圾收集器的，CMS就是6.</strong></p>
-</li>
-<li><ul>
-<li><img src="https://api2.mubu.com/v3/document_image/dd8f0efc-a6ba-457d-b84f-c47b389e673f-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-<li><ul>
-<li><img src="https://api2.mubu.com/v3/document_image/ca4e0e3b-6e72-4cd6-8a1b-cfa2ceb7e4ca-12259280.jpg" alt="img"></li>
-</ul>
-</li>
-</ul>
+<li>ArrayList<ul>
+<li>实现了 RandomAccess 接口，随机访问快，在末尾添加元素复杂度不高。</li>
+<li>在非末尾处增删元素涉及到元素的移动，比较耗费性能。</li>
+</ul>
+</li>
+<li>LinkedList<ul>
+<li>增删快，不涉及元素移动。查找慢，要从头开始遍历</li>
+</ul>
+</li>
+</ul>
+<h5 id="HashSet 原理"><a href="#HashSet 原理" class="headerlink" title="HashSet 原理"></a>HashSet 原理</h5><p>　HashSet 是基于 HashMap 实现的，HashSet 的值存放于 HashMap 的 key 上，HashMap 的 value 统一为 PRESENT，HashSet 不允许重复的值。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object PRESENT = <span class="keyword">new</span> Object();</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 调用 HashMap 的 put 方法,PRESENT 是一个至始至终都相同的虚值</span></span><br><span class="line">	<span class="keyword">return</span> map.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="JDK1-7 和 JDK1-8 中 ArrayList 的区别"><a href="#JDK1-7 和 JDK1-8 中 ArrayList 的区别" class="headerlink" title="JDK1.7 和 JDK1.8 中 ArrayList 的区别"></a>JDK1.7 和 JDK1.8 中 ArrayList 的区别</h5><p>　JDK1.7 的时候是初始化就创建一个容量为 10 的数组，JDK1.8 后是初始化先创建一个空数组，第一次 add 时才扩容为 10（类似于饿汉式和懒汉式）</p>
+<h5 id="ArrayList 扩容"><a href="#ArrayList 扩容" class="headerlink" title="ArrayList 扩容"></a>ArrayList 扩容</h5><p>　1.5 倍扩容，把原数组的数据复制到新数组中，再把指向原数组的地址换到新数组<img src="https://api2.mubu.com/v3/document_image/379d8270-a408-48e4-9b20-884d4f7c89f4-12259280.jpg" alt="img"></p>
+<h6 id="add-E-e- 方法"><a href="#add-E-e- 方法" class="headerlink" title="add(E e)方法"></a>add(E e)方法</h6><p>　添加元素前会先判断数组是否为空，如果为空，则创建一个长度为 10 的空数组，然后在把所添加的元素加入到数组中。如果不为空，则判断集合大小是否超出数组的长度，判断完长度后决定是否扩容。</p>
+<h5 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h5><h6 id="成员变量"><a href="# 成员变量" class="headerlink" title="成员变量"></a>成员变量</h6><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// 默认初始容量 16</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>; <span class="comment">// 最大容量 2^30</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>; <span class="comment">// 负载因子</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>; <span class="comment">// 转化为红黑树的阈值</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>; <span class="comment">// 树转链表的阈值</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>; <span class="comment">//  转化为红黑树的阈值</span></span><br></pre></td></tr></table></figure>
+<p>链表长度达到 8 会尝试转成红黑树，但是如果此时容量小于 64 时会先扩容，而不是转成红黑树</p>
+<p><img src="https://api2.mubu.com/v3/document_image/8117cd3c-3c8b-4042-a8d1-a0dc61d8d81c-12259280.jpg" alt="img"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> cap)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = cap - <span class="number">1</span>; <span class="comment">// 先将传入容量 -1</span></span><br><span class="line">    <span class="comment">// 得到 2 的幂次方 -1  也就是二进制全为 1 的数</span></span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">8</span>;</span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">16</span>;</span><br><span class="line">    <span class="comment">// 返回 n + 1  即 2 的幂次方</span></span><br><span class="line">    <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="为什么 HashMap 的容量是 2 的幂次方"><a href="# 为什么 HashMap 的容量是 2 的幂次方" class="headerlink" title="为什么 HashMap 的容量是 2 的幂次方"></a>为什么 HashMap 的容量是 2 的幂次方 </h6><p>　1. 根据 key 的 hash 值寻找对应的哈希桶时，可以<strong> 用位运算替代取模运算 </strong>，<strong> 更加高效</strong>，即<code>p = tab[i = (n - 1) &amp; hash]</code></p>
+<p>　2. 扩容后，用 hash 与 oldCap 做与运算用于判断元素的在数组中的位置是否需要移动 <code>e.hash &amp; oldCap == 1</code> 表示需要移动，否则不移动，其中 oldCap 是 2 的幂次方，因此二进制表示时候只有最高位为 1</p>
+<h6 id="为什么扰动函数用 key-hashcode- 的高低 16 位做异或运算？"><a href="# 为什么扰动函数用 key-hashcode- 的高低 16 位做异或运算？" class="headerlink" title="为什么扰动函数用 key.hashcode()的高低 16 位做异或运算？"></a>为什么扰动函数用 key.hashcode()的高低 16 位做异或运算？</h6><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line"><span class="keyword">int</span> h;</span><br><span class="line"><span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　hashcode 这个 32bit 的散列值是不能直接拿来用的，使用之前还要先做 <strong> 对数组的长度取模运算 </strong>，得到的余数才能用来访问数组下标。源码中模运算是<code>(n - 1) &amp; hash</code> 完成的，实际上就是散列值的高位全部归 0，只保留低位的值 (实际上就是取低位)，但这时候问题就来了，就算散列值分布再松散，要是只取最后几位的话，碰撞机率会很大，更严重的情况是<strong> 如果散列本身做得不好，分布上成等差数列的漏洞 </strong>，恰好使最后几个低位呈现规律性重复，<strong> 就很容易发生哈希冲突。</strong></p>
+<p>右移 16 位，正好是 32bit 的一半，自己的高半区和低半区做异或，就是为了混合原始哈希码的高位和低位，<strong>以此来加大低位的随机性</strong></p>
+<h6 id="put 过程"><a href="#put 过程" class="headerlink" title="put 过程"></a>put 过程 </h6><p>　1. 判断键值对数组 table[i] 是否为空或为 null，是的话 resize()进行扩容；传入 key.hashcode()重新计算哈希值 (高低 16 位异或)，然后(n - 1) &amp;hash 确定桶的位置<br> 　2. 如果 table[i]==null，直接新建节点添加，转向 6，如果 table[i]！=null，转向 3<br>　3. 判断 table[i] 的首个元素是否和 key 一样，如果相同直接覆盖 value，否则转向 4，这里的相同指的是 hashCode 以及 equals<br>　4. 判断 table[i] 是否为 treeNode，即 table[i] 是否是红黑树，如果是红黑树，则直接在树中插入键值对，否则转向 5<br>　5. 遍历 table[i]，判断链表长度是否大于 8，大于 8 的话把链表转换为红黑树，在红黑树中执行插入操作，否则进行链表的插入操作；遍历过程中若发现 key 已经存在直接覆盖 value 即可<br>　6. 插入成功后，判断键值对数量是否超过最大容量如果超过，进行扩容</p>
+<h6 id="get 过程"><a href="#get 过程" class="headerlink" title="get 过程"></a>get 过程 </h6><p>　1 通过 hash &amp; (table.length - 1) 获取该 key 对应的数据节点的 hash 槽 <br>　2 判断首节点是否为空, 为空则直接返回空<br>　3 再判断首节点.key 是否和目标值相同, 相同则直接返回(首节点不用区分链表还是红黑树)<br>　4 首节点.next 为空, 则直接返回空<br>　5 首节点是树形节点, 则进入红黑树数的取值流程, 并返回结果<br>　6 进入链表的取值流程, 并返回结果<br> 扩容扩展后 Node 对象的位置要么在原位置，要么移动到 原始位置 + 增加的数组</p>
+<h6 id="HashMap 在并发编程环境下有什么问题"><a href="#HashMap 在并发编程环境下有什么问题" class="headerlink" title="HashMap 在并发编程环境下有什么问题?"></a>HashMap 在并发编程环境下有什么问题?</h6><ul>
+<li>JDK1.7 中，并发执行扩容操作可能引起的链表死循环问题</li>
+<li>多线程 put 的时候可能导致元素丢失</li>
+<li>在 JDK1.8 中，在并发执行 put 操作时会发生数据覆盖的情况</li>
+</ul>
+<p>　数据覆盖：A、B 都在进行 put 操作，并且 hash 函数计算出的插入下标是相同的，当线程 A 由于时间片耗尽导致被挂起，而线程 B 得到时间片后在该下标处插入了元素，完成了正常的插入，然后线程 A 获得时间片，由于之前已经进行了 hash 碰撞的判断，所有此时不会再进行判断，而是直接进行插入</p>
+<h6 id="转化成红黑树的阈值为什么是 8"><a href="# 转化成红黑树的阈值为什么是 8" class="headerlink" title="转化成红黑树的阈值为什么是 8"></a>转化成红黑树的阈值为什么是 8</h6><p>　红黑树节点大小约为链表节点的 2 倍，在节点太少时，红黑树的查找性能优势并不明显，付出 2 倍空间的代价作者觉得不值得。</p>
+<p>　理想情况下，使用随机的哈希码，节点分布在 hash 桶中的频率遵循泊松分布，按照泊松分布的公式计算，链表中节点个数为 8 时的概率为 6*10^-7^，这个概率足够低了，并且到 8 个节点时，红黑树的性能优势也会开始展现出来，因此 8 是一个较合理的数字<img src="https://api2.mubu.com/v3/document_image/2576d75c-aff8-4c27-989b-294c513ca84a-12259280.jpg" alt="img"></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>《Redis 设计与实现》读书笔记</title>
-    <url>/2021/10/26/%E3%80%8ARedis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8ARedis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h5 id="Redis 中的数据结构"><a href="#Redis 中的数据结构" class="headerlink" title="Redis 中的数据结构"></a>Redis 中的数据结构 </h5><h6 id="字符串"><a href="# 字符串" class="headerlink" title="字符串"></a> 字符串</h6><p>&emsp;&emsp; 简单动态字符串的结构：使用一个结构体来表示，其内部有一个<strong>buf 数组(保存字符串)，以及字符串长度 len，剩余长度 free 等字段</strong>，优点是通过长度限制写入，避免缓冲区溢出，另外剩余长度不足时会自动扩容，扩展性较好，不需要频繁分配内存。</p>
-<span id="more"></span>
-
-<p><img src="https://api2.mubu.com/v3/document_image/aef323e1-d81e-45b5-bc34-78f82fca759f-12259280.jpg" alt="img"></p>
-<p>&emsp; 简单动态字符串 (SDS) 与 C 语言字符串的区别</p>
-<ul>
-<li><p>1. 常数复杂度获取字符串长度</p>
-<ul>
-<li>len 表示已经使用字节的数量 (也就是字符串的长度，这样就可以 O(1) 复杂度获取字符串的长度)</li>
-<li>即使对一个非常长的字符串键执行 strlen 命令，也不会对系统性能造成影响，因为 strlen 复杂度仅为 O(1)</li>
-</ul>
-</li>
-<li><p>2. 杜绝缓冲区溢出</p>
-<p><img src="https://api2.mubu.com/v3/document_image/d531493d-261f-42e3-a5d0-a1249a3655d9-12259280.jpg" alt="img"></p>
-<ul>
-<li>C 字符串不记录自身长度带来的一个问题是容易造成缓冲区溢出：执行 strcat 时如果忘记分配足够空间，s1 的数据就会溢出到 s2 所在的空间中  如图，执行 strcat 之前没有分配足够空间，s1 就变成了 rediscluster，也就是 s1 的内容溢出到了 s2 所在位置<img src="https://api2.mubu.com/v3/document_image/81fcb70e-7b3e-4d79-b919-4262e4695044-12259280.jpg" alt="img"></li>
-<li>SDS 空间分配策略：需要对 SDS 进行修改时，<strong>先会检查 SDS 的空间是否满足修改所需的要求，不满足要求的话就先拓展 SDS 的空间</strong>，再执行 sdscat 拼接操作</li>
-</ul>
-</li>
-<li><p>3. 减少修改字符串时带来的内存重分配次数</p>
-<ul>
-<li><p>对于一个包含了 N 个字符的 C 字符串来说，底层实现总是一个 N+1 个字符长的数组(‘\0’作为结束标志)，所以每次增长或者缩短 C 字符串，都要对保存这个 C 字符串的数组进行内存重分配操作。</p>
-<ul>
-<li><p>如果是拼接操作 append，执行这个操作之前，程序先要内存重分配来扩展底层数组的大小——如果忘了这一步就会产生 <strong> 缓冲区溢出</strong></p>
-</li>
-<li><p>如果是裁剪操作 trim，执行这个操作之后，程序需要内存重分配来释放字符串不再使用的那部分空间——如果忘了这一步就会产生 <strong> 内存泄露</strong></p>
-</li>
-</ul>
-</li>
-<li><p>在一般程序中，如果修改字符串长度的情况不经常出现，那么每次修改都执行一次内存重分配是可以接受的，但是<strong>redis 作为数据库，经常被用于速度要求严苛、数据被频繁修改的场合，如果每次修改字符串的长度都需要执行一次内存重分配的话</strong>，内存重分配的时间就会占据修改字符串所用时间段一大部分，如果频繁修改还可能对性能造成影响。</p>
-</li>
-</ul>
-</li>
-<li><p>4. 减少内存分配次数采取的策略：<strong>空间预分配 </strong> 以及 <strong> 惰性空间释放</strong></p>
-<ul>
-<li>空间预分配：<ul>
-<li>修改后的 SDS&lt;1MB，程序分配和 len 属性同样大小的未使用空间，此时 SDS 的 len 与 free 大小相等。比如修改后实际存储字符串的空间变为 13 字节，那么 len=13，free=13，buf 数组整体的长度 =13+13+1=27（额外 1 字节保存结束符）</li>
-<li>修改后 SDS&gt;=1MB。程序会分配 1MB 的未使用空间。比如修改后实际存储字符串的空间变为 2MB，那么 len=2M，free=1MB，buf 数组整体的长度 =2MB+1MB+1byte</li>
-</ul>
-</li>
-<li>惰性空间释放：用于优化 SDS 字符串 <strong> 缩短操作 </strong>。当 SDS API 需要缩短保存的字符串时，程序并<strong> 不立即回收这部分内存，而是使用 free 属性将字节的数量记录，等待使用。</strong>与此同时，SDS 提供了相关 API，<strong>在有需要时，真正释放未使用空间</strong></li>
-</ul>
-</li>
-</ul>
-<h6 id="字符串总结"><a href="# 字符串总结" class="headerlink" title="字符串总结"></a>字符串总结 <img src="https://api2.mubu.com/v3/document_image/a41abab9-9440-4535-b78d-7475be0c171b-12259280.jpg" alt="img"></h6><h6 id="链表"><a href="# 链表" class="headerlink" title="链表"></a> 链表 </h6><p> 双向链表结构，使用 adlist.h/list 来持有，操作链表<img src="https://api2.mubu.com/v3/document_image/f104c56b-d380-44cd-a64a-28fb51eeba76-12259280.jpg" alt="img"><img src="https://api2.mubu.com/v3/document_image/81d2b496-b86c-4d50-8900-c95034f36dc1-12259280.jpg" alt="img"></p>
-<p>链表总结</p>
-<ul>
-<li>双端：链表节点带有 prev 和 next 指针，获取前置和后置节点的复杂度都是 O(1)</li>
-<li>无环：表头节点的 prev 指针和表尾节点的 next 指针都指向 NULL，对链表的访问以 NULL 为终点。 带表头指针和表尾指针，带链表长度计数器 </li>
-<li>头尾指针：将程序获取头尾节点的复杂度降为 O(1)</li>
-<li>长度计数器：将程序获取表长的复杂度降为 O(1)</li>
-<li>多态：链表节点使用 void* 指针来保存节点值，并且可以通过 list 结构的 dup、free、match 为节点值设置类型特定函数，所以链表可以用于保存各种不同类型的值</li>
-</ul>
-<h6 id="字典"><a href="# 字典" class="headerlink" title="字典"></a>字典</h6><p>&emsp; 数组中的每个元素都是指向 dict.h/dictht 的结构，dictEntry 就是一个键值对<img src="https://api2.mubu.com/v3/document_image/2ce1d861-37a6-4e50-bd6a-f31a52b72403-12259280.jpg" alt="img"></p>
-<p>Redis 中的字典由 dict.h/dict 实现，由这个数据结构将字典组织在一起</p>
-<p><img src="https://api2.mubu.com/v3/document_image/d5280468-3589-4c38-8a7a-c457c4c0c608-12259280.jpg" alt="img"></p>
-<ul>
-<li>ht 属性是包含两个项的数组，<strong>每项都是一个哈希表 </strong>，<strong>ht[0] 平时使用，而 ht[1]仅在 rehash 时使用</strong>。</li>
-<li>rehashidx 记录了 rehash 的进度，初始为 -1</li>
-<li>解决键冲突：链地址法，为了提高速度，每次都是 <strong> 将新节点添加到链表的表头位置</strong>，复杂度为 O(1)（这点跟 hashmap 不一样）</li>
-</ul>
-<p>rehash 的过程</p>
-<ul>
-<li>1. 为字典 ht[1]哈希表分配空间，大小取决于要执行的操作与 ht[0]当前键值对的数量，将保存在 ht[0]中的所有键值对存放到 ht[1]指定的位置</li>
-<li>2. 当 ht[0]的所有键值对都迁移完毕后，释放 ht[0]，并指向 ht[1]，并在 ht[1]上创建一个空的哈希表，为下次 rehash 准备。</li>
-</ul>
-<p>扩容的条件</p>
-<ul>
-<li>服务器目前 <strong> 没有在执行 </strong>BGSAVE 命令或 BGREWRITEAOF 命令，并且哈希表的<strong> 负载因子 &gt;=1</strong></li>
-<li>服务器 <strong> 正在执行 </strong>BGSAVE 命令或 BGREWRITEAOF 命令，并且哈希表的<strong> 负载因子 &gt;=5</strong></li>
-</ul>
-<p>为什么根据 BGSAVE 命令或 BGREWRITEAOF 命令来判断是否扩展？</p>
-<ul>
-<li>执行这些命令时，Redis 需要创建当前服务器进程的子进程，大多数操作系统采用 <strong> 写时复制技术 </strong> 来优化子进程使用效率，此时提高负载因子，可以尽量避免子进程对哈希表扩展，避免不必要的内存写入操作，节约内存。</li>
-<li>Redis 在持久化时，如果是采用 BGSAVE 命令或者 BGREWRITEAOF 的方式，那 Redis 会 <strong>fork 出一个子进程来读取数据，从而写到磁盘中</strong>。如果子进程存在期间，发生了大量的写操作，那可能就会出现很多的分页错误(页异常中断 page-fault)，这样就得耗费不少性能在复制上。<strong> 而在 rehash 阶段上，写操作是无法避免的。</strong>所以 Redis 在 fork 出子进程之后，将负载因子阈值提高，尽量减少写操作，避免不必要的内存写入操作，最大限度地节约内存。</li>
-</ul>
-<p>渐进式 hash</p>
-<ul>
-<li>rehash 时会将 ht[0]中所有的键值对 rehash 到 ht[1]，如果 <strong> 键值对很多并且一次性操作的话，容易导致服务器在一段时间内停止服务 </strong>。为避免这种情况，Redis 采用渐进式 rehash，将 ht[0] 中的键值对 <strong> 分多次，慢慢的 rehash 到 ht[1]之中</strong>。</li>
-</ul>
-<p>渐进式 hash 的步骤</p>
-<ul>
-<li>1. 为 ht[1]分配空间，让字典同时持有两个哈希表。</li>
-<li>2. 在字典中维持一个索引计数器变量 rehashidx，将其设置为 0，表示 rehash 正式开始。</li>
-<li>3. 在 rehash 进行期间，每次对字典进行添加，删除，查找或更新操作时，程序除了执行指定的操作外，还会将 ht[0]哈希表在 rehashidx 索引上的所有键值对 rehash 到 ht[1]，当 rehash 工作完成后，将 rehashidx++。</li>
-<li>4. 某个时刻，ht[0]中的所有键值对都被 rehash 至 ht[1]，此时设置 rehashidx= -1 时，表示 rehash 操作已经完成。</li>
-</ul>
-<p>渐进式 hash 的好处</p>
-<p>&emsp; 采用了分而治之的方式，将 rehash 键值对所需的计算工作均摊到对字典的每个操作中，从而避免集中式 rehash 带来庞大计算量</p>
-<p>&emsp; 在 rehash 的期间，字典同时使用 ht[0]，ht[1]两个哈希表。对哈希表的操作会在两个表上进行，比如查找键时，<strong>先在 ht[0]里面查找，如果为空，就继续到 ht[1]里查找 </strong>。在此期间，<strong> 新增的键值对都会被添加到 ht[1]中 </strong>，ht[0] 不承担任何添加操作，<strong>保证 ht[0]中的键值对只能是越来越少</strong>。</p>
-<h6 id="跳表"><a href="# 跳表" class="headerlink" title="跳表"></a>跳表 </h6><p>　跳跃表是一种<strong> 有序的 </strong> 数据结构，通过在每个节点 <strong> 维持多个指向其他节点的指针</strong>，达到快速访问节点的目的。Redis 只有在两个地方用到了跳跃表，一个是实现有序集合键，另一个是在集群节点中作为内部数据结构。</p>
-<p><img src="https://api2.mubu.com/v3/document_image/cf9cb1d2-8ec5-4026-b32c-e8c7f22db422-12259280.jpg" alt="img"></p>
-<p><img src="https://api2.mubu.com/v3/document_image/ea8f1d97-b799-4ee3-ace2-d64bc5598109-12259280.jpg" alt="img"></p>
-<p>　1. 层–level</p>
-<p>　　跳跃表的每个节点都会包含多个层，每次创建一个新跳跃表时，都会根据 <strong> 幂次定律</strong>，随机生成一个<strong>1~32 之间的数作为层的大小</strong>。每个层都会包含前进指针和跨度</p>
-<p>　2. 前进指针（forword）</p>
-<p>　　用于访问下一个节点。跨度表示两个节点之间的距离，指向 NULL 的所有前进指针的跨度为 0。跨度用于计算排位，访问某一结点的 <strong> 经过的跨度之和就是当前节点的排位</strong></p>
-<p>　3. 后退指针–backward</p>
-<p>　　用于从表尾向表头方向访问节点，<strong>前进指针可以一次跳过多个节点 </strong>，<strong> 后退指针只能后退至前一个节点</strong>，因为每个节点只有一个后退指针。</p>
-<p>　4. 分值–score</p>
-<p>　　分值是一个 double 类型的浮点数，跳跃表中节点都按照分值排序。</p>
-<p>　5. 成员对象–obj</p>
-<p>　　是一个指针，指向字符串 SDS 对象。一个跳跃表中，对象必须是唯一的，但分值可以相同。相同时按对象字典序来排序。</p>
-<p>　Redis 的 level 个数 <strong> 为什么要用幂次定律生成</strong>（随机生成节点的层数）？</p>
-<p>　　通过幂次定律能保证 <strong> 越高 level 的结点数量越少 。保证索引等级越高，参与索引建立的元素越少，如果每层都有很多 level，那么这个索引建立的就没有意义了。</strong></p>
-<p>　为什么不用最均衡的方式，按照节点分数的排序情况均匀建立索引？</p>
-<p>　　考虑到下一个插入的元素具有随机性，这样设计不容易出现最坏的情况。如果每次都以均匀固定的方式建索引，维护的成本很高，跳跃表的优点就是维持结构平衡的成本低，完全依靠随机。跳跃表相比二叉树有一个优势就在于不需要主动 rebalance 去维护平衡。</p>
-<p>　跳表的查找过程</p>
-<p>　　此时跳跃表查找 10，会先从 header 节点（O1）的最高层（L3）寻找，发现要查找的数小于 23.２则返回，继续从下一个有后继的层开始寻找，当发现要查找的数小于 11.0 时，则从 O1 的下一层找，此时到 O2 的 L1，发现要查找的数大于 7.0，则从 L1 找，直到查找到相邻节点为止。<img src="https://api2.mubu.com/v3/document_image/4dbbfdf9-4dfe-41f1-a0b2-f3fc8c0a1ddd-12259280.jpg" alt="img"></p>
-<p>　为什么有序集合需要同时使用跳跃表和字典来实现？</p>
-<p>　　如果 <strong> 只使用字典存储，由于是无序的，所以每次在范围查询时，需要排序 </strong>，时间复杂度 O(nlogn) 为和额外 O(n)  的内存空间，因为要创建一个数组存储排序后的元素。 如果 <strong> 只用跳跃表实现，根据成员查找分值时，复杂度将为 O(logn)</strong> 。综上，为了让有序集合的分值查找和范围查找都尽可能快地执行，Redis 选择字典和跳跃表两种数据结构结合的方式</p>
-<p>　跳表时间复杂度<img src="https://api2.mubu.com/v3/document_image/5b934ef8-c434-473d-88d0-faa17f1821e1-12259280.jpg" alt="img"></p>
-<h5 id="数据库"><a href="# 数据库" class="headerlink" title="数据库"></a>数据库</h5><p>　Redis 把所有库信息都保存在 redis.h/redisServer 结构的 db 数组中，数组类型是 redis.h/redisDB，dbnum 决定着应该创建多少数据库中的 db，默认为 16，clients 维护着所有连接 Redis 的客户端<img src="https://api2.mubu.com/v3/document_image/79cb9883-2f79-4a5b-8a0f-60e0eebc74ab-12259280.jpg" alt="img"></p>
-<p>切换库时，其实就是 redisClient.db 对 redisServer.db 数组的目标数据库指针的移动　<img src="https://api2.mubu.com/v3/document_image/81d85ea8-e660-4a79-b3fa-b4ffb356ee94-12259280.jpg" alt="img"></p>
-<h6 id="存储过期时间"><a href="# 存储过期时间" class="headerlink" title="存储过期时间"></a>存储过期时间</h6><p>　redisDb 中有一个 expires 的字典数据结构保存所有键的过期时间，也称为过期字典。过期字典的值是一个 long long 类型的整数，保存了键所指向的数据库键的过期时间（毫秒精度的 Unix 时间戳）</p>
-<p><img src="https://api2.mubu.com/v3/document_image/0089123b-1ace-428f-8d52-dd5d37c830be-12259280.jpg" alt="img"></p>
-<h6 id="过期键删除策略"><a href="# 过期键删除策略" class="headerlink" title="过期键删除策略"></a>过期键删除策略</h6><p>　定时删除：设置键的过期时间时，创建定时器，过期时，定时器立刻执行键的删除。</p>
-<p>　惰性删除：不着急删除过期键，每次获取时都会进行过期校验</p>
-<p>　定期删除：隔一段时间，程序就对数据库检查，删除过期键</p>
-<h6 id="删除策略的特点"><a href="# 删除策略的特点" class="headerlink" title="删除策略的特点"></a>删除策略的特点 </h6><p>　定时删除：<strong> 对内存友好，但对 CPU 不友好。</strong>过期键比较多时，删除会占用资源，特别是和删除当前任务无关的过期键，影响性能。<strong>Redis 定时器需要创建时间事件</strong>，时间事件底层由无序链表实现，查找复杂度为 O(N)，如果需要高效处理必然要创建大量的定时器，并不现实。</p>
-<p>　惰性删除：<strong>对 CPU 友好，但对内存不友好 </strong>。不需要把时间浪费在非相关键的删除上。如果有非常多的过期键，这些键又恰好没有被访问到的话，那么它们永远不会被删除，除非用户手动执行 flushdb，我们甚至可以把<strong> 这种情况下看作是一种内存泄露 </strong>。当键非常多时，会导致内存泄漏，因为<strong> 只有用到时才会判断，删除</strong>。</p>
-<p>　定期删除：<strong>定时删除占用太多 CPU 时间，影响响应时间，惰性删除浪费太多内存，有内存泄露的风险 </strong>。<font color="red"> 定期删除是一种折衷的方式</font>，隔一段时间执行一次，并限制删除操作执行的时长和频率减少对 CPU 的占用；定期删除还能减少庞大的过期键对内存的占用。</p>
-<p>　<strong>难点是如何确定时长和频率，执行得太频繁或者执行时间太长，会退化为定时删除，执行得太少或者执行时间太短，会退化为惰性删除</strong>，因此，服务器必须根据情况，合理设置删除的执行时长和执行频率。</p>
-<h5 id="redis 持久化"><a href="#redis 持久化" class="headerlink" title="redis 持久化"></a>redis 持久化</h5><p>　RDB 持久化：RDB 文件是经过压缩的二进制文件，可通过该文件还原成数据库状态</p>
-<p>　AOF 持久化：采用日志的形式来记录每个写操作，并追加到文件中</p>
-<h6 id="RDB 与 AOF 共存的载入情况"><a href="#RDB 与 AOF 共存的载入情况" class="headerlink" title="RDB 与 AOF 共存的载入情况"></a><strong>RDB 与 AOF 共存的载入情况 </strong></h6><p>　由于 AOF 文件的更新频率更高，因此开启 AOF 持久化功能后，启动时<strong> 优先加载 AOF 还原数据</strong>，只有在 AOF 处于关闭状态，才使用 RDB 文件恢复数据</p>
-<h6 id="SAVE 和 BGSAVE 的区别"><a href="#SAVE 和 BGSAVE 的区别" class="headerlink" title="SAVE 和 BGSAVE 的区别"></a>SAVE 和 BGSAVE 的区别 </h6><p>　SAVE 会<strong> 阻塞 Redis 服务器进程 </strong>，直到 RDB 文件创建完毕为止，<strong> 阻塞期间，服务器不能处理任何命令请求。</strong></p>
-<p>　<strong>BGSAVE 会 fork 出一个子进程 </strong>，由<strong> 子进程负责创建 RDB 文件，父进程继续处理命令请求</strong>。当子进程完成之后，向父进程发送信号</p>
-<h6 id="服务器是如何根据 save 选项来自动执行 BGSAVE 的？"><a href="# 服务器是如何根据 save 选项来自动执行 BGSAVE 的？" class="headerlink" title="服务器是如何根据 save 选项来自动执行 BGSAVE 的？"></a>服务器是如何根据 save 选项来自动执行 BGSAVE 的？</h6><p>　主要是根据<strong>dirty 计数器和 lastsave 属性，</strong>dirty 计数器记录距离上次成功执行 SAVE 或 BGSAVE 后数据库被修改了几次，lastsave 是一个 UNIX 时间戳，记录上次成功执行 SAVE 或 BGSAVE 的时间</p>
-<h6 id="AOF 文件的载入与数据还原"><a href="#AOF 文件的载入与数据还原" class="headerlink" title="AOF 文件的载入与数据还原"></a>AOF 文件的载入与数据还原</h6><ul>
-<li>1. 创建一个没有网络连接的伪客户端。因为 Redis 命令只能在客户端上下文中执行，并且 AOF 文件在本地而不是网络</li>
-<li>2. 解析 AOF 文件并取出一条写命令</li>
-<li>3. 使用 <strong> 伪客户端 </strong> 执行被读出的写命令</li>
-<li>4. 持续执行 2 和 3，直到所有写命令都已经执行完毕<img src="https://api2.mubu.com/v3/document_image/135f9792-2877-463e-9054-7cb6d49022f1-12259280.jpg" alt="img"></li>
-</ul>
-<h6 id="AOF 重写"><a href="#AOF 重写" class="headerlink" title="AOF 重写"></a>AOF 重写 </h6><p>　<strong> 因为 AOF 持久化会将所有的写命令都记录，所以会有冗余情况 </strong>，比如频繁地创建删除键值对，或者对同一个键的值频繁更新，都会导致文件的内容越来越多。所以需要一种<strong> 瘦身机制确保 AOF 里存的都是必不可少的精华</strong></p>
-<p>　Redis 提供 AOF 文件重写功能，让服务器创建一个新的 AOF 文件，替代现有的 AOF 文件，减少冗余命令。<strong>虽然名字叫 AOF 重写，但是在新的 AOF 文件的重写过程中，不会读取旧 AOF 文件，而是通过读取数据库状态来实现的 </strong>。首先<strong> 从数据库中读取键现在的值，然后用一条命令记录键值对</strong>，代替之前记录的多条命令。</p>
-<p>　比如 RPUSH  list “A”  RPUSH list  “B” RPUSH  list “C” RPUSH  list “D” RPUSH list  “E” ，如果没有 AOF 重写，AOF 文件要保存 5 条命令，<strong>如果服务器想要用尽量少的命令来记录 list 的状态，最简单高效的办法不是去读取和分析 AOF 文件的内容，而是直接从数据库中读取 list 键的值</strong>，然后用一条 RPUSH list “A” “B” “C” “D” “E”代替 5 条命令</p>
-<h6 id="AOF 重写过程"><a href="#AOF 重写过程" class="headerlink" title="AOF 重写过程"></a>AOF 重写过程 </h6><p>　AOF 重写的过程中会有<strong> 大量的写入操作 </strong>，为了<strong> 避免 Redis 服务器长时间的阻塞 </strong>，重写工作将被<strong> 放到子进程中进行 </strong>。这样<strong> 父进程仍然可继续处理请求</strong></p>
-<p>　子进程在执行 AOF 重写期间，服务器进程还需要继续处理命令请求，而新的命令可能会对现有的数据库状态进行修改，导致当前数据库状态与重写后的 AOF 文件保存状态不一致。为解决这个问题，<strong>设置了 AOF 重写缓冲区</strong></p>
-<p>　当重写子进程创建后，Redis 服务器执行完写命令就会将其写入 AOF 缓冲区和 AOF 重写缓冲区，子进程执行重写期间，服务器进程要执行 3 个工作：</p>
-<ul>
-<li><p>执行客户端发来的命令。</p>
-</li>
-<li><p>将执行后的写命令追加到 AOF 缓冲区</p>
-</li>
-<li><p>将执行后的写命令追加到 AOF 重写缓冲区<img src="https://api2.mubu.com/v3/document_image/f7d5cbc6-ea87-4ae1-8a78-f74561e57503-12259280.jpg" alt="img"></p>
-</li>
-</ul>
-<p>　当子进程完成重写后，<strong>会向父进程发送一个信号 </strong>，父进程接收并调用信号处理函数，将<strong> 重写缓冲区的所有内容写到新 AOF 文件中，原地覆盖现有的 AOF 文件 </strong>。因此整个 AOF 文件重写的过程中，<strong> 只有信号处理函数执行时，才会阻塞</strong>，将性能损耗降到最低。</p>
-<h5 id="主从复制"><a href="# 主从复制" class="headerlink" title="主从复制"></a>主从复制 </h5><p>　通过 SLAVEOF 命令或配置文件中设置 slaveof 选项设置主从，Redis 的复制功能分为<strong> 同步 </strong> 和<strong>命令传播 </strong> 俩操作：</p>
-<ul>
-<li>同步用于把 slave 的数据库状态更新至 master 的数据库状态</li>
-<li>命令传播是在 master 的数据库状态被修改时，导致主从数据库状态不一致，让主从回到一致的过程</li>
-</ul>
-<h6 id="同步和命令传播过程"><a href="# 同步和命令传播过程" class="headerlink" title="同步和命令传播过程"></a>同步和命令传播过程 </h6><h6 id="同步"><a href="# 同步" class="headerlink" title="同步"></a> 同步</h6><ul>
-<li>slave 向主发送 SYNC 命令。</li>
-<li>master 接收并执行 BGSAVE，后台生成 RDB 文件，并用 <strong> 一个缓冲区记录现在开始执行的所有写命令</strong>。</li>
-<li>BGSAVE 执行完毕时，master 将 RDB 文件发给 slave，slave 接收并载入，更新数据库状态。</li>
-<li>master<strong>将其记录在缓冲区的所有写命令发给 slave</strong>，slave 执行写命令<img src="https://api2.mubu.com/v3/document_image/0502a38d-b4a5-42a7-bde5-666c372ded94-12259280.jpg" alt="img"></li>
-</ul>
-<h6 id="命令传播"><a href="# 命令传播" class="headerlink" title="命令传播"></a>命令传播</h6><p>　　当 master 发生写操作时，主从同步需要通过命令传播，master 将写命令发送给 slave，slave 接收并执行相同的写命令</p>
-<h5 id="一次完整的主从复制过程"><a href="# 一次完整的主从复制过程" class="headerlink" title="一次完整的主从复制过程"></a>一次完整的主从复制过程 </h5><p>　一次完整的复制过程可以分为<strong> 设置主服务器的地址和端口、建立套接字连接、发送 PING 命令、身份验证、发送端口信息、同步、命令传播</strong></p>
-<ul>
-<li>1. 设置主服务器的地址和端口：当客户端向 slave 发送 slaveof 127.0.0.1:6379 时，slave 要将客户端给定的 ip 和端口号都保存后发送 OK。这是一个异步命令，所以复制工作在回复 OK 后再执行。</li>
-<li>2. 创建连向 master 的套接字连接，如果成功，slave 会给它关联一个处理复制工作的文件事件处理器（负责接收 RDB，传播的命令等）。主从成功连接后，master 会创建从服务器的客户端状态，<strong>将 slave 看做是一个客户端来看待</strong><img src="https://api2.mubu.com/v3/document_image/00a7b512-8ce2-4aab-a504-12e4d5887aa6-12259280.jpg" alt="img"></li>
-<li>发送 PING 命令：slave 在套接字连接后做的第一个工作就是发送 PING 命令，<strong>检查套接字读写状态是否正常</strong>；主服务器能否正常处理命令请求。而主服务器会根据网络状态、能够处理给出对应回复。一旦回复超时或返回错误，从服务器就会断开并重连主服务器。</li>
-<li>身份验证：收到 <strong>master 的 pong 回复</strong> 之后，检查从服务器是否设置<strong>masterauth，如果设置则进行身份验证</strong></li>
-<li>发送端口信息：slave<strong>向 master 发送自己监听的端口号</strong>，master 保存这个端口号，也就是 12345</li>
-<li>同步：从服务器发送 PSYNC 命令，主从互相成为对方的客户端，都能够执行命令并回复，执行同步操作，看是完整重同步还是部分重同步。</li>
-<li>命令传播：完成同步后，进入该阶段，主服务器将写命令发送给从服务器，从服务器接收并执行</li>
-</ul>
-<h6 id="心跳机制"><a href="# 心跳机制" class="headerlink" title="心跳机制"></a>心跳机制 </h6><p>　在命令传播阶段，从服务器默认 1 秒一次发送 REPLCONF ACK <replication_offset> 命令给主服务器，<strong>replication_offset 是复制偏移量</strong>。这么做有 3 个作用：</replication_offset></p>
-<ul>
-<li>检测主从网络状态：若主服务器超过一秒没收到从服务器的 REPLCONF ACK 则表示连接有问题。</li>
-<li>辅助实现 min-slave 选项：min-slaves-to-write 3 min-slaves-max-lag 10 表示从服务器数量少于 3 或 3 个从服务器延迟大于等于 10s 时，主服务器拒绝写命令。</li>
-<li>检测命令丢失：如果 master 传播给 slave 的写命令在半路丢失，那么 slave 向 master 发送 REPLCONF ACK 时，master 发现 slave 当前的复制偏移量少于自己的复制偏移量，就从积压缓冲区里找到并补发。<img src="https://api2.mubu.com/v3/document_image/799f8eb4-35cb-453c-b135-d8cb51f5a0a3-12259280.jpg" alt="img"></li>
-</ul>
-<p>如图所示，这时会将复制缓冲区里面复制偏移量为 201-233 的命令重发</p>
-<h5 id="Sentinel 机制"><a href="#Sentinel 机制" class="headerlink" title="Sentinel 机制"></a><strong>Sentinel 机制 </strong></h5><p>　Sentinel（哨兵）是 Redis 的<strong> 高可用性 </strong> 的解决方案，由一个或多个 Sentinel 实例组成的 Sentinel 系统可以监视任意多个主服务器以及属下的所有从服务器。当主服务器下线时，自动将下线的某个主服务器属下的某个从服务器升级为新的主服务器。从而实现故障转移，<strong>当原来的主服务器重新上线时，会被降级为从服务器。</strong></p>
-<h6 id="Sentinel 系统对主服务器执行故障转移的过程"><a href="#Sentinel 系统对主服务器执行故障转移的过程" class="headerlink" title="Sentinel 系统对主服务器执行故障转移的过程"></a>Sentinel 系统对主服务器执行故障转移的过程</h6><ul>
-<li>检测 <strong> 主观下线 </strong> 状态：Sentinel 默认每秒与创建命令连接的实例 <strong> 发送 PING 命令 </strong>，通过回复判断是否在线。由于每个 Sentinel 中的<strong> 主观下线时间配置都可以不同，所有有可能某个 Sentinel 判断主观下线时，另一个 Sentinel 认为在线状态</strong></li>
-<li>检查 <strong> 客观下线 </strong> 状态：当 Sentinel 判断主服务器为主观下线时，还会向其他 Sentinel 询问，得到足量数据已下线判断后，就会判定服务器为客观下线，并执行故障转移。</li>
-<li><strong>选举领头 Sentinel</strong><ul>
-<li>当主服务器被判断为客观下线时，sentinel 会协商选举领头 sentinel，并由领头 sentinel 对下线主服务器执行故障转移操作</li>
-<li>当 SENTINEL is-master-down-by-addr 命令 <strong> 已经确认主服务器客观下线时 </strong>，Sentinel 还会再发送带有选举性质的命令，<strong> 并且带上自己的运行 ID</strong>。如果接收命令的 Sentinel 还没设置局部领头时，就会将这个运行 ID 作为自己的 Multi Bulk 回复参数。根据回复参数来判断多少 sentinel 将自己设置为局部领头。可能根据网络延迟，有的 Sentinel 命令比其他 Sentinel 都先到达，并且胜出（必须有半数以上的票），那么就由它负责故障转移。一次选举没有产生，一段时间后再次选举，直到选出</li>
-</ul>
-</li>
-</ul>
-<h5 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h5><p>　出现的原因：主从复制不能实现高可用、业务需要更高的 QPS，而主从复制中单机的 QPS 可能无法满足业务需求</p>
-<p>​    节点取余方式：对每个数据进行 hash 运算之后，与节点数进行取余运算，根据余数不同保存在不同的节点上，<strong>优点是配置简单，缺点是数据节点伸缩时，导致数据迁移</strong></p>
-<p>　一致性哈希方式：将所有的数据当做一个哈希环，哈希环中的数据范围是 0-2＾32。然后为每一个数据节点分配一个哈希值，<strong>这个节点就负责保存这个范围内的数据 </strong>。对<strong> 每一个 key 进行 hash 运算，被哈希后的结果在哪个 node 的范围内，则 <font color="red"> 按顺时针去找最近的节点 </font>&gt;，这个 key 将会被保存在这个节点上。</strong> 优点是 <font color="red"> 节点伸缩时，只影响邻近节点</font></p>
-<p><img src="https://api2.mubu.com/v3/document_image/42cee358-df0c-4e1d-b0f1-655e92f976d1-12259280.jpg" alt="img">**</p>
-<h6 id="分配槽"><a href="# 分配槽" class="headerlink" title="分配槽"></a>分配槽 </h6><p>　1. 每个节点通过通信都会共享 Redis Cluster 中<strong> 槽和集群中对应节点的关系</strong></p>
-<p>　2. 客户端向 Redis Cluster 的任意节点发送命令，接收命令的节点会根据 CRC16 规则进行<strong>hash 运算与 16383 取余</strong>，计算自己的槽和对应节点 </p>
-<p>　3. 如果保存数据的槽被分配给当前节点，则去槽中执行命令，并把命令执行结果返回给客户端 </p>
-<p>　4. 如果保存数据的槽不在当前节点的管理范围内，则 <strong> 向客户端返回 moved 重定向异常</strong> </p>
-<p>　5. 客户端接收到节点返回的结果，如果是 moved 异常，则 <strong> 从 moved 异常中获取目标节点的信息</strong> </p>
-<p>　6. 客户端向目标节点发送命令，获取命令执行结果<img src="https://api2.mubu.com/v3/document_image/ea429ae5-bc25-492b-b584-303d4c5c7e76-12259280.jpg" alt="img"></p>
-]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
       <tags>
-        <tag>读书笔记</tag>
+        <tag>Java基础知识</tag>
       </tags>
   </entry>
   <entry>
@@ -916,9 +500,9 @@
 <li>浮点型：单精度浮点型 float、双精度浮点型 double</li>
 <li>字符型：char</li>
 </ul>
-<p>注意，<code>String</code>不是基本数据类型。</p>
+<p>注意，<font color="red"><code>String</code>不是基本数据类型</font>。</p>
 <span id="more"></span>
-
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -927,7 +511,8 @@
 <th>成员变量默认值</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>byte</td>
 <td>1B</td>
 <td>0</td>
@@ -962,7 +547,9 @@
 <td>1B</td>
 <td>false</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h6 id="单精度浮点型和双精度浮点型的区别"><a href="# 单精度浮点型和双精度浮点型的区别" class="headerlink" title="单精度浮点型和双精度浮点型的区别"></a>单精度浮点型和双精度浮点型的区别</h6><p>　单精度（float），一般在计算机中存储占用 4 字节，双精度（double）在计算机中存储占用 8 字节，由于位数存储位不同，他们能表示的数值的范围就不同，也就是能准确表示的数的位数就不同</p>
 <h6 id="final 关键字"><a href="#final 关键字" class="headerlink" title="final 关键字"></a>final 关键字</h6><ul>
 <li>被 final 修饰的类不可以被继承</li>
@@ -1001,12 +588,496 @@
 <li>通过 <strong> 反射可以暴力修改</strong>。</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">s1 = s1 + <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line">System.out.println(s1);</span><br><span class="line">输出： aaabbb</span><br></pre></td></tr></table></figure>
-
-<h5 id="String-str-”i”与 -String-str-new-String-“i”- 有什么区别？"><a href="#String-str-”i”与 -String-str-new-String-“i”- 有什么区别？" class="headerlink" title="String str=”i”与 String str=new String(“i”)有什么区别？"></a>String str=”i”与 String str=new String(“i”)有什么区别？</h5><p>　他们的内存分配方式不一样。<code>String str=&quot;i&quot;</code>，虚拟机会将其分配到字符串常量池中；而 <code>String str=new String(“i”) </code>会被分到堆内存中。</p>
+<h5 id="String-str-”i”与 -String-str-new-String-“i”- 有什么区别？"><a href="#String-str-”i”与 -String-str-new-String-“i”- 有什么区别？" class="headerlink" title="String str=”i”与 String str=new String(“i”)有什么区别？"></a>String str=”i”与 String str=new String(“i”)有什么区别？</h5><p>　他们的内存分配方式不一样。<code>String str=&quot;i&quot;</code>，虚拟机会将其分配到字符串常量池中；而 <code>String str=new String(“i”)</code>会被分到堆内存中。</p>
 <h5 id="string 有哪些特性？"><a href="#string 有哪些特性？" class="headerlink" title="string 有哪些特性？"></a>string 有哪些特性？</h5><p>　1. 不变性：字符串是不可变的，所以也是 <font color="red"> 线程安全 </font> 的。对字符串所有的操作，实际上都是创建一个新的对象，再把引用指向该对象。</p>
 <p>　2. 常量池优化：String 对象创建之后，会在字符串常量池中进行缓存，如果下次创建同样的对象时，会直接返回缓存的引用，提高访问速度。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;shy&quot;</span>; <span class="comment">//s1 指向常量池</span></span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">&quot;shy&quot;</span>);  <span class="comment">//s2 指向堆上的对象</span></span><br><span class="line">String s3 = <span class="string">&quot;shy&quot;</span>;</span><br><span class="line">String s4 = <span class="keyword">new</span> String(<span class="string">&quot;shy&quot;</span>);</span><br><span class="line">System.out.println(s1.equals(s2)); <span class="comment">//true 重写 equals 方法 比较的是字符串的值</span></span><br><span class="line">System.out.println(s1 == s2); <span class="comment">//false == 比较的是地址,s1 和 s2 地址不同</span></span><br><span class="line">System.out.println(s1 == s3); <span class="comment">//true 常量池优化,s3 不会开辟新的内存空间</span></span><br><span class="line">System.out.println(s2 == s4); <span class="comment">//false s2 和 s4 是两个对象</span></span><br><span class="line">System.out.println(s2 == <span class="string">&quot;shy&quot;</span>); <span class="comment">//false  s2 是堆内存中的对象,shy 在字符串常量池中, 内存地址不一样</span></span><br><span class="line">s2 = s1;    <span class="comment">// 改变 s2 的指向, 让 s2 指向常量池</span></span><br><span class="line">System.out.println(s2 == <span class="string">&quot;shy&quot;</span>); <span class="comment">//true  s2 指向常量池</span></span><br></pre></td></tr></table></figure>
-
+]]></content>
+      <tags>
+        <tag>Java基础知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JVM 实战</title>
+    <url>/2021/10/20/JVM%E5%AE%9E%E6%88%98/JVM%E5%AE%9E%E6%88%98/</url>
+    <content><![CDATA[<p>JVM 实战</p>
+<span id="more"></span>
+<ul>
+<li><p>jps 命令   jps 是 jdk 提供的一个查看当前 java 进程的小工具，列出了现在运行的线程情况</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a4232929-3de1-4da8-a98d-8aece0f929e9-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>查看 VM 参数  jinfo 命令可以用来查看 Java 进程运行的 JVM 参数</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/c37307cd-e977-4803-880c-1ce4ad63e4d6-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>具体查看某个参数  </p>
+<ul>
+<li>jinfo -flag MetaspaceSize(参数名) 55504(pid 号)<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/5e2afc97-0a8a-4c34-a052-53e88318f3f5-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常用参数</p>
+<ul>
+<li>-Xms600m 堆空间（年轻代 + 老年代）的 <strong> 初始内存 </strong> 大小</li>
+<li>-Xmx600m 堆空间（年轻代 + 老年代）的 <strong> 最大内存 </strong> 大小</li>
+<li>开发中建议将初始堆内存和最大的堆内存设置成相同的值。</li>
+<li>-XX:NewRatio ： 设置新生代与老年代的比例。默认值是 2.(一般不会调)  除非我们知道 <strong> 很多类对象生命周期非常长，在某些情况下还能与 JVM 的生命周期保持一致</strong></li>
+<li><em>-</em>XX:SurvivorRatio ：设置新生代中 Eden 区与 Survivor 区的比例。默认值是 8</li>
+</ul>
+</li>
+<li><p>为什么需要分代？不分代就不能正常工作了吗？</p>
+<ul>
+<li>经研究，不同对象的生命周期不同。70%-99% 的对象都是临时对象。<ul>
+<li>新生代：有 Eden、Survivor 构成（s0,s1 又称为 from to），to 总为空</li>
+<li>老年代：存放新生代中经历多次依然存活的对象</li>
+</ul>
+</li>
+<li><strong>其实不分代完全可以，分代的唯一理由就是优化 GC 性能 </strong>。如果没有分代，<strong> 那所有的对象都在一块 </strong>，就如同把一个学校的人都关在一个教室。<strong>GC 的时候要找到哪些对象没用，这样就会对堆的所有区域进行扫描</strong>，而很多对象都是朝生夕死的，<strong> 如果分代的话，把新创建的对象放到某一地方，当 GC 的时候先把这块存储“朝生夕死”对象的区域进行回收，这样就会腾出很大的空间出来。</strong></li>
+</ul>
+</li>
+<li><p>大对象直接进入老年代：分配 60m 堆空间，新生代 20m ，Eden 16m， s0 2m， s1 2m，buffer 对象 20m，Eden 区无法存放 buffer， 直接晋升老年代</p>
+<ul>
+<li><em>-Xms60m -Xmx60m -XX:NewRatio=2 -XX:SurvivorRatio=8 -XX:+PrintGCDetails</em><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/955732eb-5ae9-43b5-8a40-5e84472cc8d5-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/bd05e07c-8d9a-40c9-8d6f-0bc64d9b0408-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>什么是 TLAB</p>
+<ul>
+<li>从内存模型而不是垃圾收集的角度，对 Eden 区域继续进行划分，JVM 为每个线程分配了一个私有缓存区域，它包含在 Eden 空间内<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/f5ff4ad1-cd53-4197-bc3d-5baf37b2c2d6-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>多线程同时分配内存时，使用 TLAB 可以避免一系列的非线程安全问题，同时还能够提升内存分配的吞吐量，因此我们可以将这种内存分配方式称之为 <strong> 快速分配策略</strong></li>
+</ul>
+</li>
+<li><p>说明</p>
+<ul>
+<li>尽管不是所有的对象实例都能够在 TLAB 中成功分配内存，但 JVM 明确是是将 TLAB 作为内存分配的首选</li>
+<li>jinfo -flag UseTLAB 42668<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/af22140d-65df-4c86-89c9-2f3cc9bb0f4e-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>在程序中，开发人员可以通过选项“-XX:UseTLAB“ 设置是够开启 TLAB 空间</li>
+<li>默认情况下，TLAB 空间的内存非常小，<strong>仅占有整个 EDen 空间的 1%</strong>，当然我们可以通过选项 ”-XX:TLABWasteTargetPercent“ 设置 TLAB 空间所占用 Eden 空间的百分比大小</li>
+<li><strong>一旦对象在 TLAB 空间分配内存失败时，JVM 就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在 Eden 空间中分配了内存</strong><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/35f2d985-eba5-4841-a508-f4bb9764f6e4-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>为什么有 TLAB（Thread Local Allocation Buffer）</strong></p>
+<ul>
+<li>堆区是线程共享的，任何线程都可以访问到堆区中的共享数据。由于对象实例的创建在 JVM 中非常频繁，<strong>因此在并发环境下从堆区中划分内存空间是线程不安全的</strong></li>
+<li><strong>为避免多个线程操作同一地址，需要使用加锁等机制，进而影响分配速度</strong></li>
+<li><strong>所以有了 TLAB</strong></li>
+</ul>
+</li>
+<li><p>逃逸分析   -XX:DoEscapeAnalysis 显式开启逃逸分析</p>
+<ul>
+<li>在 Java 虚拟机中，对象是在 Java 堆中分配内存的，这是一个普遍的常识。但是，有一种特殊情况，<strong>那就是如果经过逃逸分析（Escape Analysis)后发现，一个对象并没有逃逸出方法的话，那么就可能被优化成栈上分配 </strong>。<strong> 这样就无需在堆上分配内存，也无须进行垃圾回收了。</strong>这也是最常见的堆外存储技术。</li>
+<li>逃逸分析的基本行为就是分析对象动态作用域：<ul>
+<li>当一个对象在方法中被定义后，<strong>对象只在方法内部使用 </strong>，则认为<strong> 没有发生逃逸</strong>。</li>
+<li>当一个对象在方法中被定义后，<strong>它被外部方法所引用，则认为发生逃逸。</strong>例如作为调用参数传递到其他地方中。</li>
+</ul>
+</li>
+<li>如何快速的判断是否发生了逃逸分析，就 <strong> 看 new 的对象实体是否有可能在方法外被调用</strong></li>
+<li><strong>结论</strong><ul>
+<li>开发中能使用局部变量的，就不要使用在方法外定义</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>代码优化</p>
+<ul>
+<li>使用逃逸分析，编译器可以对代码做如下优化：</li>
+<li>栈上分配：将堆分配转化为栈分配。如果一个对象在子线程中被分配，要使指向该对象的指针永远不会逃逸，对象可能是栈分配的候选，而不是堆分配<ul>
+<li>JIT 编译器在编译期间根据逃逸分析的结果，发现如果一个对象并没有逃逸出方法的话，就可能被优化成栈上分配。分配完成之后，继续在调用栈内执行，最后线程结束，栈空间被回收，局部变量对象也被回收。这样就无须机型垃圾回收了</li>
+<li>常见的栈上分配场景：给成员变量赋值、方法返回值、实例引用传递</li>
+</ul>
+</li>
+<li>同步省略：如果一个对象被发现只能从一个线程被访问到，那么对于这个对象的操作可以不考虑同步<ul>
+<li>在动态编译同步块的时候，JIT 编译器可以借助逃逸分析来判断同步块所使用的锁对象是否只能够被一个线程访问而没有被发布到其他线程。如果没有，那么 JIT 编译器在编译这个同步块的时候就会取消对这部分代码的同步。这样就能大大提高并发性和性能。这个取消同步的过程就叫同步省略，也叫 == 锁消除 ==</li>
+</ul>
+</li>
+<li>分离对象或标量替换：有的对象可能不需要作为一个连续的内存结构存在也可以被访问到，那么对象的部分（或全部）可以不存储在内存，而是存储在 CPU 寄存器中。<ul>
+<li>如果经过逃逸分析，发现一个对象不会被外界访问的话，那么经过 JIT 优化，就会把这个对象拆解成若干个其中包含的若干个成员变量来替代。这个过程就是标量替换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>逃逸分析小结</p>
+<ul>
+<li>无法保证逃逸分析的性能消耗一定能高于他的消耗。虽然经过逃逸分析可以做 <strong> 标量替换、栈上分配、和锁消除</strong>。但是逃逸分析自身也是需要进行一系列复杂的分析的，这其实也是一个相对耗时的过程。</li>
+<li>通过逃逸分析，JVM 会在栈上分配那些不会逃逸的对象，这在理论上是可行的，但是取决于 JVM 设计者的选择</li>
+</ul>
+</li>
+<li><p>栈、堆和方法区的交互</p>
+<ul>
+<li>reference 指向对象的实例数据，实例数据中有到对象类型数据的指针，这个指针指向方法区中的对象类型数据。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/7a448b77-9369-48e8-b83a-ae42c10dae10-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>JVM 没有使用句柄池的方式（增加了一次指针的开销）<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/2e95c125-00b0-4b68-8a4d-deab4e882a8e-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>方法区   <strong>在 jdk7 及以前，习惯上把方法区称为永久代。jdk8 开始，使用元空间取代了永久代</strong></p>
+</li>
+<li><p>方法区的演变</p>
+<ul>
+<li>jdk1.6 及之前：有永久代（permanent generation） ，静态变量存放在永久代上</li>
+<li>jdk1.7：有永久代，但已经逐步“去永久代”，<strong>字符串常量池、静态变量移除，保存在堆中</strong></li>
+<li>jdk1.8 及之后： 无永久代，<strong>类型信息、字段、方法、常量保存在本地内存的元空间，但字符串常量池、静态变量仍在堆</strong></li>
+</ul>
+</li>
+<li><p>永久代为什么要被元空间替换</p>
+</li>
+<li><p>方法区的垃圾回收</p>
+</li>
+<li><p>StringTable （字符串常量池）为什么要调整到堆中</p>
+<ul>
+<li>jdk7 中将 StringTable 放到了堆空间中。因为永久代的回收效率很低，在 fullgc 的时候才会触发。而 full GC 是老年代的空间不足、永久代不足时才会触发。这就导致了 StringTable 回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。放到堆里，能及时回收内存.</li>
+</ul>
+</li>
+<li><p>内存布局</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/3d17013b-524f-4c60-83f5-1988c9617bb0-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>对象在 JVM 是怎么存储的？对象头中有哪些东西？</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/04430d3c-ccab-4884-9a17-252635ebeded-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>对象头（Header）</p>
+<ul>
+<li>运行时元数据</li>
+<li>类型指针：指向类元数据的 InstanceKlass，确定该对象所属的类型</li>
+<li>说明：如果是数组，还需记录数组的长度</li>
+</ul>
+</li>
+<li><p>编译型语言和解释型语言</p>
+<ul>
+<li><strong>编译型语言 </strong> 的执行方式是：先把这 10 行代码通过 <a href="https://baike.baidu.com/item/ 编译器 /8853067?fr=aladdin"> 编译器 </a> 全部编 <strong> 译成机器指令码的文件</strong>，然后再让计算机运行<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a0b6d04d-ad8c-48ea-8f7e-3bf00e651de5-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><strong>解释型语言 </strong> 的执行方式就是：通过 <a href="https://baike.baidu.com/item/ 解释器 /10418965?fr=aladdin"> 解释器 </a> 一行一行的将代码翻译成机器指令码执行。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/541878de-4caf-4609-aea1-96c6996b5096-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>Java 代码来说，是将源文件（.java 文件）先 <strong> 编译 </strong> 成字节码文件（.class 文件），然后再在 <a href="https://baike.baidu.com/item/JVM/2902369?fr=aladdin">Java 虚拟机</a>（JVM）中<strong> 解释 </strong> 执行。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/51ede055-f9f8-4ab4-be18-cd70a2bb207c-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JAVA 是半编译半解释的语言</p>
+<ul>
+<li><strong>Java 首先将源代码编译成字节码， 然后依赖各种不同平台上的虚拟机来解释执行字节码 </strong>，<strong> 从而实现了“一次编写，到处运行”的跨平台特性</strong>， 所以说 java 是半编译半解释型的语言。</li>
+<li>编译器：将源代码编译成 class 字节码文件</li>
+<li>解释器：将字节码文件中的内中翻译为 <strong> 对应平台 (windows 、linux)</strong> 的本地机器指令</li>
+</ul>
+</li>
+<li><p>四种引用：软弱虚引用在一定条件下都是可以被回收的。<strong>相对而言，强引用是造成内存泄漏的主要原因之一。</strong></p>
+<ul>
+<li>强引用：只要强引用的对象是可触及的，被强引用的对象就不会被回收。比如这个”hello 双硅谷”<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/517f7338-19b9-404d-a4b9-890040b4829a-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/f222f539-c3d1-490d-8e79-27eb5819e443-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>如果 str 置为 null   这个时候就会被回收</li>
+<li>软引用<ul>
+<li><em>内存不足即回收   -Xms10m -Xmx10m  // 在报 OOM 之前，垃圾回收器会回收软引用的可达对象。</em><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/4049e061-4129-4167-b40e-cfdd9cfc32bf-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>弱引用<ul>
+<li>// 不管当前内存空间足够与否，都会回收它的内存</li>
+</ul>
+</li>
+<li>虚引用<ul>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>GC 性能的几大指标</p>
+</li>
+<li><p>JVM 调优篇</p>
+<ul>
+<li>生产环境中的问题<ul>
+<li>发生了内存移除怎么处理</li>
+<li>给服务器分配多少内存合适</li>
+<li>怎么对垃圾回收器调优</li>
+<li>CPU 负载高怎么处理</li>
+<li>分配多少线程比较合适</li>
+<li>不加 log  怎么确定请求是否实行了某一行代码</li>
+<li>不加 log  怎么实时查看某个方法的入参和返回值</li>
+</ul>
+</li>
+<li>为什么要调优  防止 OOM  解决 OOM  减少 Full GC 出现的频率</li>
+</ul>
+</li>
+<li><p>调优步骤</p>
+<ul>
+<li>性能监控、性能分析、性能调优<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/ce90f4e4-9aa1-4b6a-b962-030198e0d9cf-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JVM 命令</p>
+<ul>
+<li>查看运行的 Java 进程<ul>
+<li>jps Java Virtual Machine Process Status Tool</li>
+<li>jps  显示 pid 和类名</li>
+<li>jps -q  显示 pid</li>
+<li>jps -l  显示 pid 和全限定名</li>
+<li>jps -v  显示 JVM 参数</li>
+</ul>
+</li>
+<li>查看 JVM 统计信息<ul>
+<li>jstat Java Virtual Machine statistics monitoring tool<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/b3a763dd-aae4-4e7f-b10c-10d33645edea-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>jstat -class pid<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/3899f590-e60a-4340-96ce-6f33017e02a3-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>每秒打印 1 次<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/915abbf5-56c2-4219-87fb-a0de77955ed1-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>类加载统计<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/2a642908-d15b-4927-873a-9206edbf7b51-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>垃圾回收统计   jstat -gc 2060<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/6f571dc1-8ef0-4e1e-85bc-9eddf338907f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>堆内存统计  jstat -gccapacity 2060<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/fe0fd382-d937-4c95-be10-c1838c1a03fe-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>新生代垃圾回收统计<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/400b51e0-c385-4b21-9011-e4781f2d155f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>总结垃圾回收统计<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/8efc6046-dd8d-4141-bc94-441e3d8c7879-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>查看 JVM 参数   jinfo<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/bc7e9da1-3957-4ff8-9563-d28761ee7666-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>导出内存映像文件   获取 dump 文件 作用  出现了堆溢出时可以用 dump 文件分析<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/1f928e57-bb28-4b3f-bcc0-b96295137a84-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/1912078b-7ce1-4c95-9861-ba7f9d208833-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>打印线程快照  jstack pid</p>
+</li>
+<li><p>排查</p>
+</li>
+<li><p>jstack 实战之高 cpu 占用率排查</p>
+<ul>
+<li><strong>1、</strong>使用 top 指令，定位 CPU 占用较高的进程。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/0251434d-d9dd-4bd5-bafe-4266e9506909-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>2. 使用 top -H -p ${进程 id}指令，查看指定进程下各个线程的 cpu 使用情况<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/e739a85b-0208-41a3-bedc-35bc736402b3-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>注意：PID 虽然名为进程控制符，<strong>但其用途不限于特指进程 id</strong>。如上图中 PID 列指的就是线程的 id</li>
+<li>3. 使用 printf “%x” xxx 指令，将 1977 转换为 16 进制<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/4609dd90-6770-4fa7-bcd0-b93de9159260-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><strong>4</strong>使用 jstack pid 指令，查看当前的堆栈信息；并 <strong> 根据上一步得到的 16 进制的线程 id，找到肇事线程</strong>。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/b705c322-4bcb-4d2f-a20c-679e9bb3d3b4-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>如果线程较多的话，我们可以使用 grep 指定来根据关键字定位行，jstack 1956 | grep -10 7b9 显示 10 行</li>
+<li><strong>5：</strong>分析肇事线程堆栈信息。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/d510fb6a-e43b-490d-a9cc-22228356acbf-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>我们已经定位到位置 6，然后去找代码即可<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/2827bed2-0a3d-466e-908b-c2aa6ecef481-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>jstack 之死锁排查</p>
+<ul>
+<li><strong>1、</strong>使用 jps 指令，查看所有 java 进程。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/0659ef78-4f38-493f-8da8-604708b74515-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><strong>2、</strong>使用 jstack pid 指令，查看指定进程的堆栈信息, 观察并定位到死锁线程。<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/bb313bdc-ae62-47f5-b37b-02259adfb9ee-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>jcmd  包括了之前 的所有  jcmd -l 列出所有进程 pid 号</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/5be5237a-7cd7-4a39-abb4-96b01ade100b-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/cbc0cd05-760c-4128-886c-093b94fec7f8-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>内存泄漏和内存溢出</p>
+<ul>
+<li>内存泄露：对象不会再被程序引用了，但是 GC 又不会回收他们</li>
+<li>内存溢出：内存不够分配新对象了</li>
+<li>两者关系：内存泄漏的增多最终会导致内存溢出。</li>
+</ul>
+</li>
+<li><p>JAVA 中内存泄漏的情况</p>
+<ul>
+<li><p><img src="https://api2.mubu.com/v3/document_image/89af9633-3827-4eb5-b611-2a4675fe023b-12259280.jpg" alt="img"></p>
+</li>
+<li><p>静态集合类</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/0fdd6986-18a2-46bd-8a72-ddd1320c82e6-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>单例模式<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/4f05caf6-0f14-40ab-9107-20bcd27e1dc3-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>内部类持有外部类<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a2e9b2b7-8c36-466f-8c3b-267e3a89b70f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>不释放连接<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/a52b8862-bac3-4812-b850-79608684003b-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>改变哈希值  当我们想把自定义对象存入 map 时就要保证对象的 hashcode 不变<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/f1c15ebe-5199-4313-a900-4bd84caa2524-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>缓存问题<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/5e4b4094-7e36-432e-b3c3-944a76e0ee37-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>内存泄漏案例</p>
+<ul>
+<li>第一个只是移动了指针，实际上栈顶的数据还在，没有被回收<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/8ae1dd10-9486-4e31-a4a6-492cf016fef2-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li>解决   将栈顶元素置空</li>
+</ul>
+</li>
+<li><p>Eden 区和两个 S 区理论上是 8:1:1，但实际上是 150:25:25，也就是 6:1:1，原因是有一个参数 UseAdaptiveSizePolicy，默认开启，它会自动选择各区大小的比例。虽然查出来 SurvivoRatio=8, 但没有启用，当 UseAdaptiveSizePolicy 禁用时 且显式地写出 SurvivoRatio=8 才会出现 8:1:1 的比例</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/33ae6bd9-0aa6-4530-a9d1-4bf42dd7b74f-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/cdc67e2a-9551-47ea-b304-d38657a79644-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/3c415e11-318c-4806-b4a6-cbfed2572dd0-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/ca3725c0-fb71-4d52-bbf1-c54a5cfe2e82-12259280.jpg" alt="img"></li>
+<li><img src="https://api2.mubu.com/v3/document_image/7df214b3-2fea-4370-837b-33beb3d76b87-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><p>1.4 动态对象年龄判定</p>
+</li>
+<li><p>“Hotspot 遍历所有对象时，按照年龄从小到大对其所占用的大小进行累积，当 <strong> 累积的某个年龄大小超过了 survivor 区的一半时 </strong>，<strong> 取这个年龄和 MaxTenuringThreshold 中更小的一个值，作为新的晋升年龄阈值”。</strong></p>
+</li>
+<li><p>需要注意的是：<strong>对象默认晋升年龄并不都是 15，这个是要区分垃圾收集器的，CMS 就是 6.</strong></p>
+</li>
+<li><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/dd8f0efc-a6ba-457d-b84f-c47b389e673f-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+<li><ul>
+<li><img src="https://api2.mubu.com/v3/document_image/ca4e0e3b-6e72-4cd6-8a1b-cfa2ceb7e4ca-12259280.jpg" alt="img"></li>
+</ul>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>跨平台性、编译型语言、解释型语言</title>
+    <url>/2021/10/17/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%80%A7%E3%80%81%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80%E3%80%81%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%80%A7%E3%80%81%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80%E3%80%81%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/</url>
+    <content><![CDATA[<h5 id="跨平台性是什么意思？"><a href="# 跨平台性是什么意思？" class="headerlink" title="跨平台性是什么意思？"></a>跨平台性是什么意思？</h5><p>&emsp;&emsp; 要知道，不同操作系统支持的函数、数据类型都可能不同，所以基于某个操作系统下编写的源代码一般是不能直接拿到另一个操作系统下编译的。注意 <strong> 我们所说的跨平台指的是源代码跨平台，而不是解释器跨平台</strong>。</p>
+<span id="more"></span>
+<h5 id="为什么说 Java 是跨平台性的语言？"><a href="# 为什么说 Java 是跨平台性的语言？" class="headerlink" title="为什么说 Java 是跨平台性的语言？"></a>为什么说 Java 是跨平台性的语言？</h5><p>&emsp;&emsp; 跨平台性是指使用 Java 语言编写的程序，经过一次编译后，可以在不同操作系统上运行。其原理就是 Java 程序是通过 Java 虚拟机在操作系统上运行的，只要该操作系统安装了对应的 Java 虚拟机，这个系统就可以运行 Java 程序。<br>&emsp;&emsp; 也就是说，Java 程序只需要跟虚拟机打交道，与操作系统的交互都由虚拟机来负责。</p>
+<h5 id="编译型语言、解释型语言、混合型语言"><a href="# 编译型语言、解释型语言、混合型语言" class="headerlink" title="编译型语言、解释型语言、混合型语言"></a>编译型语言、解释型语言、混合型语言</h5><p>&emsp;&emsp; 计算机只能识别二进制指令，我们学习的 Java、C++、Python 都是高级语言，高级语言程序代码带运行之前要将源代码转换成二进制指令，也就是机器码，机器码是 CPU 可识别的硬件层面的代码。<br>&emsp;&emsp; 那么，到底在何时将源代码转换成机器码呢? 根据转换时机的不同，便有了不同类型的语言。</p>
+<ul>
+<li>编译型语言：提前将源代码通过 <strong> 编译器 </strong> 一次性全部转换成机器码，也就是生成一个可执行程序，比如 windows 下的.exe 文件，常见的编译型语言有 C、C++、Go、汇编语言<ul>
+<li>优点：可以脱离开发环境运行，比如 window 下，通过编译后生成.exe 可执行文件，可执行文件所包含的就是机器码，只要拥有了可执行程序就可以到处运行，不需要再重新编译了（不需要源代码和编译器了），可以做到 <strong> 一次编译，无限次运行</strong>。</li>
+<li>缺点：可移植性差，因为不同操作系统的可执行文件几乎不兼容。</li>
+</ul>
+</li>
+<li>解释型语言：通过 <strong> 解释器 </strong> 一边执行一边转换，<strong>解释型语言不会生成可执行程序</strong>，常见的解释型语言有 Python、Matlab<ul>
+<li>优点: 可移植性好，因为有了中间层：<strong>解释器</strong>，官方针对不同操作系统开发不同的解释器，使得同样的源代码在不同操作系统下的执行结果是完全相同的。故解释型语言天生具有良好的可移植性。</li>
+<li>缺点：相对编译型语言来说，解释型语言执行效率比较慢，甚至存在量级上的差距。</li>
+</ul>
+</li>
+<li>混合型语言：半编译半解释，先将源代码转换成一种中间文件（在 Java 中就是字节码文件），然后再将中间文件拿到虚拟机中执行。常见的有 Java、C#</li>
+</ul>
+<p>&emsp;&emsp; 当我们说“下载一个程序（软件）”时，不同类型的语言有不同的含义：</p>
+<p>&emsp;&emsp;&emsp;&emsp; 对于编译型语言，我们下载到的是可执行文件，源代码被作者保留，所以编译型语言的程序一般是 <strong> 闭源 </strong> 的。</p>
+<p>&emsp;&emsp;&emsp;&emsp; 对于解释型语言，我们下载到的是所有的源代码，因为作者不给源代码就没法运行，所以解释型语言的程序一般是 <strong> 开源 </strong> 的</p>
+<p>&emsp;&emsp; 编译型语言和解释型语言的执行流程如下图所示：</p>
+<p><img src="https://api2.mubu.com/v3/document_image/74a0fec7-97de-41a0-82e6-b8eda78fb014-12259280.jpg" alt="编译型语言和解释型语言的执行流程"></p>
+<p>&emsp;&emsp; 有次面试被问到过<strong>Java 和 Python 的区别</strong>，当时只答了一些语法层面，还有强类型语言弱类型语言的东西，包括垃圾回收机制（Python 也是有自动垃圾回收的，而且用的是引用计数法）。面试官说我理解得不够深刻，我想他应该是想让我从这个层面来说吧。</p>
+]]></content>
+      <tags>
+        <tag>语言类型的差异</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python 批量修改文件后缀名</title>
+    <url>/2021/10/12/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/python%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D/</url>
+    <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_files_list</span>(<span class="params"><span class="built_in">dir</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    实现遍历 dir 目录下, 所有文件 (包含子文件夹的文件)</span></span><br><span class="line"><span class="string">    :param dir: 指定文件夹目录 </span></span><br><span class="line"><span class="string">    :return: 包含所有文件的列表 -&gt;list</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># parent: 父目录, filenames: 该目录下所有文件夹,filenames: 该目录下的文件名 </span></span><br><span class="line"></span><br><span class="line">path = <span class="string">r&quot;E:\test&quot;</span></span><br><span class="line">filelist = get_files_list(path)</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> filelist:</span><br><span class="line">    portion = os.path.splitext(filename)  <span class="comment"># portion 为名称和后缀分离后的列表 </span></span><br><span class="line">    <span class="keyword">if</span> portion[<span class="number">1</span>] ==<span class="string">&quot;.bmp&quot;</span>:</span><br><span class="line">        newname = portion[<span class="number">0</span>] + <span class="string">&quot;.jpg&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(filename)  <span class="comment"># 打印出要更改的文件名 </span></span><br><span class="line">        os.chdir(path)</span><br><span class="line">        os.rename(filename, newname)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/09/29/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br><span id="more"></span></p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
 </search>
