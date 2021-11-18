@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!--pjax：防止跳转页面音乐暂停-->
+ <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
+
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="计算机网络体系结构应用层：应用软件都是在应用层实现。那么，当两个不同设备的应⽤需要通信的时候，应⽤就把应⽤数据传给下⼀层，也就是传输层。主要协议有HTTP,DNS,SMTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络">
+<meta property="og:url" content="http://example.com/2021/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="Dreamer-shan&#39;s Blog">
+<meta property="og:description" content="计算机网络体系结构应用层：应用软件都是在应用层实现。那么，当两个不同设备的应⽤需要通信的时候，应⽤就把应⽤数据传给下⼀层，也就是传输层。主要协议有HTTP,DNS,SMTP">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/f07bf730-733f-45e6-ad39-5856312e7165-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/99239b5e-507e-482a-a063-6252b68ef41f-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/ce857b60-d059-42bc-8067-1f97ab5bfa67-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/3bef30ab-7cb0-49d1-a5bf-a75b81f10202-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/2fc163e2-726e-428e-93f8-bcfd75944702-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/00f01da9-e655-4f81-98e7-e3e49ea293c7-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/09a1a4d6-0775-4cde-8e3a-bebde81009ce-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/af7f7649-96cf-47a3-89a7-b00ba2b2a94e-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/a11a5224-248d-4959-8fa9-703ceada63c9-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/c7a76fbb-ff13-45ed-9d95-73613776ef79-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/b39fb60b-2654-458b-9e92-c9ac62c2c0a4-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/17f72b14-01f3-4c0b-b39d-face6bb8cb40-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/110bf20e-0d42-4347-91a4-e5571295c01a-12259280.jpg">
+<meta property="article:published_time" content="2021-11-14T13:30:39.000Z">
+<meta property="article:modified_time" content="2021-11-17T09:28:39.181Z">
+<meta property="article:author" content="Dreamer-shan">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api2.mubu.com/v3/document_image/f07bf730-733f-45e6-ad39-5856312e7165-12259280.jpg">
+
+<link rel="canonical" href="http://example.com/2021/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计算机网络 | Dreamer-shan's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Dreamer-shan's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="history fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机网络
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-14 21:30:39" itemprop="dateCreated datePublished" datetime="2021-11-14T21:30:39+08:00">2021-11-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-17 17:28:39" itemprop="dateModified" datetime="2021-11-17T17:28:39+08:00">2021-11-17</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h5 id="计算机网络体系结构"><a href="# 计算机网络体系结构" class="headerlink" title="计算机网络体系结构"></a>计算机网络体系结构 </h5><p> 应用层：应用软件都是在应用层实现。那么，当两个不同设备的应⽤需要通信的时候，应⽤就把应⽤数据传给下⼀层，也就是传输层。主要协议有 HTTP,DNS,SMTP</p>
+<span id="more"></span>
+<p>传输层：主要任务是负责向两台主机中 <strong> 进程之间的通信 </strong> 提供数据传输服务, 主要协议有 TCP/UDP</p>
+<ul>
+<li>TCP：传输层控制协议（Transmission Control Protocol），<strong>提供面向连接的，可靠的 </strong> 数据传输服务，传输单位是报文段</li>
+<li>UDP：用户数据报协议（User Datagram Protocol），提供 <strong> 无连接的、尽最大努力交付的 </strong> 数据传输服务，传输单位是用户数据报</li>
+</ul>
+<p>如果传输层的数据包大小超过 TCP 最大报文段长度 （MSS），就要将数据包分块，这样即使中途有⼀个分块丢失或损坏了，只需要重传分块，而不是整个数据包。在 TCP 协议中，我们把每个分块称为⼀个 TCP 段（TCP Segment）</p>
+<p>网络层：负责为网络中的 <strong> 不同主机提供通信服务</strong>。</p>
+<p>数据链路层：将网络层交下来的 IP 数据报封装成帧，并且加上一些必要的控制信息，如差错控制等，传输单位是帧</p>
+<p>物理层：把数据包转换成电信号，让其可以在物理介质中传输</p>
+<p>注意，一些物理媒体，比如光纤、同轴电缆，这些并不属于物理层协议内，而是在物理层协议下面，也可以当作是第 0 层</p>
+<p><img src="https://api2.mubu.com/v3/document_image/f07bf730-733f-45e6-ad39-5856312e7165-12259280.jpg" alt="img"></p>
+<p>为什么计算机网络要分为层模型？</p>
+<p>　①各层之间是独立的。某一层可以使用其下一层提供的服务而不需要知道服务是如何实现的</p>
+<p>　②灵活性好。当某一层发生变化时，只要其接口关系不变，则这层以上或以下的各层均不受影响　</p>
+<p>　③结构上可分割开。各层可以采用最合适的技术来实现</p>
+<p>　④易于实现和维护</p>
+<p>　⑤能促进标准化工作</p>
+<h5 id="数据链路层"><a href="# 数据链路层" class="headerlink" title="数据链路层"></a>数据链路层 </h5><h6 id="使用点对点信道的数据链路层"><a href="# 使用点对点信道的数据链路层" class="headerlink" title="使用点对点信道的数据链路层"></a> 使用点对点信道的数据链路层 </h6><p>　数据链路层使用的信道主要有：点对点信道(PPP 协议) 和广播信道(CSMA/CD 协议)</p>
+<p>　数据链路层的三个基本问题：封装成帧、透明传输和差错检测。</p>
+<p>　封装成帧：给帧加上头部和尾部来进行帧定界，也就是帧开始符 (SOH) 和帧结束符(EOT)</p>
+<p><img src="https://api2.mubu.com/v3/document_image/99239b5e-507e-482a-a063-6252b68ef41f-12259280.jpg" alt="img"></p>
+<p>　<img src="https://api2.mubu.com/v3/document_image/ce857b60-d059-42bc-8067-1f97ab5bfa67-12259280.jpg" alt="img"></p>
+<p>　透明传输：如果传输的数据中二进制代码刚好出现了和 SOH 和 EOT 这种控制字符一样，链路层就会 <strong> 错误地“找到帧的边界”，而把剩下的那部分数据丢弃</strong>。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/3bef30ab-7cb0-49d1-a5bf-a75b81f10202-12259280.jpg" alt="img"></p>
+<p>　为了解决透明传输问题，就必须使得数据中出现控制字符 SOH 和 EOT 在接收端不会被解释为控制字符。具体做法：字节填充法，也就是在控制字符前面插入转义字符。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/2fc163e2-726e-428e-93f8-bcfd75944702-12259280.jpg" alt="img"></p>
+<p>　差错检测：循环冗余检验 CRC(Cyclic Redundancy Check)技术，就是双方协商一个固定的除数 P，在数据后面添加 n 位 (n 就是 P 多项式的最高幂次) 的冗余检错码，构成一个帧发送出去，如果数据 M=101001，除数 P=1101，写成多项式就是 $P=X^{3}+X^{2}+1$，得到余数 001，在 M 后添加 001 得到最终发出去的帧序列：101001001，接收端收到帧序列后，除以除数 P，得到余数 R</p>
+<ul>
+<li>$R = 0$，判定这个帧在传输过程过没有出现差错，接受。</li>
+<li>$R \ne 0$，出现差错（但是不知道是哪一位或者哪几位出现了差错），丢弃该帧。</li>
+</ul>
+<p><img src="https://api2.mubu.com/v3/document_image/00f01da9-e655-4f81-98e7-e3e49ea293c7-12259280.jpg" alt="img"></p>
+<p>　有了 CRC 冗余校验就做到帧的无差错接收，也就是可做到不出现比特差错。</p>
+<p>　但是有一种情况是帧差错：帧丢失、帧重复或者帧失序，因此在 CRC 的基础上，增加帧编号、确认和重传机制。</p>
+<ul>
+<li>对于 <strong> 通信质量较差 </strong> 的无线传输链路，链路层协议使用 <strong> 确认和重传 </strong> 机制，向上提供可靠传输的服务。</li>
+<li>对于 <strong> 通信质量较好 </strong> 的有线传输链路，链路层协议 <strong> 不使用 </strong> 确认和重传机制，如果出现了差错并且需要进行改正，改正差错的任务由上层协议（例如 TCP 协议）来完成</li>
+</ul>
+<h6 id="使用广播信道的数据链路层"><a href="# 使用广播信道的数据链路层" class="headerlink" title="使用广播信道的数据链路层"></a>使用广播信道的数据链路层</h6><p>　局域网特点：地理范围和站点数目有限，拓朴结构主要有：星形、环形、总线形</p>
+<h6 id="CSMA-CD 协议"><a href="#CSMA-CD 协议" class="headerlink" title="CSMA/CD 协议"></a>CSMA/CD 协议</h6><p>　总线上只要有一台计算机在发送数据，总线的传输资源就被占用。因此，在同一时间只能允许一台计算机发送数据，否则各计算机之间就会互相干扰，使得所发送数据被破坏。因此，如何协调总线上各计算机的工作就是以太网要解决的一个重要问题。它使用的协议是 CSMA/CD，意思是载波监听多点接入 / 碰撞检测(Carrier Sense Multiple Access with Collision Detection)</p>
+<p>　“多点接入”就是说明这是总线型网络，许多计算机以多点接入的方式连接在一根总线上。协议的实质是“载波监听”和“碰撞检测”。<br>　“载波监听”指在发送前，还是在发送中，每个站都必须不停地检测信道。在发送前检测信道，是为了获得发送权。如果检测出已经有其他站在发送，则自己就暂时不许发送数据，必须要等到信道变为空闲时才能发送。在发送中检测信道，是为了及时发现有没有其他站的发送和本站发送的碰撞。这就称为碰撞检测。<br>　“碰撞检测”也就是“边发送边监听”，即适配器边发送数据边检测信道上的信号电压的变化情况，以便判断自己在发送数据时其他站是否也在发送数据。当几个站同时在总线上发送数据时，总线上的信号电压变化幅度将会增大（互相叠加)。当适配器检测到的信号电压变化幅度超过阈值时，就认为产生了碰撞，适配器就要停止发送数据，以免浪费网络资源，然后等待一段随机时间后再次发送。</p>
+<h6 id="帧格式"><a href="# 帧格式" class="headerlink" title="帧格式"></a>帧格式</h6><p>　以太网帧使用 MAC 地址来作为标识符，MAC 帧的头部是 18B，以太网 MAC 帧的长度是 64-1518B，因此数据部分是 46-1500B，当数据部分不足 46B 时，MAC 子层会在数据字段的后面加入一个整数字节的填充字段。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/09a1a4d6-0775-4cde-8e3a-bebde81009ce-12259280.jpg" alt="img"></p>
+<h5 id="网络层"><a href="# 网络层" class="headerlink" title="网络层"></a>网络层 </h5><h6 id="分类的 IP 地址"><a href="# 分类的 IP 地址" class="headerlink" title="分类的 IP 地址"></a> 分类的 IP 地址</h6><p>　</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>网络类别</th>
+<th>第一个可指派的网络号</th>
+<th>最后一个可指派的网络号</th>
+<th>每个网络中的最大主机数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1</td>
+<td>126</td>
+<td>16777214</td>
+</tr>
+<tr>
+<td>B</td>
+<td>128.1</td>
+<td>191.255</td>
+<td>65534</td>
+</tr>
+<tr>
+<td>C</td>
+<td>192.0.1</td>
+<td>223.255.255</td>
+<td>254</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h6 id="IP 地址与物理地址的区别？"><a href="#IP 地址与物理地址的区别？" class="headerlink" title="IP 地址与物理地址的区别？"></a>IP 地址与物理地址的区别？</h6><p>　从层次的角度看，物理地址是数据链路层和物理层使用的地址，而 IP 地址是网络层和以上各层使用的地址，是一种逻辑地址。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/af7f7649-96cf-47a3-89a7-b00ba2b2a94e-12259280.jpg" alt="img"></p>
+<p>如果有以下拓扑结构的网络，主机 $H_1$ 与主机 $H_2$ 通信，IP 地址和 MAC 地址的变化情况是</p>
+<p><img src="https://api2.mubu.com/v3/document_image/a11a5224-248d-4959-8fa9-703ceada63c9-12259280.jpg" alt="img"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>源 IP 地址</th>
+<th>目的 IP 地址</th>
+<th>源 MAC 地址</th>
+<th>目的 MAC 地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>从 $H_1$ 到 $R_1$</td>
+<td>$IP_1$</td>
+<td>$IP_2$</td>
+<td>$HA_1$</td>
+<td>$HA_3$</td>
+</tr>
+<tr>
+<td>从 $R_1$ 到 $R_2$</td>
+<td>$IP_1$</td>
+<td>$IP_2$</td>
+<td>$HA_4$</td>
+<td>$HA_5$</td>
+</tr>
+<tr>
+<td>从 $R_2$ 到 $H_2$</td>
+<td>$IP_1$</td>
+<td>$IP_2$</td>
+<td>$HA_6$</td>
+<td>$HA_2$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h6 id="APR 协议"><a href="#APR 协议" class="headerlink" title="APR 协议"></a>APR 协议</h6><p>　APR 协议又叫地址解析协议，该协议可以通过 IP 解析出对应的 MAC 地址。</p>
+<p>　每台主机都有一个 ARP 高速缓存，里面有本局域网上的各主机和路由器的 IP 地址到硬件地址的映射表，这些都是该主机目前知道的一些地址。<br>　当主机 A 要向本局域网上的某台主机 B 发送 IP 数据报时，就先在其 ARP 高速缓存中查看有无主机 B 的 I 地址。如有，就在 ARP 高速缓存中查出其对应的硬件地址，再把这个硬件地址写入 MAC 帧，然后通过局域网把该 MAC 帧发往此硬件地址。如果没有，ARP 进程就在本局域网上广播发送一个 ARP 请求分组（带上 A 和 B 的 IP 地址，以及 A 自己的 MAC 地址），其他主机收到广播包后，检查自己的 IP 地址跟 ARP 请求分组中的 IP 地址是否一致，如一致，单播发送 ARP 响应分组。如不一致，直接不理睬这个 ARP 请求分组。</p>
+<p>　注意：１. 高速缓存中映射地址都有生存时间　2.ARP 解决的是 <strong> 同一个局域网 </strong> 上的主机或路由器的 IP 地址到 MAC 地址的映射问题。</p>
+<h6 id="IP 数据报的格式"><a href="#IP 数据报的格式" class="headerlink" title="IP 数据报的格式"></a>IP 数据报的格式</h6><p>　<img src="https://api2.mubu.com/v3/document_image/c7a76fbb-ff13-45ed-9d95-73613776ef79-12259280.jpg" alt="img"></p>
+<p>(1)版本：占 4bit，目前主要是 $IPv_4$ 和 $IPv_6$</p>
+<p>(2)首部长度：占 4bit，最大值是 15，该字段的单位是以 4B 为单位，所以 UP 首部最大长度是 15*4=60B</p>
+<p>(3)总长度：数据报最大长度为 $2^{16}-1=65535B$</p>
+<p>(4)标识：数据报超过网络的 MTU 而必须分片时，标识字段的值就会复制到所有数据报片的标识字段中，确保分片后的各个数据报片能正确地重装为原来的数据报</p>
+<p>(5)标志：MF=1(more fragment)表示后面还有分片，MF=0 表示这个最后一个分片，DF(don’t fragment)=0 表示允许分片</p>
+<p>(6)片偏移：分片后，某片在原分组中的相对位置</p>
+<h6 id="内部网关协议：RIP 协议"><a href="# 内部网关协议：RIP 协议" class="headerlink" title="内部网关协议：RIP 协议"></a>内部网关协议：RIP 协议 </h6><p>　一种分布式的基于<strong> 距离向量 </strong> 的路由选择协议，其距离度量为跳数，每经过一个路由器跳数就加 1，最大跳数为 15，因此 RIP 只适用于小型互联网。</p>
+<p>　特点：1. 仅和相邻路由器交换信息 2. 交换的信息是本路由器所知道的全部信息，即自己的路由表 3. 固定时间间隔交换路由信息</p>
+<h6 id="内部网关协议：OSPF 协议"><a href="# 内部网关协议：OSPF 协议" class="headerlink" title="内部网关协议：OSPF 协议"></a>内部网关协议：OSPF 协议</h6><p>　全称叫开放最短路径优先(迪杰斯特拉算法)，特点：1. 使用洪泛法向本自治系统中所有路由器发送信息 2. 发送的信息是本路由器相邻的所有路由器的链路状态，所谓链路状态是指本路由器与哪些路由器相邻，以及该链路的”度量“ 3. 只有链路状态发生变化时，路由器才向所有路由器用洪泛法发送此信息。</p>
+<p>　路由器之间频繁地交换链路状态信息，因此所有的路由器最终都能建立一个链路状态数据库，这个数据库实际上就是全网的拓扑结构图，每一个路由器都知道全网有多少个路由器以及哪些路由器是相连的，度量是多少。而 RIP 协议的每一个路由器只知道到所有网络的距离以及下一跳路由器，而不知道全网的拓扑结构。</p>
+<h6 id="外部网关协议：BGP（边界网关协议）"><a href="# 外部网关协议：BGP（边界网关协议）" class="headerlink" title="外部网关协议：BGP（边界网关协议）"></a>外部网关协议：BGP（边界网关协议）</h6><p>　边界网关协议力求寻找一条能够到达目的地网络且比较好的路由，并非寻找一条最佳路由。也就是可达性＞高效性</p>
+<h6 id="内部网关协议和外部网关协议的区别？"><a href="# 内部网关协议和外部网关协议的区别？" class="headerlink" title="内部网关协议和外部网关协议的区别？"></a>内部网关协议和外部网关协议的区别？</h6><p>　想象成快递公司，外部网关协议就是不同省公司，不同省公司之间注重的是可达性。内部网关协议就是省公司内部，需要一套高效的快递派件规则，注重高效性。</p>
+<h5 id="运输层"><a href="# 运输层" class="headerlink" title="运输层"></a>运输层</h5><p>　从 IP 层来说，通信的两端是两台主机。但严格地讲，两台主机进行通信就是两台主机中的应用进程互相通信。IP 协议虽然能把分组送到目的主机，但是这个分组还停留在主机的网络层而没有交付主机中的应用进程。从运输层的角度看，通信的真正端点并不是主机而是主机中的进程。也就是说，端到端的通信是应用进程之间的通信。</p>
+<p>　端口号：熟知端口号 0-1023，常用的端口号有</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>应用程序</th>
+<th>端口号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FTP</td>
+<td>21</td>
+</tr>
+<tr>
+<td>SMTP</td>
+<td>25</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>53</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>80</td>
+</tr>
+<tr>
+<td>HTTPS</td>
+<td>443</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h6 id="UDP 首部格式"><a href="#UDP 首部格式" class="headerlink" title="UDP 首部格式"></a>UDP 首部格式</h6><p>　8 个字节，源端口、目的端口、长度、校验和</p>
+<p><img src="https://api2.mubu.com/v3/document_image/b39fb60b-2654-458b-9e92-c9ac62c2c0a4-12259280.jpg" alt="img"></p>
+<h6 id="TCP 首部格式"><a href="#TCP 首部格式" class="headerlink" title="TCP 首部格式"></a>TCP 首部格式</h6><p><img src="https://api2.mubu.com/v3/document_image/17f72b14-01f3-4c0b-b39d-face6bb8cb40-12259280.jpg" alt="img"></p>
+<p>　源端口和目的端口：占 2B</p>
+<p>　序号：占 4B，指整个传送的数据的第一个字节的序号。范围是 $[0,2^{32}-1]$, 序号增加到 $2^{32}-1$ 后，下一个序号就又回到了 0。</p>
+<p>　确认号：占 4B，是期望收到对方下一个报文段的第一个数据字节的序号。</p>
+<p>　确认 ACK：仅 ACK=1 时确认号字段才有效，TCP 规定，在连接建立后所有传送的报文段都要把 ACK 置１</p>
+<p>　同步 SYN：在连接建立时用来同步序号</p>
+<h6 id="TCP 可靠传输的原因"><a href="#TCP 可靠传输的原因" class="headerlink" title="TCP 可靠传输的原因"></a>TCP 可靠传输的原因</h6><p>　差错控制：为每个报文段编号，并且有检错和重传机制</p>
+<p>　流量控制：控制发送端发送报文段的速度，使接收端来得及接收，是一个端到端的过程。</p>
+<p>　拥塞控制：防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载，是一个全局性的过程。</p>
+<h6 id="拥塞控制方法"><a href="# 拥塞控制方法" class="headerlink" title="拥塞控制方法"></a>拥塞控制方法</h6><p>　慢开始：指数增加报文段发送数量</p>
+<p>　拥塞避免：线性增加报文段发送数量</p>
+<p>　快重传：发送方只要收到连续３个重复确认，就应该立即进行重传，而不是等待超时重传。</p>
+<p>　快恢复：新的发送方门限值 ssthresh＝cwnd/2，而不是从 1 开始</p>
+<p><img src="https://api2.mubu.com/v3/document_image/110bf20e-0d42-4347-91a4-e5571295c01a-12259280.jpg" alt="img"></p>
+<h5 id="网络安全"><a href="# 网络安全" class="headerlink" title="网络安全"></a>网络安全 </h5><h6 id="对称加密"><a href="# 对称加密" class="headerlink" title="对称加密"></a> 对称加密</h6><p>　加密密钥和解密密钥使用相同的密码体制，如 DES。问题在于密钥分配：使用密钥分配中心 KDC 会使得网络成本增加，不使用 KDC 的话会有密钥被劫持的风险。</p>
+<h6 id="非对称加密"><a href="# 非对称加密" class="headerlink" title="非对称加密"></a>非对称加密 </h6><p>　公钥 $PK$ 公开，私钥 $SK$ 保密，如 $RSA$，发送者 A 用 B 的公钥 $PK_B$ 通过 $E$ 运算对明文 X 加密，得出密文 $Y$，发送给 B，B 用自己是私钥 $SK_B$ 通过 $D$ 运算进行解密，恢复出明文。<strong> 非对称加密算法的开销较大</strong>，在可见的将来还不会放弃传统加密算法。</p>
+<p> <center>加密 　$Y=E_{PK_B}(X)$</center>　</p>
+<p><center>　解密 　$D_{SK_B}=D_{SK_B}(E_{PK_B}(X))$</center>　</p>
+<h5 id="计算机是怎么连上局域网的？"><a href="# 计算机是怎么连上局域网的？" class="headerlink" title="计算机是怎么连上局域网的？"></a>计算机是怎么连上局域网的？</h5><p>　计算机与外界局域网的连接是通过通信适配器 (网卡) 进行的。在这种通信适配器上面装有处理器和存储器（包括 RAM 和 ROM)。<strong>适配器和局域网之间的通信是通过电缆或双绞线以串行传输方式进行的，而适配器和计算机之间的通信则是通过计算机主板上的 IO 总线以并行传输方式进行 </strong>。因此，适配器的<strong> 一个重要功能就是要进行数据串行传输和并行传输的转换 </strong>。由于网络上的数据率和计算机总线上的数据率并不相同，因此在适配器中必须<strong> 装有对数据进行缓存的存储芯片 </strong>。在主板上插入适配器时，还必须把管理该适配器的设备驱动程序安装在计算机的操作系统中。这个驱动程序以后就会告诉适配器，应当<strong> 从存储器的什么位置上把多长的数据块发送到局域网，或者应当在存储器的什么位置上把局域网传送过来的数据块存储下来</strong>。适配器还要能够实现以太网协议</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/13/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/" rel="prev" title="方法调用的本质">
+      <i class="fa fa-chevron-left"></i> 方法调用的本质
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/17/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="next" title="图解网络读书笔记">
+      图解网络读书笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">计算机网络体系结构 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">数据链路层 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%82%B9%E5%AF%B9%E7%82%B9%E4%BF%A1%E9%81%93%E7%9A%84%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-number">2.1.</span> <span class="nav-text"> 使用点对点信道的数据链路层 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E7%9A%84%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-number">2.2.</span> <span class="nav-text">使用广播信道的数据链路层</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#CSMA-CD%20%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.3.</span> <span class="nav-text">CSMA&#x2F;CD 协议</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B8%A7%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text">帧格式</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">网络层 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E7%9A%84%20IP%20%E5%9C%B0%E5%9D%80"><span class="nav-number">3.1.</span> <span class="nav-text"> 分类的 IP 地址</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#IP%20%E5%9C%B0%E5%9D%80%E4%B8%8E%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">3.2.</span> <span class="nav-text">IP 地址与物理地址的区别？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#APR%20%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.3.</span> <span class="nav-text">APR 协议</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#IP%20%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.4.</span> <span class="nav-text">IP 数据报的格式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%EF%BC%9ARIP%20%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.5.</span> <span class="nav-text">内部网关协议：RIP 协议 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%EF%BC%9AOSPF%20%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.6.</span> <span class="nav-text">内部网关协议：OSPF 协议</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%EF%BC%9ABGP%EF%BC%88%E8%BE%B9%E7%95%8C%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%EF%BC%89"><span class="nav-number">3.7.</span> <span class="nav-text">外部网关协议：BGP（边界网关协议）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%E5%92%8C%E5%A4%96%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">3.8.</span> <span class="nav-text">内部网关协议和外部网关协议的区别？</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%90%E8%BE%93%E5%B1%82"><span class="nav-number">4.</span> <span class="nav-text">运输层</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#UDP%20%E9%A6%96%E9%83%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.1.</span> <span class="nav-text">UDP 首部格式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#TCP%20%E9%A6%96%E9%83%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.2.</span> <span class="nav-text">TCP 首部格式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#TCP%20%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">4.3.</span> <span class="nav-text">TCP 可靠传输的原因</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%96%B9%E6%B3%95"><span class="nav-number">4.4.</span> <span class="nav-text">拥塞控制方法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8"><span class="nav-number">5.</span> <span class="nav-text">网络安全 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="nav-number">5.1.</span> <span class="nav-text"> 对称加密</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="nav-number">5.2.</span> <span class="nav-text">非对称加密 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%98%AF%E6%80%8E%E4%B9%88%E8%BF%9E%E4%B8%8A%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">计算机是怎么连上局域网的？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Dreamer-shan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Dreamer-shan</p>
+  <div class="site-description" itemprop="description">吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Dreamer-shan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Dreamer-shan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/1713944558@qq.com" title="E-Mail → 1713944558@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+              <div id="music163player">
+                  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1827559941&auto=1&height=66"></iframe>
+              </div>
+  </aside>
+
+  <div id="sidebar-dimmer"></div>
+
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dreamer-shan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">47k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">43 分钟</span>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

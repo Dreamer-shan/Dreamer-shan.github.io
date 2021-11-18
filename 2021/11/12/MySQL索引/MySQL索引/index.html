@@ -23,17 +23,23 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Dreamer-shan&#39;s Blog">
-<meta property="og:url" content="http://example.com/tags/JVM/index.html">
+  <meta name="description" content="索引数据结构演化　有序数组：有序数组可以使用二分查找，有序数组的等值查询和比较查询效率非常高，但是更新数据的时候会出现一个问题，可能要挪动大量的数据（改变 index），所以只适合存储静态的数据 　链表：支持频繁的修改，不需要挪动大量数据。但如果是单链表，查找效率还是不够高。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 索引">
+<meta property="og:url" content="http://example.com/2021/11/12/MySQL%E7%B4%A2%E5%BC%95/MySQL%E7%B4%A2%E5%BC%95/index.html">
 <meta property="og:site_name" content="Dreamer-shan&#39;s Blog">
-<meta property="og:description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+<meta property="og:description" content="索引数据结构演化　有序数组：有序数组可以使用二分查找，有序数组的等值查询和比较查询效率非常高，但是更新数据的时候会出现一个问题，可能要挪动大量的数据（改变 index），所以只适合存储静态的数据 　链表：支持频繁的修改，不需要挪动大量数据。但如果是单链表，查找效率还是不够高。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/be696c86-796d-462e-87ee-ed412e9cf721-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/da9ecc92-6d49-4df5-afbe-8925a1e3621f-12259280.jpg">
+<meta property="article:published_time" content="2021-11-12T02:41:34.000Z">
+<meta property="article:modified_time" content="2021-11-12T06:37:02.830Z">
 <meta property="article:author" content="Dreamer-shan">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api2.mubu.com/v3/document_image/be696c86-796d-462e-87ee-ed412e9cf721-12259280.jpg">
 
-<link rel="canonical" href="http://example.com/tags/JVM/">
+<link rel="canonical" href="http://example.com/2021/11/12/MySQL%E7%B4%A2%E5%BC%95/MySQL%E7%B4%A2%E5%BC%95/">
 
 
 <script id="page-configurations">
@@ -41,12 +47,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: JVM | Dreamer-shan's Blog</title>
+  <title>MySQL 索引 | Dreamer-shan's Blog</title>
   
 
 
@@ -183,51 +189,120 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">JVM
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/12/MySQL%E7%B4%A2%E5%BC%95/MySQL%E7%B4%A2%E5%BC%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL 索引
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-12 10:41:34 / 修改时间：14:37:02" itemprop="dateCreated datePublished" datetime="2021-11-12T10:41:34+08:00">2021-11-12</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <h6 id="索引数据结构演化"><a href="# 索引数据结构演化" class="headerlink" title="索引数据结构演化"></a>索引数据结构演化 </h6><p>　有序数组：有序数组可以使用<strong> 二分查找 </strong>，有序数组的等值查询和比较查询效率非常高，但是更新数据的时候会出现一个问题，可能要挪动大量的数据（改变 index），所以只适合<strong> 存储静态的数据</strong></p>
+<p>　链表：支持频繁的修改，不需要挪动大量数据。但如果是单链表，查找效率还是不够高。</p>
+<span id="more"></span>
+<p>　二叉查找树：既能够 <strong> 实现快速查找，又能够实现快速插入 </strong>。但是有一个缺陷：<strong> 在极端情况下，树会退化成链表。</strong>因为左右子树深度差太大，也就是这棵树 <font color="red"> 不够平衡</font>。因此，可以使用平衡二叉树（AVL）。</p>
+<p>　平衡二叉树：<strong>左右子树深度差绝对值不能超过 1</strong>，解决了 <strong> 二叉查找树退化为近似链表的缺点 </strong>，但是平衡度要求严格，因此每次插入 / 删除结点的时候都需要通过左旋右旋对树进行调整使之平衡，<strong> 这对性能影响很大 </strong>。因此，可以考虑使用<font color="red"> 弱平衡树：红黑树</font></p>
+<p>　红黑树：<strong>红黑树确保没有一条路径会比其它路径长出两倍 </strong>，因此红黑树是一种<strong> 弱平衡二叉树 </strong>（<strong> 因此在相同的节点情况下，AVL 树的高度低于红黑树）</strong>，相对于要求严格的 AVL 树来说，它的旋转次数少，<strong>对于插入，删除操作较多的情况下，红黑树性能更好</strong></p>
+<p>　以上都是二叉树，MySQL 用树的结构来存储索引的时候，访问一层节点就要跟磁盘之间发生一次 IO。InnoDB 操作磁盘的最小的单位是一页，大小是 16K，那么，一个树的节点就是 16K 的大小。如果每个节点存储的数据太少，从索引中找到我们需要的数据，就要访问更多的节点，意味着跟磁盘交互次数就会过多。因此，<strong>可以使用多叉树 </strong>。<strong> 因为分叉数越多，树的深度就会减少</strong></p>
+<p>　多路平衡查找树（ B 树）：B 树每个结点存储着 <strong> 键值、数据地址、节点引用</strong><img src="https://api2.mubu.com/v3/document_image/be696c86-796d-462e-87ee-ed412e9cf721-12259280.jpg" alt="img"></p>
+<p>　B+ 树：B+Tree 的非叶子结点都不会存储数据，只有叶子节点才存储数据。搜索到关键字不会直接返回，会到最后一层的叶子节点。比如我们搜索 id=28，虽然在第一层直接命中了，但是全部的数据在叶子节点上面，所以我还要继续往下搜索，一直到叶子节点</p>
+<p><img src="https://api2.mubu.com/v3/document_image/da9ecc92-6d49-4df5-afbe-8925a1e3621f-12259280.jpg" alt="img"></p>
+<h6 id="B- 树的特点"><a href="#B- 树的特点" class="headerlink" title="B+ 树的特点"></a>B+ 树的特点</h6><p>　1.B Tree 能解决的问题，它都能解决 （每个节点存储更多关键字；路数更多）<br>　2. 扫库、扫表能力更强（如果要进行全表扫描，只需要遍历叶子节点就可以了，不需要遍历整棵 B+Tree 拿到所有的数据）</p>
+<p>　3. 非叶子结点不保存数据，所以一个节点可以保存更多的关键字，一次磁盘加载的关键字更多</p>
+<p>　4. 排序能力更强（因为叶子节点上有下一个数据区的指针，数据形成了链表）<br>　5. 效率更加稳定（B+Tree 永远是在叶子节点拿到数据，所以 IO 次数是稳定的）</p>
+<h6 id="MySQL 索引类型"><a href="#MySQL 索引类型" class="headerlink" title="MySQL 索引类型"></a>MySQL 索引类型</h6><p>　索引类型有三种，普通索引、唯一索引（主键索引是特殊的唯一索引）、全文索引。</p>
+<p>　唯一索引：<strong>键值不能重复</strong>。主键索引是一种特殊的唯一索引，它还多了一个限制条件，要求键值不能为空</p>
+<p>　全文索引：针对比较大的数据，比如我们存放的是消息内容，有几 KB 的数据的这种情况，如果要解决 like 查询效率低的问题，可以创建全文索引。只有文本类型的字段才可以创建全文索引，比如 char、varchar、text</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-11T19:50:02+08:00"
-              content="2021-10-11">
-          10-11
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/JVM%E5%A4%8D%E4%B9%A0/" itemprop="url">
-            <span itemprop="name">JVM 复习</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/10/Java%E9%9B%86%E5%90%88/Java%E9%9B%86%E5%90%88/" rel="prev" title="Java 集合">
+      <i class="fa fa-chevron-left"></i> Java 集合
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/12/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/" rel="next" title="RandomAccess 接口有什么作用？">
+      RandomAccess 接口有什么作用？ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -281,6 +356,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BC%94%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">索引数据结构演化 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#B-%20%E6%A0%91%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">B+ 树的特点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#MySQL%20%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">MySQL 索引类型</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

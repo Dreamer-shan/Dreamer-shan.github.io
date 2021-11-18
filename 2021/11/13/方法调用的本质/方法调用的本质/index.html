@@ -23,17 +23,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Dreamer-shan&#39;s Blog">
-<meta property="og:url" content="http://example.com/tags/JVM/index.html">
+  <meta name="description" content="每一个变量都有两种类型：静态类型（Static Type）和实际类型（Actual Type），例如下面代码中，Person为变量person的静态类型，Student为实际类型： 1Person person &#x3D; new Student();">
+<meta property="og:type" content="article">
+<meta property="og:title" content="方法调用的本质">
+<meta property="og:url" content="http://example.com/2021/11/13/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/index.html">
 <meta property="og:site_name" content="Dreamer-shan&#39;s Blog">
-<meta property="og:description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+<meta property="og:description" content="每一个变量都有两种类型：静态类型（Static Type）和实际类型（Actual Type），例如下面代码中，Person为变量person的静态类型，Student为实际类型： 1Person person &#x3D; new Student();">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/df80dc3b-0b6a-4a56-9960-4a827c99c206-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/ea79dee7-15ce-4c6e-8850-76fc698675e7-12259280.jpg">
+<meta property="article:published_time" content="2021-11-13T07:40:28.000Z">
+<meta property="article:modified_time" content="2021-11-13T08:29:31.604Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api2.mubu.com/v3/document_image/df80dc3b-0b6a-4a56-9960-4a827c99c206-12259280.jpg">
 
-<link rel="canonical" href="http://example.com/tags/JVM/">
+<link rel="canonical" href="http://example.com/2021/11/13/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/">
 
 
 <script id="page-configurations">
@@ -41,12 +46,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: JVM | Dreamer-shan's Blog</title>
+  <title>方法调用的本质 | Dreamer-shan's Blog</title>
   
 
 
@@ -183,51 +188,143 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">JVM
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/13/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          方法调用的本质
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-13 15:40:28 / 修改时间：16:29:31" itemprop="dateCreated datePublished" datetime="2021-11-13T15:40:28+08:00">2021-11-13</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <p>每一个变量都有两种类型：静态类型（Static Type）和实际类型（Actual Type），例如下面代码中，Person 为变量 person 的静态类型，Student 为实际类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person person = <span class="keyword">new</span> Student();</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>区别如下：</p>
+<ul>
+<li>静态类型：引用变量的类型，在 <strong> 编译期确定，无法改变</strong></li>
+<li>实际类型：实例对象的类型，在编译期无法确定，需在 <strong> 运行期确定，可以改变</strong></li>
+</ul>
+<p>Java 前端编译的产物是字节码，字节码中所有的方法调用都是使用符号引用，如图，#1 #2 #3 表示符号引用在常量池中的索引号，根据这个索引号检索常量表，可以查到最终表示的是一个字符串字面量，例如 func:()V，这个就是方法的符号引用。符号引用（Symbolic References）是一个用来 <strong> 无歧义地标识一个实体（例如方法 / 字段）的字符串，在运行期会翻译为直接引用 </strong>（Direct Reference）。对于方法来说，就是方法的入口地址。通过这个符号引用，Java 虚拟机就可以翻译出该方法的直接引用。但是，<strong> 同一个符号引用，运行时翻译出来的直接引用可能是不同的</strong>，为什么会这样呢？</p>
+<p><img src="https://api2.mubu.com/v3/document_image/df80dc3b-0b6a-4a56-9960-4a827c99c206-12259280.jpg" alt="img"></p>
+<p>Java 中方法选择的三个步骤：</p>
+<ul>
+<li><p>步骤 1：生成符号引用（编译时）：1. 方法的符号引用在编译期确定，并固化到字节码中方法调用指令的参数中</p>
+</li>
+<li><p>步骤 2：解析（类加载时）：为什么静态方法、私有实例方法、实例构造器、父类方法以及 final 修饰这五种方法（对应的关键字： static、private、<init>、super、final）可以在编译期确定版本呢？<strong>因为无论运行时加载多少个类，这些方法都保证唯一的版本</strong>, 比如 private 只在本类中可见，final 修饰的方法不能被重写</init></p>
+</li>
+<li><p>既然可以确定方法的版本，虚拟机在处理 invokestatic、invokespecial、invokevirtual(final)时，就可以 <strong> 提前将符号引用转换为直接引用，不必延迟到方法调用时确定</strong>，具体来说，是在类加载的解析阶段完成转换的。</p>
+</li>
+<li><p>步骤 3：动态分派（类使用时）</p>
+<ul>
+<li><p>invokevirtual 指令</p>
+</li>
+<li><p>虚拟机为每个类生成 <strong> 虚方法表 vtable</strong>（virtual method table），类中声明的方法的入口地址会按固定顺序存放在虚方法表中；虚方法表还会继承父类的虚方法表，顺序与父类保持一致，子类新增的方法按顺序添加到虚方法末尾（这以 Java 单继承为前提）；<strong>若子类重写父类方法，则重写方法位置的入口地址修改为子类实现；</strong></p>
+</li>
+<li><p>1）类加载解析阶段：解析类的继承关系，生成类的虚方法表 （包含了这个类型所有方法的入口地址）。举个例子，有 Class B 继承与 Class A，并重写了 A 中的方法：<img src="https://api2.mubu.com/v3/document_image/ea79dee7-15ce-4c6e-8850-76fc698675e7-12259280.jpg" alt="img"></p>
+</li>
+<li><p>Object 是所有类的父类，所有 <strong> 每个类的虚方法表头部都会包含 Object 的虚方法表 </strong>。另外，B 重写了 A#printMe()，所以对应位置的<strong> 入口地址方法被修改为 B 重写方法的入口地址。</strong></p>
+</li>
+<li><p>需要注意的是，被<strong>final、static 或 private 修饰的方法不会出现在虚方法表中</strong>，因为这些方法无法被继承重写。</p>
+</li>
+<li><p>2）调用阶段（动态分派）：解析阶段生成虚方法表后，每个方法在虚方法表中的索引是固定的，这是不会随着实际类型变化影响的。调用方法时，<strong>首先根据变量的实际类型获得对应的虚方法表 </strong>（包含了这个类型所有方法的入口地址），然后<strong> 根据索引找到方法的入口地址</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>总结：</p>
+<ul>
+<li><strong>1. 方法调用的本质是根据方法的符号引用确定方法的直接引用（入口地址）</strong>的过程，一共需要经过（编译时）生成符号引用、（类加载时）解析、（调用时）动态分派三个步骤</li>
+<li>2.invokestatic &amp; invokespecial 指令在（类加载时）解析时根据静态类型完成转换</li>
+<li>3.invokevirtual &amp; invokeinterface 在（调用时）根据实际类型，查找 vtable &amp; itable 完成转换</li>
+<li>4. 重载其实是编译器的语法特性与多态无关，对编译时符号引用生成有影响，在运行时已经没有影响了；重写是多态的基础，虚拟机通过 vtable &amp; itable 来支持虚方法的方法选择。</li>
+</ul>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-11T19:50:02+08:00"
-              content="2021-10-11">
-          10-11
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/JVM%E5%A4%8D%E4%B9%A0/" itemprop="url">
-            <span itemprop="name">JVM 复习</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/12/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/" rel="prev" title="RandomAccess 接口有什么作用？">
+      <i class="fa fa-chevron-left"></i> RandomAccess 接口有什么作用？
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="next" title="计算机网络">
+      计算机网络 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 

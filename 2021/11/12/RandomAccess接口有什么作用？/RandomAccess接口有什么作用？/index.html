@@ -23,17 +23,25 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Dreamer-shan&#39;s Blog">
-<meta property="og:url" content="http://example.com/tags/JVM/index.html">
+  <meta name="description" content="ArrayList实现了RandomAccess接口，而LinkedList没有，这两者有什么区别？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RandomAccess 接口有什么作用？">
+<meta property="og:url" content="http://example.com/2021/11/12/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Dreamer-shan&#39;s Blog">
-<meta property="og:description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+<meta property="og:description" content="ArrayList实现了RandomAccess接口，而LinkedList没有，这两者有什么区别？">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/c7a77c31-ec6e-4e43-8a09-17e13002b37a-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/bac7b699-61d2-47b4-b9a2-6eb640f07572-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/19cb6789-f0d7-4107-aee0-760a91209063-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/26db1bfa-d07b-4439-9f78-75164b9cd149-12259280.jpg">
+<meta property="article:published_time" content="2021-11-12T05:52:18.000Z">
+<meta property="article:modified_time" content="2021-11-12T06:33:15.395Z">
 <meta property="article:author" content="Dreamer-shan">
+<meta property="article:tag" content="Java基础知识">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api2.mubu.com/v3/document_image/c7a77c31-ec6e-4e43-8a09-17e13002b37a-12259280.jpg">
 
-<link rel="canonical" href="http://example.com/tags/JVM/">
+<link rel="canonical" href="http://example.com/2021/11/12/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/">
 
 
 <script id="page-configurations">
@@ -41,12 +49,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: JVM | Dreamer-shan's Blog</title>
+  <title>RandomAccess 接口有什么作用？ | Dreamer-shan's Blog</title>
   
 
 
@@ -183,51 +191,118 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">JVM
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/12/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/RandomAccess%E6%8E%A5%E5%8F%A3%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Dreamer-shan">
+      <meta itemprop="description" content="吃西瓜不吐西瓜皮，不吃葡萄倒吐葡萄皮">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamer-shan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RandomAccess 接口有什么作用？
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-12 13:52:18 / 修改时间：14:33:15" itemprop="dateCreated datePublished" datetime="2021-11-12T13:52:18+08:00">2021-11-12</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <p>ArrayList 实现了 RandomAccess 接口，而 LinkedList 没有，这两者有什么区别？</p>
+<span id="more"></span>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">LinkedList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">AbstractSequentialList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">Deque</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
+<p> 从源码中可以看到，RandomAccess 接口中是空的，那这代表什么含义呢？红色方框中可以看到，for 循环遍历比迭代器遍历速度要快。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/c7a77c31-ec6e-4e43-8a09-17e13002b37a-12259280.jpg" alt="img"></p>
+<p> 从这里可以看到，binarySearch 选择二分查找方式时，会先判断 list 是否实现了 RandomAccess 接口，如果实现了就用 for 循环遍历，否则使用迭代器遍历。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(List&lt;? extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; list, T key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (list <span class="keyword">instanceof</span> RandomAccess || list.size()&lt;BINARYSEARCH_THRESHOLD)</span><br><span class="line">        <span class="keyword">return</span> Collections.indexedBinarySearch(list, key);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> Collections.iteratorBinarySearch(list, key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 以下是 indexedBinarySearch 方法和 iteratorBinarySearch 方法的源码 </p>
+<p><img src="https://api2.mubu.com/v3/document_image/bac7b699-61d2-47b4-b9a2-6eb640f07572-12259280.jpg" alt="img"></p>
+<p><img src="https://api2.mubu.com/v3/document_image/19cb6789-f0d7-4107-aee0-760a91209063-12259280.jpg" alt="img"></p>
+<p> 可以发现，实现 RandomAccess 接口的 List 集合采用一般的 for 循环遍历，而未实现这接口则采用迭代器。我们分别使用 for 循环方式和迭代器方式对 ArrayList 和 LinkedList 进行遍历，然后计算遍历时间。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/26db1bfa-d07b-4439-9f78-75164b9cd149-12259280.jpg" alt="img"></p>
+<p> 从图中可以看出，<font color="red">ArrayList 用 for 循环遍历比 iterator 迭代器遍历快，LinkedList 用 iterator 迭代器遍历比 for 循环遍历快 </font>, 因此，在遍历 list 的时候，我们可以先判断是否实现了 RandomAccess 接口，如果实现了该接口，就使用 for 循环方式遍历 </p>
+<p> 注意：<strong> 增强 for 循环底层也是采用迭代器实现 </strong>，所以增强 for 循环和迭代器遍历是一回事 </p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-11T19:50:02+08:00"
-              content="2021-10-11">
-          10-11
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag"># Java基础知识</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/11/JVM%E5%A4%8D%E4%B9%A0/JVM%E5%A4%8D%E4%B9%A0/" itemprop="url">
-            <span itemprop="name">JVM 复习</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/12/MySQL%E7%B4%A2%E5%BC%95/MySQL%E7%B4%A2%E5%BC%95/" rel="prev" title="MySQL 索引">
+      <i class="fa fa-chevron-left"></i> MySQL 索引
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/13/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E7%9A%84%E6%9C%AC%E8%B4%A8/" rel="next" title="方法调用的本质">
+      方法调用的本质 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 

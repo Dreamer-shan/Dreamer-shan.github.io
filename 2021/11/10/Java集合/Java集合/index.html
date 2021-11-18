@@ -35,8 +35,9 @@
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/379d8270-a408-48e4-9b20-884d4f7c89f4-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/8117cd3c-3c8b-4042-a8d1-a0dc61d8d81c-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/2576d75c-aff8-4c27-989b-294c513ca84a-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/377e3347-66e6-4b80-bcc4-830960567b37-12259280.jpg">
 <meta property="article:published_time" content="2021-11-10T06:39:14.000Z">
-<meta property="article:modified_time" content="2021-11-12T02:08:24.847Z">
+<meta property="article:modified_time" content="2021-11-12T05:49:57.212Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta property="article:tag" content="Java基础知识">
 <meta name="twitter:card" content="summary">
@@ -86,9 +87,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -232,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-12 10:08:24" itemprop="dateModified" datetime="2021-11-12T10:08:24+08:00">2021-11-12</time>
+                <time title="修改时间：2021-11-12 13:49:57" itemprop="dateModified" datetime="2021-11-12T13:49:57+08:00">2021-11-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,7 +256,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.3k</span>
+              <span>5.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -308,7 +307,7 @@
 <h5 id="CopyOnWriteArrayList 和 vector 的区别"><a href="#CopyOnWriteArrayList 和 vector 的区别" class="headerlink" title="CopyOnWriteArrayList 和 vector 的区别"></a>CopyOnWriteArrayList 和 vector 的区别 </h5><p>　他们都是并发安全的，但是<strong> 性能上存在一些差异</strong>。</p>
 <p>　Vector 是增删改查方法都加了 synchronized，保证同步，但是每个方法执行的时候都要去获取锁，性能就会大大降低</p>
 <p>　CopyOnWriteArrayList 只是在增删改上加 ReentrantLock 独占锁，但是读操作不加锁，支持并发读，因此它适合读多写少的场景</p>
-<h5 id="ArrayList- 和 -LinkedList"><a href="#ArrayList- 和 -LinkedList" class="headerlink" title="ArrayList 和 LinkedList"></a>ArrayList 和 LinkedList</h5><p>　数据结构：ArrayList 底层是 <strong> 动态数组 </strong>，LinkedList 底层是<strong> 双向链表</strong><br>　随机访问效率：ArrayList 实现了 RandomAccess 接口，只要 List 集合实现了这个接口就能支持快速随机访问。ArrayList 比 LinkedList 在随机访问的时候效率要高，因为 LinkedList 是线性的数据存储方式，所以需要移动指针从前往后依次查找<br>　增加和删除效率：在非首尾的增加和删除操作，LinkedList 要比 ArrayList 效率要高，因为 ArrayList 增删操作要影响数组内的其他数据的下标。<br>　内存空间占用：LinkedList 比 ArrayList 更占内存，因为 LinkedList 的节点除了存储数据，还存储了两个引用，一个指向前一个元素，一个指向后一个元素。<br>　线程安全：二者都不保证线程安全；</p>
+<h5 id="ArrayList- 和 -LinkedList"><a href="#ArrayList- 和 -LinkedList" class="headerlink" title="ArrayList 和 LinkedList"></a>ArrayList 和 LinkedList</h5><p>　数据结构：ArrayList 底层是 <strong> 动态数组 </strong>，LinkedList 底层是<strong> 双向链表 </strong><br>　随机访问效率：ArrayList 实现了<strong>RandomAccess</strong> 接口，只要 List 集合实现了这个接口就能支持快速随机访问。ArrayList 比 LinkedList 在随机访问的时候效率要高，因为 LinkedList 是线性的数据存储方式，所以需要移动指针从前往后依次查找<br>　增加和删除效率：在非首尾的增加和删除操作，LinkedList 要比 ArrayList 效率要高，因为 ArrayList 增删操作要影响数组内的其他数据的下标。<br>　内存空间占用：LinkedList 比 ArrayList 更占内存，因为 LinkedList 的节点除了存储数据，还存储了两个引用，一个指向前一个元素，一个指向后一个元素。<br>　线程安全：二者都不保证线程安全；</p>
 <p>　各自的优缺点：</p>
 <ul>
 <li>ArrayList<ul>
@@ -344,7 +343,13 @@
 </ul>
 <p>　数据覆盖：A、B 都在进行 put 操作，并且 hash 函数计算出的插入下标是相同的，当线程 A 由于时间片耗尽导致被挂起，而线程 B 得到时间片后在该下标处插入了元素，完成了正常的插入，然后线程 A 获得时间片，由于之前已经进行了 hash 碰撞的判断，所有此时不会再进行判断，而是直接进行插入</p>
 <h6 id="转化成红黑树的阈值为什么是 8"><a href="# 转化成红黑树的阈值为什么是 8" class="headerlink" title="转化成红黑树的阈值为什么是 8"></a>转化成红黑树的阈值为什么是 8</h6><p>　红黑树节点大小约为链表节点的 2 倍，在节点太少时，红黑树的查找性能优势并不明显，付出 2 倍空间的代价作者觉得不值得。</p>
-<p>　理想情况下，使用随机的哈希码，节点分布在 hash 桶中的频率遵循泊松分布，按照泊松分布的公式计算，链表中节点个数为 8 时的概率为 6*10^-7^，这个概率足够低了，并且到 8 个节点时，红黑树的性能优势也会开始展现出来，因此 8 是一个较合理的数字<img src="https://api2.mubu.com/v3/document_image/2576d75c-aff8-4c27-989b-294c513ca84a-12259280.jpg" alt="img"></p>
+<p>　理想情况下，使用随机的哈希码，节点分布在 hash 桶中的频率遵循泊松分布，按照泊松分布的公式计算，链表中节点个数为 8 时的概率为 $6*10^{-7}$，这个概率足够低了，并且到 8 个节点时，红黑树的性能优势也会开始展现出来，因此 8 是一个较合理的数字<img src="https://api2.mubu.com/v3/document_image/2576d75c-aff8-4c27-989b-294c513ca84a-12259280.jpg" alt="img"></p>
+<h6 id="HashMap- 与 -HashTable- 有什么区别？"><a href="#HashMap- 与 -HashTable- 有什么区别？" class="headerlink" title="HashMap 与 HashTable 有什么区别？"></a>HashMap 与 HashTable 有什么区别？</h6><p>　底层数据结构：JDK1.8 以后的 HashMap 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</p>
+<p>　初始容量和扩容：</p>
+<p> 　①创建时如果不指定容量初始值，Hashtable <strong>默认的初始大小为 11</strong>，扩充后容量变为原来的<strong>2n+1</strong>。HashMap 默认的初始化大小为 16，扩充后容量变为原来的 2 倍。<img src="https://api2.mubu.com/v3/document_image/377e3347-66e6-4b80-bcc4-830960567b37-12259280.jpg" alt="img"></p>
+<p>　②创建时如果给定了容量初始值，那么 Hashtable 会直接使用传入的参数ｎ，而 HashMap 会将其扩充为最接近ｎ的 2 的幂次方大小，比如 n=13 会自动扩充为 $2^4=16$</p>
+<p>　线程安全：HashMap 是非线程安全的，HashTable 是线程安全的，因为 HashTable 内部的方法基本都经过 synchronized 修饰，<strong>这意味着 HashTable 的效率会比 HashMap 低</strong></p>
+<p>　null 键和 null 值：HashMap 中，null 可以作为键，<strong>这样的键只有一个 </strong>，可以有一个或多个键所对应的值为 null，HashTable <strong> 不支持 null 键和 null 值</strong></p>
 
     </div>
 
@@ -366,7 +371,10 @@
     <a href="/2021/11/09/Java%E5%9F%BA%E7%A1%80/Java%E5%9F%BA%E7%A1%80/" rel="prev" title="Java 基础">
       <i class="fa fa-chevron-left"></i> Java 基础
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/12/MySQL%E7%B4%A2%E5%BC%95/MySQL%E7%B4%A2%E5%BC%95/" rel="next" title="MySQL 索引">
+      MySQL 索引 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -400,6 +408,7 @@
       localStorage.setItem('comments_active', commentClass);
     });
   }
+
 </script>
 
         </div>
@@ -425,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">集合的继承关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%9B%86%E5%90%88"><span class="nav-number">2.</span> <span class="nav-text">线程安全的集合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fail-fast%20%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">fail-fast 机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%20CopyOnWrite%20%E5%AE%B9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">什么是 CopyOnWrite 容器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#CopyOnWrite%20%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">4.1.</span> <span class="nav-text">　CopyOnWrite 的缺点</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CopyOnWriteArrayList%20%E5%92%8C%20vector%20%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">CopyOnWriteArrayList 和 vector 的区别 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ArrayList-%20%E5%92%8C%20-LinkedList"><span class="nav-number">6.</span> <span class="nav-text">ArrayList 和 LinkedList</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HashSet%20%E5%8E%9F%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">HashSet 原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JDK1-7%20%E5%92%8C%20JDK1-8%20%E4%B8%AD%20ArrayList%20%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.</span> <span class="nav-text">JDK1.7 和 JDK1.8 中 ArrayList 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ArrayList%20%E6%89%A9%E5%AE%B9"><span class="nav-number">9.</span> <span class="nav-text">ArrayList 扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#add-E-e-%20%E6%96%B9%E6%B3%95"><span class="nav-number">9.1.</span> <span class="nav-text">add(E e)方法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HashMap"><span class="nav-number">10.</span> <span class="nav-text">HashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">10.1.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%20HashMap%20%E7%9A%84%E5%AE%B9%E9%87%8F%E6%98%AF%202%20%E7%9A%84%E5%B9%82%E6%AC%A1%E6%96%B9"><span class="nav-number">10.2.</span> <span class="nav-text">为什么 HashMap 的容量是 2 的幂次方 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%B0%E5%8A%A8%E5%87%BD%E6%95%B0%E7%94%A8%20key-hashcode-%20%E7%9A%84%E9%AB%98%E4%BD%8E%2016%20%E4%BD%8D%E5%81%9A%E5%BC%82%E6%88%96%E8%BF%90%E7%AE%97%EF%BC%9F"><span class="nav-number">10.3.</span> <span class="nav-text">为什么扰动函数用 key.hashcode()的高低 16 位做异或运算？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#put%20%E8%BF%87%E7%A8%8B"><span class="nav-number">10.4.</span> <span class="nav-text">put 过程 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#get%20%E8%BF%87%E7%A8%8B"><span class="nav-number">10.5.</span> <span class="nav-text">get 过程 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HashMap%20%E5%9C%A8%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">10.6.</span> <span class="nav-text">HashMap 在并发编程环境下有什么问题?</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BD%AC%E5%8C%96%E6%88%90%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%98%88%E5%80%BC%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%208"><span class="nav-number">10.7.</span> <span class="nav-text">转化成红黑树的阈值为什么是 8</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">集合的继承关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%9B%86%E5%90%88"><span class="nav-number">2.</span> <span class="nav-text">线程安全的集合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fail-fast%20%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">fail-fast 机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%20CopyOnWrite%20%E5%AE%B9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">什么是 CopyOnWrite 容器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#CopyOnWrite%20%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">4.1.</span> <span class="nav-text">　CopyOnWrite 的缺点</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CopyOnWriteArrayList%20%E5%92%8C%20vector%20%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">CopyOnWriteArrayList 和 vector 的区别 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ArrayList-%20%E5%92%8C%20-LinkedList"><span class="nav-number">6.</span> <span class="nav-text">ArrayList 和 LinkedList</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HashSet%20%E5%8E%9F%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">HashSet 原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JDK1-7%20%E5%92%8C%20JDK1-8%20%E4%B8%AD%20ArrayList%20%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.</span> <span class="nav-text">JDK1.7 和 JDK1.8 中 ArrayList 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ArrayList%20%E6%89%A9%E5%AE%B9"><span class="nav-number">9.</span> <span class="nav-text">ArrayList 扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#add-E-e-%20%E6%96%B9%E6%B3%95"><span class="nav-number">9.1.</span> <span class="nav-text">add(E e)方法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HashMap"><span class="nav-number">10.</span> <span class="nav-text">HashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">10.1.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%20HashMap%20%E7%9A%84%E5%AE%B9%E9%87%8F%E6%98%AF%202%20%E7%9A%84%E5%B9%82%E6%AC%A1%E6%96%B9"><span class="nav-number">10.2.</span> <span class="nav-text">为什么 HashMap 的容量是 2 的幂次方 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%B0%E5%8A%A8%E5%87%BD%E6%95%B0%E7%94%A8%20key-hashcode-%20%E7%9A%84%E9%AB%98%E4%BD%8E%2016%20%E4%BD%8D%E5%81%9A%E5%BC%82%E6%88%96%E8%BF%90%E7%AE%97%EF%BC%9F"><span class="nav-number">10.3.</span> <span class="nav-text">为什么扰动函数用 key.hashcode()的高低 16 位做异或运算？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#put%20%E8%BF%87%E7%A8%8B"><span class="nav-number">10.4.</span> <span class="nav-text">put 过程 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#get%20%E8%BF%87%E7%A8%8B"><span class="nav-number">10.5.</span> <span class="nav-text">get 过程 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HashMap%20%E5%9C%A8%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">10.6.</span> <span class="nav-text">HashMap 在并发编程环境下有什么问题?</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BD%AC%E5%8C%96%E6%88%90%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%98%88%E5%80%BC%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%208"><span class="nav-number">10.7.</span> <span class="nav-text">转化成红黑树的阈值为什么是 8</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HashMap-%20%E4%B8%8E%20-HashTable-%20%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">10.8.</span> <span class="nav-text">HashMap 与 HashTable 有什么区别？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -441,7 +450,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -454,7 +463,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -503,12 +512,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">32k</span>
+    <span title="站点总字数">47k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">29 分钟</span>
+    <span title="站点阅读时长">43 分钟</span>
 </div>
 
 

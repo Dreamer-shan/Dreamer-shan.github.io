@@ -38,8 +38,14 @@
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/ff1e23ec-c0da-42ae-aee9-861e9bef469f-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/7b7fd4c0-2228-481a-b2db-7c796db28dad-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/36cb3d78-4a3d-4f20-8623-4428282459e5-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/6efef1b2-4243-4001-a783-7de526ec7691-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/7091d500-ea40-48b0-845d-53a8216706da-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/ad4a1aab-b2be-4ac5-86e6-3ecb183eb6e9-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/988ec2a3-f5d6-4803-8e98-ad514a78c448-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/c136d4f6-5ef1-45f0-909b-79232a10d079-12259280.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/900bd114-cfb8-4948-a3f8-f33cafda6b3e-12259280.jpg">
 <meta property="article:published_time" content="2021-10-11T11:50:02.000Z">
-<meta property="article:modified_time" content="2021-11-03T09:00:19.769Z">
+<meta property="article:modified_time" content="2021-11-13T07:40:00.263Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
@@ -89,9 +95,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -239,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-03 17:00:19" itemprop="dateModified" datetime="2021-11-03T17:00:19+08:00">2021-11-03</time>
+                <time title="修改时间：2021-11-13 15:40:00" itemprop="dateModified" datetime="2021-11-13T15:40:00+08:00">2021-11-13</time>
               </span>
 
           
@@ -468,9 +472,27 @@
 <h5 id="后端编译与优化"><a href="# 后端编译与优化" class="headerlink" title="后端编译与优化"></a>后端编译与优化</h5><h6 id="emsp- 编译器和解释器"><a href="#emsp- 编译器和解释器" class="headerlink" title="&emsp; 编译器和解释器"></a>&emsp; 编译器和解释器</h6><p>&emsp;&emsp; 主流的 Java 虚拟机内部都同时包含解释器和编译器，所以说<strong>Java 是半编译半解释的语言</strong>。</p>
 <p>&emsp;&emsp; 编译器和解释器的优势</p>
 <ul>
-<li>当程序需要迅速启动和执行的时候，解释器可以首先发挥作用，省去编译的时间，立即运行。</li>
-<li>当程序启动后，随着时间的推移，编译器逐渐发挥作用，把越来越多的代码编译成本地代码，这样可以减少解释器的中间损耗，获得更高的执行效率。</li>
-<li>当程序运行环境中内存资源限制较大，可以使用解释执行节约内存，反之可以使用编译执行来提升效率。</li>
+<li><p>当程序需要迅速启动和执行的时候，解释器可以首先发挥作用，省去编译的时间，立即运行。</p>
+</li>
+<li><p>当程序启动后，随着时间的推移，编译器逐渐发挥作用，把越来越多的代码编译成本地代码，这样可以减少解释器的中间损耗，获得更高的执行效率。</p>
+</li>
+<li><p>当程序运行环境中内存资源限制较大，可以使用解释执行节约内存，反之可以使用编译执行来提升效率。</p>
+<p><img src="https://api2.mubu.com/v3/document_image/6efef1b2-4243-4001-a783-7de526ec7691-12259280.jpg" alt="img"></p>
+</li>
+</ul>
+<h6 id="方法内联"><a href="# 方法内联" class="headerlink" title="方法内联"></a>方法内联 </h6><p>　其主要目的有两个：一是去除方法调用的成本（如查找方法版本、建立栈帧等）；二是为其他优化建立良好的基础。方法内联膨胀之后可以便于在更大范围上进行后续的优化手段，可以获取更好的优化效果。因此各种编译器一般都会把内联优化放在<strong> 优化序列最靠前的位置<img src="https://api2.mubu.com/v3/document_image/7091d500-ea40-48b0-845d-53a8216706da-12259280.jpg" alt="img"></strong></p>
+<p><img src="https://api2.mubu.com/v3/document_image/ad4a1aab-b2be-4ac5-86e6-3ecb183eb6e9-12259280.jpg" alt="img"></p>
+<h6 id="冗余访问消除"><a href="# 冗余访问消除" class="headerlink" title="冗余访问消除"></a>冗余访问消除</h6><p>　假设代码中间注释掉的“…dostuff…”所代表的操作不会改变 b.value 的值，那么就可以把“z=b.value”替换为“z=y”，因为上一句“y=b.value”已经保证了变量 y 与 b.value 是一致的，这样就可以不再去访问对象 b 的局部变量了</p>
+<p><img src="https://api2.mubu.com/v3/document_image/988ec2a3-f5d6-4803-8e98-ad514a78c448-12259280.jpg" alt="img"></p>
+<h6 id="复写传播"><a href="# 复写传播" class="headerlink" title="复写传播"></a>复写传播</h6><p>　这段程序的逻辑之中没有必要使用一个额外的变量 z，它与变量 y 是完全相等的，因此我们可以使用 y 来代替 z</p>
+<p><img src="https://api2.mubu.com/v3/document_image/c136d4f6-5ef1-45f0-909b-79232a10d079-12259280.jpg" alt="img"></p>
+<h6 id="无用代码消除"><a href="# 无用代码消除" class="headerlink" title="无用代码消除"></a>无用代码消除</h6><p>　无用代码可能是永远不会被执行的代码，也可能是完全没有意义的代码。因此它又被很形象地称为“Dead Code”，在上图中，“y=y”是没有意义的</p>
+<p><img src="https://api2.mubu.com/v3/document_image/900bd114-cfb8-4948-a3f8-f33cafda6b3e-12259280.jpg" alt="img"></p>
+<h5 id="优化技术"><a href="# 优化技术" class="headerlink" title="优化技术"></a>优化技术</h5><h6 id="方法内联 -1"><a href="# 方法内联 -1" class="headerlink" title="方法内联"></a>　方法内联</h6><p>　就是把目标方法的代码原封不动地“复制”到发起调用的方法之中，避免发生真实的方法调用而已</p>
+<h6 id="逃逸分析"><a href="# 逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析 </h6><p>　分析对象动态作用域，当一个对象在方法里面被定义后，它可能被外部方法所引用，<strong> 例如作为调用参数传递到其他方法中，这种称为方法逃逸</strong>；甚至还有可能被外部线程访问到，譬如赋值给可以在其他线程中访问的实例变量，这种称为线程逃逸；从不逃逸、方法逃逸到线程逃逸，称为对象由低到高的不同逃逸程度。</p>
+<p>　<strong>如果能证明一个对象不会逃逸到方法或线程之外 </strong>（换句话说是别的方法或线程无法通过任何途径访问到这个对象），或者逃逸程度比较低（只逃逸出方法而不会逃逸出线程），则可能为这个对象实例<strong> 采取不同程度的优化</strong>，如：</p>
+<ul>
+<li>栈上分配：一般情况下，在 Java 虚拟机中是在堆上分配创建对象的内存空间，GC 时会回收堆中不再使用的对象，但回收动作无论是标记筛选出可回收对象，还是回收和整理内存，都需要耗费大量资源。<strong>如果确定一个对象不会逃逸出线程之外，那让这个对象在栈上分配内存将会是一个很不错的主意，对象所占用的内存空间就可以随栈帧出栈而销毁。</strong>在一般应用中，完全不会逃逸的局部对象和不会逃逸出线程的对象所占的比例是很大的，如果能使用栈上分配，那 <strong> 大量的对象就会随着方法的结束而自动销毁了，垃圾收集子系统的压力将会下降很多</strong>。栈上分配可以支持方法逃逸，但不能支持线程逃逸。</li>
 </ul>
 
     </div>
@@ -530,6 +552,7 @@
       localStorage.setItem('comments_active', commentClass);
     });
   }
+
 </script>
 
         </div>
@@ -555,7 +578,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%20%E5%92%8C%20C-%20%E7%9A%84%E4%B8%80%E4%B8%AA%E9%87%8D%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">Java 和 C++ 的一个重要区别 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%20JVM%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要 JVM？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JVM%20%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">JVM 运行时数据区 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#new%20%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">new 一个对象的时候会发生什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%9A%E4%BD%8D"><span class="nav-number">5.</span> <span class="nav-text">对象的访问定位</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%90%86%E8%AE%BA%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收理论和垃圾回收器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%B7%B2%E6%AD%BB%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">对象已死？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BD%9C%E4%B8%BA%20GC-Roots%20%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">8.</span> <span class="nav-text">可作为 GC Roots 的对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%8D%E8%B0%88%E5%BC%95%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text">再谈引用 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#finalize-%20%E6%96%B9%E6%B3%95"><span class="nav-number">10.</span> <span class="nav-text">finalize()方法 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9E%E6%94%B6%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-number">11.</span> <span class="nav-text">回收方法区 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E5%AE%9A%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%9E%8B%E6%98%AF%E5%90%A6%E5%B1%9E%E4%BA%8E%E2%80%9C%E4%B8%8D%E5%86%8D%E8%A2%AB%E4%BD%BF%E7%94%A8%E7%9A%84%E7%B1%BB%E2%80%9D%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-number">12.</span> <span class="nav-text">判定一个类型是否属于“不再被使用的类”的条件 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%87%A0%E4%B8%AA%E5%81%87%E8%AF%B4%20-%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%89%8D%E6%8F%90%20-%EF%BC%9A"><span class="nav-number">13.</span> <span class="nav-text"> 垃圾回收的几个假说(垃圾回收的前提)：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%20-%20%E6%B8%85%E9%99%A4"><span class="nav-number">14.</span> <span class="nav-text">标记 - 清除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%20-%20%E5%A4%8D%E5%88%B6"><span class="nav-number">15.</span> <span class="nav-text">标记 - 复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%20-%20%E6%95%B4%E7%90%86"><span class="nav-number">16.</span> <span class="nav-text">标记 - 整理 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">17.</span> <span class="nav-text">并发的可达性分析 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">18.</span> <span class="nav-text">经典垃圾收集器 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#emsp-CMS%EF%BC%88%E6%A0%87%E8%AE%B0%20-%20%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95%EF%BC%89"><span class="nav-number">18.1.</span> <span class="nav-text"> CMS（标记 - 清除算法）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#G1%20%E6%94%B6%E9%9B%86%E5%99%A8%EF%BC%88%E6%A0%87%E8%AE%B0%20-%20%E6%95%B4%E7%90%86%EF%BC%8C%E4%B8%8D%E4%BC%9A%E4%BA%A7%E7%94%9F%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E7%A2%8E%E7%89%87%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">18.2.</span> <span class="nav-text">G1 收集器（标记 - 整理，不会产生内存空间碎片问题）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-6-2-ZGC%20%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">18.3.</span> <span class="nav-text">3.6.2 ZGC 收集器</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="nav-number">19.</span> <span class="nav-text">内存分配策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%AF%B9%E8%B1%A1%E5%B9%B4%E9%BE%84%E5%88%A4%E5%AE%9A"><span class="nav-number">20.</span> <span class="nav-text">动态对象年龄判定 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E6%8B%85%E4%BF%9D"><span class="nav-number">21.</span> <span class="nav-text">空间分配担保</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="nav-number">22.</span> <span class="nav-text">类加载机制</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="nav-number">22.1.</span> <span class="nav-text">类加载过程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B"><span class="nav-number">22.2.</span> <span class="nav-text">双亲委派模型 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E7%9A%84%E6%97%B6%E6%9C%BA%EF%BC%88%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E5%AF%B9%E7%B1%BB%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%89"><span class="nav-number">23.</span> <span class="nav-text">类加载的时机（什么时候会对类进行初始化）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B"><span class="nav-number">24.</span> <span class="nav-text">泛型 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Java%20%E4%B8%8E%20C-%20%E7%9A%84%E6%B3%9B%E5%9E%8B"><span class="nav-number">24.1.</span> <span class="nav-text">Java 与 C# 的泛型 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="nav-number">25.</span> <span class="nav-text">后端编译与优化</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#emsp-%20%E7%BC%96%E8%AF%91%E5%99%A8%E5%92%8C%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="nav-number">25.1.</span> <span class="nav-text">  编译器和解释器</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%20%E5%92%8C%20C-%20%E7%9A%84%E4%B8%80%E4%B8%AA%E9%87%8D%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">Java 和 C++ 的一个重要区别 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%20JVM%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要 JVM？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JVM%20%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">JVM 运行时数据区 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#new%20%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">new 一个对象的时候会发生什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%9A%E4%BD%8D"><span class="nav-number">5.</span> <span class="nav-text">对象的访问定位</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%90%86%E8%AE%BA%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收理论和垃圾回收器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%B7%B2%E6%AD%BB%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">对象已死？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BD%9C%E4%B8%BA%20GC-Roots%20%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">8.</span> <span class="nav-text">可作为 GC Roots 的对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%8D%E8%B0%88%E5%BC%95%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text">再谈引用 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#finalize-%20%E6%96%B9%E6%B3%95"><span class="nav-number">10.</span> <span class="nav-text">finalize()方法 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9E%E6%94%B6%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-number">11.</span> <span class="nav-text">回收方法区 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E5%AE%9A%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%9E%8B%E6%98%AF%E5%90%A6%E5%B1%9E%E4%BA%8E%E2%80%9C%E4%B8%8D%E5%86%8D%E8%A2%AB%E4%BD%BF%E7%94%A8%E7%9A%84%E7%B1%BB%E2%80%9D%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-number">12.</span> <span class="nav-text">判定一个类型是否属于“不再被使用的类”的条件 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%87%A0%E4%B8%AA%E5%81%87%E8%AF%B4%20-%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E5%89%8D%E6%8F%90%20-%EF%BC%9A"><span class="nav-number">13.</span> <span class="nav-text"> 垃圾回收的几个假说(垃圾回收的前提)：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%20-%20%E6%B8%85%E9%99%A4"><span class="nav-number">14.</span> <span class="nav-text">标记 - 清除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%20-%20%E5%A4%8D%E5%88%B6"><span class="nav-number">15.</span> <span class="nav-text">标记 - 复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%20-%20%E6%95%B4%E7%90%86"><span class="nav-number">16.</span> <span class="nav-text">标记 - 整理 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">17.</span> <span class="nav-text">并发的可达性分析 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">18.</span> <span class="nav-text">经典垃圾收集器 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#emsp-CMS%EF%BC%88%E6%A0%87%E8%AE%B0%20-%20%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95%EF%BC%89"><span class="nav-number">18.1.</span> <span class="nav-text"> CMS（标记 - 清除算法）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#G1%20%E6%94%B6%E9%9B%86%E5%99%A8%EF%BC%88%E6%A0%87%E8%AE%B0%20-%20%E6%95%B4%E7%90%86%EF%BC%8C%E4%B8%8D%E4%BC%9A%E4%BA%A7%E7%94%9F%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E7%A2%8E%E7%89%87%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">18.2.</span> <span class="nav-text">G1 收集器（标记 - 整理，不会产生内存空间碎片问题）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-6-2-ZGC%20%E6%94%B6%E9%9B%86%E5%99%A8"><span class="nav-number">18.3.</span> <span class="nav-text">3.6.2 ZGC 收集器</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="nav-number">19.</span> <span class="nav-text">内存分配策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%AF%B9%E8%B1%A1%E5%B9%B4%E9%BE%84%E5%88%A4%E5%AE%9A"><span class="nav-number">20.</span> <span class="nav-text">动态对象年龄判定 </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E6%8B%85%E4%BF%9D"><span class="nav-number">21.</span> <span class="nav-text">空间分配担保</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="nav-number">22.</span> <span class="nav-text">类加载机制</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="nav-number">22.1.</span> <span class="nav-text">类加载过程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B"><span class="nav-number">22.2.</span> <span class="nav-text">双亲委派模型 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E7%9A%84%E6%97%B6%E6%9C%BA%EF%BC%88%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E5%AF%B9%E7%B1%BB%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%89"><span class="nav-number">23.</span> <span class="nav-text">类加载的时机（什么时候会对类进行初始化）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B"><span class="nav-number">24.</span> <span class="nav-text">泛型 </span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Java%20%E4%B8%8E%20C-%20%E7%9A%84%E6%B3%9B%E5%9E%8B"><span class="nav-number">24.1.</span> <span class="nav-text">Java 与 C# 的泛型 </span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E7%BC%96%E8%AF%91%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="nav-number">25.</span> <span class="nav-text">后端编译与优化</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#emsp-%20%E7%BC%96%E8%AF%91%E5%99%A8%E5%92%8C%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="nav-number">25.1.</span> <span class="nav-text">  编译器和解释器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%86%85%E8%81%94"><span class="nav-number">25.2.</span> <span class="nav-text">方法内联 </span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%86%97%E4%BD%99%E8%AE%BF%E9%97%AE%E6%B6%88%E9%99%A4"><span class="nav-number">25.3.</span> <span class="nav-text">冗余访问消除</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD"><span class="nav-number">25.4.</span> <span class="nav-text">复写传播</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%97%A0%E7%94%A8%E4%BB%A3%E7%A0%81%E6%B6%88%E9%99%A4"><span class="nav-number">25.5.</span> <span class="nav-text">无用代码消除</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF"><span class="nav-number">26.</span> <span class="nav-text">优化技术</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%86%85%E8%81%94%20-1"><span class="nav-number">26.1.</span> <span class="nav-text">　方法内联</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90"><span class="nav-number">26.2.</span> <span class="nav-text">逃逸分析 </span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -571,7 +594,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -584,7 +607,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -633,12 +656,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">32k</span>
+    <span title="站点总字数">47k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">29 分钟</span>
+    <span title="站点阅读时长">43 分钟</span>
 </div>
 
 
