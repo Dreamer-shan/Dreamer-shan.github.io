@@ -403,7 +403,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-18 19:30:44" itemprop="dateModified" datetime="2021-11-18T19:30:44+08:00">2021-11-18</time>
+                <time title="修改时间：2021-12-08 13:05:31" itemprop="dateModified" datetime="2021-12-08T13:05:31+08:00">2021-12-08</time>
               </span>
 
           <br>
@@ -431,115 +431,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h5 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h5><h6 id="常见字段"><a href="# 常见字段" class="headerlink" title="常见字段"></a>常见字段</h6><p>　host：客户端发送请求时，⽤来指定服务器的域名。</p>
+          <h5 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h5><h6 id="常见字段"><a href="#常见字段" class="headerlink" title="常见字段"></a>常见字段</h6><p>　host：客户端发送请求时，⽤来指定服务器的域名。</p>
 <p>　Content-Length：服务器在返回数据时，该字段表明本次回应的数据长度</p>
 <p>　Connection：最常⽤于客户端要求服务器使⽤ TCP 持久连接，</p>
-<p>　Content-Type：⽤于服务器回应时，告诉客户端，本次数据是什么格式，如 text/html; charset=utf-8</p>
+<p>　Content-Type：⽤于服务器回应时，告诉客户端，本次数据是什么格式，如text/html; charset=utf-8</p>
 <p>　Content-Encoding：数据的压缩⽅法。表示服务器返回的数据使⽤了什么压缩格式，如 gzip</p>
-<h6 id="get 和 post 的区别"><a href="#get 和 post 的区别" class="headerlink" title="get 和 post 的区别"></a>get 和 post 的区别 </h6><p>　get 方法是请求从服务器获取资源，是<strong> 安全且幂等 </strong> 的，post 向 URI 指定的资源提交数据，数据就放在报文的 body 里，会修改服务器上的资源，所以是 <strong> 不安全 </strong> 的，且多次提交数据就会创建多个资源，所以 <strong> 不是幂等 </strong> 的</p>
-<h6 id="双刃剑"><a href="# 双刃剑" class="headerlink" title="双刃剑"></a>双刃剑</h6><p>　HTTP 协议有优缺点⼀体的双刃剑，优点是无状态、明文传输，缺点是不安全</p>
-<p>　无状态的好处，因为服务器不会去记忆 HTTP 的状态，所以 <strong> 不需要额外的资源来记录状态信息，这能减轻服务器的负担</strong>，能够把更多的 CPU 和内存⽤来对外提供服务</p>
-<p>　无状态的坏处，服务器没有记忆能力，它在完成有关联性的操作时会⾮常麻烦。例如登录 -&gt; 添加购物⻋-&gt; 下单 -&gt; 结算 -&gt;⽀付，这系列操作都要知道⽤户身份才⾏。但服务器不知道这些请求是有关联的，每次都要问⼀遍身份信息</p>
-<p>　明文传输：通过浏览器的 F12 控制台或 Wireshark 抓包都可以直接肉眼查看，为我们调试⼯作带了极大的便利，缺点是不安全</p>
-<p>　不安全：1. 明文 (不加密) 可能会被窃听 2. 不验证通信方的身份，因此有可能遭遇伪装 3. 无法证明报文的完整性，报文有可能已遭篡改</p>
-<h6 id="HTTP1-1"><a href="#HTTP1-1" class="headerlink" title="HTTP1.1"></a>HTTP1.1</h6><p>　长连接：HTTP1.0 没发起一个请求就要重新建立一次 TCP 连接，所以通信开销较大。HTTP1.1 提出了长连接的通信方式，减轻了服务端的压力</p>
-<p>　管道网络传输：在同⼀个 TCP 连接中，客户端可以发起多个请求，只要第⼀个请求发出去了，不必等其回来，就可以发第⼆个请求出去，可以减少整体的响应时间</p>
-<p>　队头阻塞问题：顺序发送的请求序列中的⼀个请求因为某种原因被阻塞时，在后面排队的所有请求也⼀同被阻塞了，会导致客户端⼀直请求不到数据</p>
-<h6 id="HTTPS 和 HTTP 的区别"><a href="#HTTPS 和 HTTP 的区别" class="headerlink" title="HTTPS 和 HTTP 的区别"></a>HTTPS 和 HTTP 的区别</h6><p>　1.HTTP 信息是明⽂传输，存在安全问题。HTTPS 则解决 HTTP 不安全的缺陷，在 TCP 和 HTTP ⽹络层之间加⼊了 SSL/TLS 安全协议，使得报文能够加密传输。</p>
-<p>　2. HTTP 连接建立相对简单， TCP 三次握手之后便可进⾏ HTTP 的报文传输。而 HTTPS 在 TCP 三次握手之后，还要进行 SSL/TLS 的握⼿过程，才可以进入加密报⽂传输阶段。</p>
-<p>　3.HTTP 端口号是 80，HTTPS 端口号是 443</p>
-<p>　4.HTTPS 协议需要向 CA（证书权威机构）申请数字证书，来保证服务器的身份是可信的</p>
-<h6 id="对称加密"><a href="# 对称加密" class="headerlink" title="对称加密"></a>对称加密 </h6><p>　加密密钥和解密密钥使用相同的密码体制，如 DES。问题在于密钥分配：使用密钥分配中心 KDC 会使得网络成本增加，不使用 KDC 的话会有<strong> 密钥被劫持的风险</strong>。</p>
-<p><center>加密 　$Y=E_{PK_B}(X)$</center>　</p>
-<h6 id="非对称加密"><a href="# 非对称加密" class="headerlink" title="非对称加密"></a>非对称加密 </h6><p>　公钥 $PK$ 公开，私钥 $SK$ 保密，如 $RSA$，发送者 A 用 B 的公钥 $PK_B$ 通过 $E$ 运算对明文 X 加密，得出密文 $Y$，发送给 B，B 用自己是私钥 $SK_B$ 通过 $D$ 运算进行解密，恢复出明文。<strong> 非对称加密算法的开销较大 </strong>，在可见的将来还不会放弃传统加密算法，<strong> 解决了密钥交换问题但速度慢</strong></p>
-<p><center>　解密 　$D_{SK_B}=D_{SK_B}(E_{PK_B}(X))$</center>　</p>
-<h6 id="HTTPS- 解决了哪些风险？"><a href="#HTTPS- 解决了哪些风险？" class="headerlink" title="HTTPS 解决了哪些风险？"></a>HTTPS 解决了哪些风险？</h6><p>　混合加密实现信息的机密性，解决了窃听的风险。摘要算法来实现完整性，解决了篡改的风险。 将服务器公钥放入到数字证书中，解决了冒充的风险</p>
-<p>　混合加密：先使用 <strong> 对称加密算法对数据 </strong> 进行加密，然后使用非对称加密算法对 <strong> 对称加密的密钥 </strong> 进行非对称加密，之后再把加密后的密钥和加密后的数据发送给接收方</p>
-<p>HTTPS 是如何建立连接的？</p>
-<p>　SSL/TLS 的「握⼿阶段」涉及四次通信</p>
-<ul>
-<li>1. 由客户端向服务器发起 <strong> 加密通信请求</strong>，也就是 ClientHello 请求<ul>
-<li>客户端⽀持的 SSL/TLS 协议版本，如 TLS 1.2 版本</li>
-<li>客户端生成的随机数（ Client Random ），后面用于 <strong> 生成会话秘钥</strong></li>
-<li>客户端⽀持的密码套件列表，如 RSA 加密算法</li>
-</ul>
-</li>
-<li>2. 服务器收到客户端请求后，向客户端发出响应，也就是 SeverHello<ul>
-<li>确认 SSL/ TLS 协议版本，如果浏览器不⽀持，则关闭加密通信。 </li>
-<li>服务器⽣产的随机数（ Server Random ），后面用于生成 <strong> 会话秘钥</strong></li>
-<li>确认的密码套件列表，如 RSA 加密算法</li>
-<li>服务器的数字证书</li>
-</ul>
-</li>
-<li>3. 客户端通过浏览器或者操作系统中的 CA 公钥，确认服务器的数字证书的真实性。 如果证书没有问题，客户端会从数字证书中取出服务器的公钥，然后使⽤它加密报⽂，向服务器发送如下信息<ul>
-<li>⼀个随机数（ pre-master key ）。该随机数会被服务器公钥加密</li>
-<li>加密通信算法改变通知，表示随后的信息都将用 <strong> 会话秘钥 </strong> 加密通信</li>
-<li>服务器握⼿结束通知，表示服务器的握手阶段已经结束。这⼀项同时把之前所有内容的发⽣的数据做个摘要，⽤来供客户端校验</li>
-</ul>
-</li>
-<li>4. 服务器的最后回应，服务器收到客户端的第三个随机数（ pre-master key ）之后，通过协商的加密算法，计算出本次通信的 <strong> 会话秘钥</strong><ul>
-<li>加密通信算法改变通知，表示随后的信息都将⽤「会话秘钥」加密通信。 </li>
-<li>服务器握⼿结束通知，表示服务器的握手阶段已经结束。这⼀项同时把之前所有内容的发⽣的数据做个摘要，⽤来供客户端校验</li>
-</ul>
-</li>
-</ul>
-<h6 id="HTTP-1-1、HTTP-2、HTTP-3- 演变"><a href="#HTTP-1-1、HTTP-2、HTTP-3- 演变" class="headerlink" title="HTTP/1.1、HTTP/2、HTTP/3 演变"></a>HTTP/1.1、HTTP/2、HTTP/3 演变</h6><p>　HTTP/1.1 相比 HTTP/1.0：TCP 长连接、管道网络传输，即只要第⼀个请求发出去了，不必等其回来，就可以发第⼆个请求出去，可以 减少整体的响应时间</p>
-<p>　HTTP/1.1 的缺陷</p>
-<ul>
-<li>请求 / 响应头部（Header）未经压缩就发送，首部信息越多延迟越大。只能压缩 Body 的部分；</li>
-<li>发送冗长的首部。每次互相发送相同的首部造成的浪费较多</li>
-<li>服务器是按请求的顺序响应的，如果服务器响应慢，会招致客户端⼀直请求不到数据，也就是 <strong> 队头阻塞</strong></li>
-<li>没有请求优先级控制</li>
-<li>请求只能从客户端开始，服务器只能被动响应。</li>
-</ul>
-<p>　HTTP2 优化</p>
-<p>　头部压缩：同时发出多个请求，它们的头部是⼀样的或是相似的，此时协议会帮你消除重复的部分，这就是所谓的 HPACK 算法，在 <strong> 客户端和服务器同时维护⼀张头信息表 </strong>，所有字段都会存⼊这个表，⽣成⼀个索引号，<strong> 以后就不发送同样字段了，</strong>只发送索引号，这样就提⾼速度了。</p>
-<p>　二进制格式：HTTP/2 不再像 HTTP/1.1 里的纯文本形式的报文，⽽是全面采用了⼆进制格式，头信息和数据体都是⼆进制，并且统称为帧（frame）：头信息帧和数据帧</p>
-<p><img src="https://api2.mubu.com/v3/document_image/eec7b738-6ed1-4d2f-b462-91a09602b6ca-12259280.jpg" alt="img"></p>
-<p>　这样虽然对人不友好，但是对计算机友好，收到报⽂后，无需再将明文的报文转成⼆进制，而是直接解析⼆进制报文，这增加了数据传输的效率。</p>
-<p>　多路复用：HTTP/2 可以在⼀个连接中并发多个请求或回应，⽽不用按照顺序⼀⼀对应。 移除了 HTTP/1.1 中的串行请求，不需要排队等待，也就不会再出现「队头阻塞」问题，降低了延迟，提高了连接的利用率。</p>
-<p>　 举例来说，在⼀个 TCP 连接⾥，服务器收到了客户端 A 和 B 的两个请求，如果发现 A 处理过程⾮常耗时，于是就 回应 A 请求已经处理好的部分，接着回应 B 请求，完成后，再回应 A 请求剩下的部分。</p>
-<p>　HTTP2 缺陷：多个 HTTP 请求在复⽤⼀个 TCP 连接，下层的 TCP 协议是不知道有多少个 HTTP 请求 的。所以⼀旦发⽣了丢包现象，就会触发 TCP 的重传机制，这样在⼀个 TCP 连接中的所有的 HTTP 请求都必须等待这个丢了的包被重传回来。这都是基于 TCP 传输层的问题，所以 HTTP/3 把 HTTP 下层的 TCP 协议改成了 QUIC，UDP 发⽣是不管顺序，也不管丢包的，所以不会出现 HTTP/1.1 的队头阻塞 和 HTTP/2 的⼀个丢包全部重传问题，基于 UDP 的 QUIC 协议 可以实现类似 TCP 的可靠性传输</p>
-<h6 id="HTTP-1-1 优化"><a href="#HTTP-1-1 优化" class="headerlink" title="HTTP/1.1 优化"></a>HTTP/1.1 优化</h6><p>​    1. 短连接改成长连接</p>
-<p>　2. 尽量避免发送 HTTP 请求：对于⼀些具有重复性的 HTTP 请求，如每次请求得到的数据都⼀样的，我们可以把这对 <strong> 请求 - 响应 </strong> 的数据都缓存在本地，那么下次就直接读取本地的数据，不必在通过网络获取服务器的响应了</p>
-<p>　3. 减少重定向请求次数：服务器上的⼀个资源可能由于迁移、维护等原因从 url1 移⾄ url2 后，⽽客户端不知情，它还是继续请求 url1，这 时服务器不能粗暴地返回错误，⽽是通过 302 响应码和 Location 头部，告诉客户端该资源已经迁移到 url2 了，于是客户端需要再发送 url2 请求以获得服务器的资源。解决方法：<font color="red">重定向的工作交由代理服务器完成，就能减少 HTTP 请求次数了</font>&gt;</p>
-<p><img src="https://api2.mubu.com/v3/document_image/aff7a832-be69-458a-832e-3b0f7134d052-12259280.jpg" alt="img"></p>
-<p>　4. 延迟发送请求：⼀般 HTML ⾥会含有很多 HTTP 的 URL，当前不需要的资源，我们没必要也获取过来， 于是可以通过 <strong> 按需获取 </strong> 的⽅式，来减少第⼀时间的 HTTP 请求次数。请求网页的时候，没必要把全部资源都获取到，只获取当前用户所看到的页面资源，当⽤户向下滑动页面的时候，再向服务器获取接下来的资源，这样就达到了延迟发送请求的效果</p>
-<p>　5. 使用合适的压缩算法来降低传输资源的大小</p>
-<h5 id="TCP 协议"><a href="#TCP 协议" class="headerlink" title="TCP 协议"></a>TCP 协议 </h5><h6 id="TCP 最大连接数是多少？"><a href="#TCP 最大连接数是多少？" class="headerlink" title="TCP 最大连接数是多少？"></a>　TCP 最大连接数是多少？</h6><p>　　理论上，服务端最大并发 TCP 连接数是客户端 IP 数×客户端端口数，即 $2^{32}<em>2^{16}=2^{48}$, 但实际上连接数不能达到理论上限。一是因为<strong> 文件描述符限制</strong>，Socket 都是文件，所以首先要通过 ulimit 配置文件描述符的数⽬，二是<em>* 内存限制</em></em>，每个 TCP 连接都要占用内存</p>
-<h6 id="TCP 为什么需要三次握手？"><a href="#TCP 为什么需要三次握手？" class="headerlink" title="TCP 为什么需要三次握手？"></a>　TCP 为什么需要三次握手？</h6><p><img src="https://api2.mubu.com/v3/document_image/84630bb9-1d87-4840-a437-c73d05351558-12259280.jpg" alt="img"></p>
-<p>　1. 阻止重复历史连接的初始化（主要原因）　2. 同步双方的初始序列号　3. 避免资源浪费</p>
-<p>　1)⼀个旧 SYN 报文比最新的 SYN  报文早到达了服务端； 那么此时服务端就会回⼀个 SYN + ACK 报⽂给客户端； 客户端收到后可以根据自身的上下文，判断这是⼀个历史连接（序列号过期或超时），那么客户端就会发送 RST 报文给服务端，表示中止这⼀次连接</p>
-<p><img src="https://api2.mubu.com/v3/document_image/430ff806-e420-4450-ba9f-f15b07146f92-12259280.jpg" alt="img"></p>
-<p> 如果是两次握手连接，就不能判断当前连接是否是历史连接，三次握手则可以在客户端准备发送第三次报文时，客户端因有足够的上下⽂来判断当前连接是否是历史连接：</p>
-<ul>
-<li>如果是历史连接（序列号过期或超时），则第三次握⼿发送的报⽂是 <strong>RST</strong> 报文，以此中止历史连接；</li>
-<li>如果不是历史连接，则第三次发送的报⽂是 <strong>ACK</strong> 报文，通信双⽅就会成功建立连接；</li>
-</ul>
-<p>2）两次握手只保证了⼀方的初始序列号能被对方成功接收，没办法保证双方的初始序列号都能被确认接收</p>
-<p>3）如果客户端的 SYN 阻塞了，重复发送多次 SYN 报文，那么服务器在收到请求后就会建立多个冗余的无效连接，造成不必要的资源浪费</p>
-<h6 id="为什么 -TIME-WAIT- 等待的时间是 -2MSL？"><a href="# 为什么 -TIME-WAIT- 等待的时间是 -2MSL？" class="headerlink" title="为什么 TIME_WAIT 等待的时间是 2MSL？"></a>为什么 TIME_WAIT 等待的时间是 2MSL？</h6><p>　当 TCP 执行一个主动关闭，并发回最后一个 ACK，该连接必须在 TIME_WAIT 状态停留的时间为 2 倍的 MSL。这样可让 TCP 再次发送最后的 ACK 以防这个 ACK 丢失</p>
-<h6 id="为什么需要 -TIME-WAIT- 状态？"><a href="# 为什么需要 -TIME-WAIT- 状态？" class="headerlink" title="为什么需要 TIME_WAIT 状态？"></a>为什么需要 TIME_WAIT 状态？</h6><p>　主动发起关闭连接的⼀方，才会有 TIME-WAIT 状态</p>
-<p>　1. 防止收到旧连接的数据包，图中黄色框服务端在关闭连接之前发送的 SEQ = 301 报⽂，被网络延迟了。 这时有相同端⼝的 TCP 连接被复用后，被延迟的 SEQ = 301 抵达了客户端，那么客户端是有可能正常接收这个过期的报文，这就会产⽣数据错乱等严重的问题。<strong>经过 2MSL 这个时间，足以让两个方向上的数据包都被丢弃，使得原来连接的数据包在网络中都自然消失，再出现的数据包一定都是新建立连接所产生的。</strong></p>
-<p><img src="https://api2.mubu.com/v3/document_image/c9081c93-93db-429f-94a1-03dd0546db8d-12259280.jpg" alt="img"></p>
-<p>　2. 保证连接正确关闭，如果第四次挥手的 ACK 报文在网络中丢失了，没有 TIME_WAIT 状态而是直接进入 CLOSED 状态的话，那么服务端一直处于 LAST_ACK 状态，导致连接不能正常关闭</p>
-<h6 id="TIME-WAIT- 过多有什么危害？"><a href="#TIME-WAIT- 过多有什么危害？" class="headerlink" title="TIME_WAIT 过多有什么危害？"></a>TIME_WAIT 过多有什么危害？</h6><p>　如果服务器有处于 TIME-WAIT 状态的 TCP，则说明是由服务器方主动发起的断开请求</p>
-<p>　危害：1. 内存资源占用　2. 端口资源的占用</p>
-<p>　如果客户端的 TIME_WAIT 状态过多，占满了所有端口资源，则会导致无法创建新连接</p>
-<p>　解决：修改内核参数</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_tw_reuse = <span class="number">1</span> 表示开启重用。允许将 TIME-WAIT sockets 重新用于新的 TCP 连接，默认为<span class="number">0</span>，表示关闭；</span><br><span class="line">net.ipv4.tcp_tw_recycle = <span class="number">1</span> 表示开启 TCP 连接中 TIME-WAIT sockets 的快速回收，默认为<span class="number">0</span>，表示关闭。</span><br><span class="line">net.ipv4.tcp_fin_timeout 修改系默认的 TIMEOUT 时间</span><br></pre></td></tr></table></figure>
-<h6 id="半连接队列和全连接队列？"><a href="# 半连接队列和全连接队列？" class="headerlink" title="半连接队列和全连接队列？"></a>半连接队列和全连接队列？</h6><p>　在 TCP 三次握手的时候，Linux 内核会维护两个队列，分别是半连接队列 (SYN 队列) 和全连接队列（accept 队列）。</p>
-<p>　服务端收到客户端发起的 SYN 请求后，内核会把该连接存储到半连接队列，并向客户端响应 SYN+ACK，接着客户端会返回 ACK，服务端收到第三次握⼿的 ACK 后，内核会把连接从半连接队列移除，然后创建新的完全的连接，并将其添加到 accept 队列，等待进程调用 accept 函数时把连接取出来</p>
-<p>　当服务端并发处理大量请求时，如果 TCP 全连接队列过小，就容易溢出。发⽣ TCP 全连接队溢出的时候，后续的请求就会被丢弃，这样就会出现服务端请求数量上不去的现象。</p>
-<p>　增大 TCP 半连接队列的方式是增大 /proc/sys/net/ipv4/tcp_max_syn_backlog</p>
-<p>　增大 TCP 全连接队列的方式是增大 listen() 函数中的 backlog</p>
-<h5 id="键入网址到网页显示，期间发生了什么？"><a href="# 键入网址到网页显示，期间发生了什么？" class="headerlink" title="键入网址到网页显示，期间发生了什么？"></a>键入网址到网页显示，期间发生了什么？</h5><p>1. 解析 URL，确定 Web 服务器和文件名，根据这些信息来生成 HTTP 请求消息</p>
-<p>2. 应用层：查询服务器域名对应的 IP 地址，此步骤需要 DNS 域名解析。</p>
-<p>3. 运输层：HTTP 是基于 TCP 的，已知 IP 地址后就可以建立 TCP 连接（三次握手），建立连接后，TCP 报⽂中的数据部分就是存放 HTTP 头部 + 数据</p>
-<p>4. 网络层：IP 协议封装源 IP 地址和目的 IP 地址，通过路由器进行路由，生成了 IP 头部之后，接下来⽹络包还需要在 IP 头部的前面加上 MAC 头部</p>
-<p>5. 链路层：根据 MAC 地址进行寻址，网卡驱动从 IP 模块获取到包之后，会将其复制到网卡内的缓存区中，接着会在其开头加上报头和起始帧分界符， 在末尾加上用于检测错误的帧校验序列</p>
-<p><img src="https://api2.mubu.com/v3/document_image/5c909a03-fb39-4f2a-9eb8-7305ce5b2557-12259280.jpg" alt="img"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/17/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

@@ -23,12 +23,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="HTTP常见字段　host：客户端发送请求时，⽤来指定服务器的域名。 　Content-Length：服务器在返回数据时，该字段表明本次回应的数据长度 　Connection：最常⽤于客户端要求服务器使⽤ TCP 持久连接， 　Content-Type：⽤于服务器回应时，告诉客户端，本次数据是什么格式，如 text&#x2F;html; charset&#x3D;utf-8 　Content-Encoding：数据的">
+  <meta name="description" content="HTTP常见字段　host：客户端发送请求时，⽤来指定服务器的域名。 　Content-Length：服务器在返回数据时，该字段表明本次回应的数据长度 　Connection：最常⽤于客户端要求服务器使⽤ TCP 持久连接， 　Content-Type：⽤于服务器回应时，告诉客户端，本次数据是什么格式，如text&#x2F;html; charset&#x3D;utf-8 　Content-Encoding：数据的压">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图解网络读书笔记">
 <meta property="og:url" content="http://example.com/2021/11/17/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Dreamer-shan&#39;s Blog">
-<meta property="og:description" content="HTTP常见字段　host：客户端发送请求时，⽤来指定服务器的域名。 　Content-Length：服务器在返回数据时，该字段表明本次回应的数据长度 　Connection：最常⽤于客户端要求服务器使⽤ TCP 持久连接， 　Content-Type：⽤于服务器回应时，告诉客户端，本次数据是什么格式，如 text&#x2F;html; charset&#x3D;utf-8 　Content-Encoding：数据的">
+<meta property="og:description" content="HTTP常见字段　host：客户端发送请求时，⽤来指定服务器的域名。 　Content-Length：服务器在返回数据时，该字段表明本次回应的数据长度 　Connection：最常⽤于客户端要求服务器使⽤ TCP 持久连接， 　Content-Type：⽤于服务器回应时，告诉客户端，本次数据是什么格式，如text&#x2F;html; charset&#x3D;utf-8 　Content-Encoding：数据的压">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/eec7b738-6ed1-4d2f-b462-91a09602b6ca-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/aff7a832-be69-458a-832e-3b0f7134d052-12259280.jpg">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/c9081c93-93db-429f-94a1-03dd0546db8d-12259280.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/5c909a03-fb39-4f2a-9eb8-7305ce5b2557-12259280.jpg">
 <meta property="article:published_time" content="2021-11-17T01:43:39.000Z">
-<meta property="article:modified_time" content="2021-11-18T11:30:44.911Z">
+<meta property="article:modified_time" content="2021-12-08T05:05:31.277Z">
 <meta property="article:author" content="Dreamer-shan">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-18 19:30:44" itemprop="dateModified" datetime="2021-11-18T19:30:44+08:00">2021-11-18</time>
+                <time title="修改时间：2021-12-08 13:05:31" itemprop="dateModified" datetime="2021-12-08T13:05:31+08:00">2021-12-08</time>
               </span>
 
           
@@ -271,9 +271,10 @@
 <p>　Connection：最常⽤于客户端要求服务器使⽤ TCP 持久连接，</p>
 <p>　Content-Type：⽤于服务器回应时，告诉客户端，本次数据是什么格式，如 text/html; charset=utf-8</p>
 <p>　Content-Encoding：数据的压缩⽅法。表示服务器返回的数据使⽤了什么压缩格式，如 gzip</p>
+<span id="more"></span>
 <h6 id="get 和 post 的区别"><a href="#get 和 post 的区别" class="headerlink" title="get 和 post 的区别"></a>get 和 post 的区别 </h6><p>　get 方法是请求从服务器获取资源，是<strong> 安全且幂等 </strong> 的，post 向 URI 指定的资源提交数据，数据就放在报文的 body 里，会修改服务器上的资源，所以是 <strong> 不安全 </strong> 的，且多次提交数据就会创建多个资源，所以 <strong> 不是幂等 </strong> 的</p>
 <h6 id="双刃剑"><a href="# 双刃剑" class="headerlink" title="双刃剑"></a>双刃剑</h6><p>　HTTP 协议有优缺点⼀体的双刃剑，优点是无状态、明文传输，缺点是不安全</p>
-<p>　无状态的好处，因为服务器不会去记忆 HTTP 的状态，所以 <strong> 不需要额外的资源来记录状态信息，这能减轻服务器的负担</strong>，能够把更多的 CPU 和内存⽤来对外提供服务</p>
+<p>　无状态的好处，因为服务器不会去记忆 HTTP 的状态，所以 <strong> 不需要额外的资源来记录状态信息，这能减轻服务器的负担</strong>，能够把更多的 CPU 和内存用来对外提供服务</p>
 <p>　无状态的坏处，服务器没有记忆能力，它在完成有关联性的操作时会⾮常麻烦。例如登录 -&gt; 添加购物⻋-&gt; 下单 -&gt; 结算 -&gt;⽀付，这系列操作都要知道⽤户身份才⾏。但服务器不知道这些请求是有关联的，每次都要问⼀遍身份信息</p>
 <p>　明文传输：通过浏览器的 F12 控制台或 Wireshark 抓包都可以直接肉眼查看，为我们调试⼯作带了极大的便利，缺点是不安全</p>
 <p>　不安全：1. 明文 (不加密) 可能会被窃听 2. 不验证通信方的身份，因此有可能遭遇伪装 3. 无法证明报文的完整性，报文有可能已遭篡改</p>
@@ -337,7 +338,7 @@
 <p>　HTTP2 缺陷：多个 HTTP 请求在复⽤⼀个 TCP 连接，下层的 TCP 协议是不知道有多少个 HTTP 请求 的。所以⼀旦发⽣了丢包现象，就会触发 TCP 的重传机制，这样在⼀个 TCP 连接中的所有的 HTTP 请求都必须等待这个丢了的包被重传回来。这都是基于 TCP 传输层的问题，所以 HTTP/3 把 HTTP 下层的 TCP 协议改成了 QUIC，UDP 发⽣是不管顺序，也不管丢包的，所以不会出现 HTTP/1.1 的队头阻塞 和 HTTP/2 的⼀个丢包全部重传问题，基于 UDP 的 QUIC 协议 可以实现类似 TCP 的可靠性传输</p>
 <h6 id="HTTP-1-1 优化"><a href="#HTTP-1-1 优化" class="headerlink" title="HTTP/1.1 优化"></a>HTTP/1.1 优化</h6><p>​    1. 短连接改成长连接</p>
 <p>　2. 尽量避免发送 HTTP 请求：对于⼀些具有重复性的 HTTP 请求，如每次请求得到的数据都⼀样的，我们可以把这对 <strong> 请求 - 响应 </strong> 的数据都缓存在本地，那么下次就直接读取本地的数据，不必在通过网络获取服务器的响应了</p>
-<p>　3. 减少重定向请求次数：服务器上的⼀个资源可能由于迁移、维护等原因从 url1 移⾄ url2 后，⽽客户端不知情，它还是继续请求 url1，这 时服务器不能粗暴地返回错误，⽽是通过 302 响应码和 Location 头部，告诉客户端该资源已经迁移到 url2 了，于是客户端需要再发送 url2 请求以获得服务器的资源。解决方法：<font color="red">重定向的工作交由代理服务器完成，就能减少 HTTP 请求次数了</font>&gt;</p>
+<p>　3. 减少重定向请求次数：服务器上的⼀个资源可能由于迁移、维护等原因从 url1 移⾄ url2 后，⽽客户端不知情，它还是继续请求 url1，这 时服务器不能粗暴地返回错误，⽽是通过 302 响应码和 Location 头部，告诉客户端该资源已经迁移到 url2 了，于是客户端需要再发送 url2 请求以获得服务器的资源。解决方法：<font color="red">重定向的工作交由代理服务器完成，就能减少 HTTP 请求次数了</font></p>
 <p><img src="https://api2.mubu.com/v3/document_image/aff7a832-be69-458a-832e-3b0f7134d052-12259280.jpg" alt="img"></p>
 <p>　4. 延迟发送请求：⼀般 HTML ⾥会含有很多 HTTP 的 URL，当前不需要的资源，我们没必要也获取过来， 于是可以通过 <strong> 按需获取 </strong> 的⽅式，来减少第⼀时间的 HTTP 请求次数。请求网页的时候，没必要把全部资源都获取到，只获取当前用户所看到的页面资源，当⽤户向下滑动页面的时候，再向服务器获取接下来的资源，这样就达到了延迟发送请求的效果</p>
 <p>　5. 使用合适的压缩算法来降低传输资源的大小</p>
