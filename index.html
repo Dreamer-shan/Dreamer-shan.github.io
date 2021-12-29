@@ -403,7 +403,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-29 11:05:32" itemprop="dateModified" datetime="2021-12-29T11:05:32+08:00">2021-12-29</time>
+                <time title="修改时间：2021-12-29 11:08:53" itemprop="dateModified" datetime="2021-12-29T11:08:53+08:00">2021-12-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -472,7 +472,7 @@
 <p>上述情况都可以通过对 y 节点 <strong> 左旋 </strong> 达到平衡</p>
 <p><img src="https://api2.mubu.com/v3/document_image/ff71ead0-b947-4006-a4ec-4220039fefc8-12259280.jpg" alt="img"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对 y 节点进行左旋转, 返回旋转后的新根节点 x</span></span><br><span class="line"><span class="comment">//      y                                   x</span></span><br><span class="line"><span class="comment">//    /  \            左旋转               /  \</span></span><br><span class="line"><span class="comment">//  T3     x         --------&gt;           y     T1</span></span><br><span class="line"><span class="comment">//        /  \                         /  \</span></span><br><span class="line"><span class="comment">//      T2    T1                     T3    T2</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> Node <span class="title">leftRotate</span><span class="params">(Node y)</span> </span>&#123;</span><br><span class="line">    Node x = y.right;</span><br><span class="line">    Node T1 = x.right;</span><br><span class="line">    Node T2 = x.left;</span><br><span class="line">    Node T3 = y.left;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 左旋转</span></span><br><span class="line">    x.left = y;</span><br><span class="line">    y.right = T2;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新 height</span></span><br><span class="line">    <span class="comment">// 因为 x 随 y 改变而改变, 所以要先更新 y</span></span><br><span class="line">    y.height = <span class="number">1</span> + Math.max(getHeight(T3), getHeight(T2));</span><br><span class="line">    x.height = <span class="number">1</span> + Math.max(getHeight(y), getHeight(T1));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="LR"><a href="#LR" class="headerlink" title="LR"></a>LR</h2><p>LR 表示 不平衡节点 y 的平衡因子为 -2 且 y 的左孩子 x 节点的平衡因子 =- 1。这个条件包括多种情况 (下图中的 T2L 子树和 T2R 子树的高度有多种情况)， 但都可以通过<strong> 先左旋再右旋 </strong> 完成平衡化。具体操作如下图:</p>
+<h5 id="LR"><a href="#LR" class="headerlink" title="LR"></a>LR</h5><p>LR 表示 不平衡节点 y 的平衡因子为 -2 且 y 的左孩子 x 节点的平衡因子 =- 1。这个条件包括多种情况 (下图中的 T2L 子树和 T2R 子树的高度有多种情况)， 但都可以通过<strong> 先左旋再右旋 </strong> 完成平衡化。具体操作如下图:</p>
 <p><img src="https://api2.mubu.com/v3/document_image/06e4371d-730f-43e4-8c1a-69da8b69f044-12259280.jpg" alt="img"></p>
 <h5 id="RL 型"><a href="#RL 型" class="headerlink" title="RL 型"></a>RL 型 </h5><p>RL 表示 不平衡节点 y 的平衡因子为 2 且 y 的右孩子 x 节点的平衡因子 =1。这个条件包括多种情况(下图中的 T2L 子树和 T2R 子树的高度有多种情况)， 但都可以通过<strong> 先右旋再左旋 </strong> 完成平衡化。具体操作如下图:</p>
 <p><img src="/.com//Blog\myblog\source\_posts\AVL 树 \image-20211229103554821.png" alt="image-20211229103554821"></p>
@@ -896,7 +896,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-26 14:29:37" itemprop="dateModified" datetime="2021-12-26T14:29:37+08:00">2021-12-26</time>
+                <time title="修改时间：2021-12-29 11:09:49" itemprop="dateModified" datetime="2021-12-29T11:09:49+08:00">2021-12-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
